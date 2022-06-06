@@ -18,7 +18,7 @@ Draft of ideas and thoughts
 Powers of Anyone, plus...
 
 - Submit new changing stations
-- Add pictures of changing stations
+- Submit new pictures of changing stations
 	- Also, delete pictures they added
 - Enter comments about changing stations
 	- Also, edit or delete comments they added
@@ -27,6 +27,7 @@ Powers of Anyone, plus...
 Powers of Logged-in User, plus...
 
 - Approve submitted changing stations
+- Approve submitted pictures
 - Edit stations
 - Delete pictures
 - Delete comments
@@ -36,6 +37,10 @@ Powers of Logged-in User, plus...
 - Web Server: NodeJS + Express
 - Database: MongoDB
 - Front-end: React
+- Component library:
+	- [Ant Design (maintained by chinese company)](https://ant.design/)
+	- [MUI](https://mui.com/)
+		- [Installation](https://mui.com/material-ui/getting-started/installation/)
 - Map APIs
 	- Google Maps
 	- [QGIS](https://www.qgis.org/en/site/)
@@ -52,7 +57,7 @@ The app should be mobile-first.
 	- status (submitted, approved, deleted)
 - Picture
 	- id (pk)
-	- data
+	- data - Amazon S3 (cheap), db will store a link
 	- timestamp
 	- account id (fk)
 	- station id (fk)
@@ -141,3 +146,12 @@ The app should be mobile-first.
 	- logged-in user: Upload picture
 	- logged-in user: Take picture
 	- logged-in user: Submit
+
+
+
+### Notes
+- upvote/downvote comments
+- [nx workspaces](https://nx.dev/) - publish multiple packages from the same monorepo
+	- [Tutorial](https://nx.dev/react-tutorial/01-create-application)
+	- [with GitHub Actions](https://nx.dev/ci/monorepo-ci-github-actions)
+- Get API Specs together
