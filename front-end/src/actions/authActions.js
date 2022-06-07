@@ -42,6 +42,21 @@ export const loginUser = userData => dispatch => {
     );
 };
 
+// Test authentication
+export const testAuth = () => dispatch => {
+  axios
+    .get("/api/users/test-auth")
+    .then(res => {
+      alert(res.data.token);
+    })
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+}
+
 // Set logged in user
 export const setCurrentUser = decoded => {
   return {

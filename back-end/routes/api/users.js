@@ -11,6 +11,9 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
+// Environment variables
+require('dotenv').config();
+
 // @route POST api/users/register
 // @desc Register user
 // @access Public
@@ -96,7 +99,7 @@ router.post("/login", (req, res) => {
         let signCallback = (err, token) => {
           res.json({
             success: true,
-            token: "Bearer " + token
+            token: token
           });
         }
 
@@ -110,6 +113,18 @@ router.post("/login", (req, res) => {
       }
     });
   });
+});
+
+// @route GET api/users/test-auth
+// @desc Get information about logged in user
+// @access Private
+router.get("/test-auth", (req, res) => {
+  try {
+    jwt.verify(req.headers.authorization, keys.secretOrKey);
+    res.json({token:'verified'});
+  } catch {
+    res.json({token:'unverified'});
+  }
 });
 
 // Export routes

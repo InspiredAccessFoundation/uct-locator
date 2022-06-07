@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 
 const users = require("./routes/api/users");
+const tables = require("./routes/api/tables");
 const passportConfig = require("./config/passport");
 
 // initialize app
@@ -32,6 +33,7 @@ passportConfig(passport);
 
 // Routes
 app.use("/api/users", users);
+app.use("/api/tables", tables);
 
 // listen on port
 const port = process.env.PORT || 5000; // process.env.port is Heroku's port if you choose to deploy the app there

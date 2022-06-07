@@ -50,8 +50,7 @@ The app should be mobile-first.
 ## Data
 - Station
 	- id (pk)
-	- coordinates
-	- address
+	- location
 	- name
 	- description
 	- status (submitted, approved, deleted)
