@@ -146,8 +146,6 @@ The app should be mobile-first.
 	- logged-in user: Take picture
 	- logged-in user: Submit
 
-
-
 ### Notes
 - upvote/downvote comments
 - [nx workspaces](https://nx.dev/) - publish multiple packages from the same monorepo
