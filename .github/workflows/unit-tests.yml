@@ -1,0 +1,17 @@
+name: Unit Tests Workflow
+on: [pull_request]
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the source code from the repository on the agent machine
+      - uses: actions/checkout@v3
+      # Install and setup node 18
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      # Install dependencies
+      - run: npm install
+      # Run tests for front-end and back-end
+      - run: npx nx test uct-locator-front-end
+      - run: npx nx test uct-locator-back-end
