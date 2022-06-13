@@ -20,7 +20,7 @@ class Navbar extends Component {
     let loggedIn = this.props.auth.isAuthenticated;
 
     return (
-        <AppBar position="inherit">
+        <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Link to="/" className="nav-link">UCT Locator</Link>
