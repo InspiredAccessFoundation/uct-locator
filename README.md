@@ -28,3 +28,25 @@ For the front-end, you should be able to simply `cd` into the **front-end** dire
 npm install
 npm run start
 ```
+
+## Advanced
+
+You can also use [Nx](https://nx.dev/) to build, run, and manage projects in this repository.
+
+First, install Nx with `npm install nx --location=global`.
+
+Next, it's possible to run any script for any project anywhere in the repo, with no need to change directories to that project.
+
+Use `nx <script-name> <project-name>` where `script-name` is the npm script defined in the project's package.json to run, and `project-name` is the name specfied in the project's `package.json` name field.
+
+### Examples
+
+1. Start UCT Locator Front-End
+```
+$ nx start uct-locator-front-end
+```
+
+2. Start UCT Locator Back-End
+```
+$ nx server uct-locator-back-end
+```

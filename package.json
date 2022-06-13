@@ -1,0 +1,10 @@
+{
+  "name": "uct-locator",
+  "workspaces": [
+    "front-end",
+    "back-end"
+  ],
+  "devDependencies": {
+    "nx": "14.2.4"
+  }
+}
