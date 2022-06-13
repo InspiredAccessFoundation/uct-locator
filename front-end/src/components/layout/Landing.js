@@ -29,7 +29,7 @@ class Landing extends Component {
 }
 
 Landing.propTypes = {
-  testAuth: PropTypes.object.isRequired,
+  testAuth: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
