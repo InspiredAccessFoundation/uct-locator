@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 // Other constants
 const User = mongoose.model("users");
-const keys = require("../config/keys");
+const keys = require("./keys");
 const opts = {};
 
 // Get token and key
