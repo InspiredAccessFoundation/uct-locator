@@ -17,7 +17,8 @@ app.use(express.json());
 const db = require("./config/keys").mongoURI;
 const dbSettings = {
 	useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  dbName: "uct_locator"
 }
 
 // connect to mongodb
