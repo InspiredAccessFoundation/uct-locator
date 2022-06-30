@@ -8,7 +8,7 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <p>Hello, {user.name}! You are logged into the app.</p>
+        <p>Hello, {user.name}! You are loged into the app.</p>
       </div>
     );
   }
