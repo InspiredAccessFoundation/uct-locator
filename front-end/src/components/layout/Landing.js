@@ -19,7 +19,7 @@ class Landing extends Component {
       <div>
         <p>Welcome to the UCT Locator app!</p>
         {loggedIn ?
-          <Link to="/Dashboard">Go to Dashbard</Link> :
+          <Link to="/Dashboard">Go to Dashboard</Link> :
           <p><Link to="/login">Login</Link> or <Link to="/register">Register</Link></p>
         }
         <p><Button onClick={this.testAuth}>Test Auth</Button></p>
