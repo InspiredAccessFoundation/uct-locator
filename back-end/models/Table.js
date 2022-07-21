@@ -11,7 +11,7 @@ const TableSchema = new Schema({
 
   },
   locationName: {
-    type: PointSchema,
+    type: String,
     required: true
   },
   streetAddress: {
@@ -43,7 +43,7 @@ const TableSchema = new Schema({
     required: false
   },
   coordinateLocation: {
-    type: Array,
+    type: PointSchema,
     required: false
   },
   tableStyle: {
