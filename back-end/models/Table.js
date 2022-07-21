@@ -4,46 +4,87 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const TableSchema = new Schema({
-  location: {
+
+  ID:{
+    type: Number,
+    required:true
+
+  },
+  locationName: {
     type: PointSchema,
     required: true
   },
-  name: {
+  streetAddress: {
     type: String,
-    required: true
+    required: false
   },
-  description: {
+  city: {
     type: String,
-    required: true
+    required: false
   },
-  status: {
+
+  state: {
     type: String,
-    enum: ['submitted', 'approved', 'deleted', 'reported'],
-    default: 'submitted'
+    required: false
   },
-  tableType: {
+  zipcode: {
     type: String,
-    enum: ['fixed-height', 'adjustable', 'portable'],
-    required: true
+    required: false,
+    max:5
+  },
+
+  locationWithinBuilding: {
+    type: String,
+    required: false
   },
   restroomType: {
     type: String,
     enum: ['men', 'women', 'family', 'other'],
+    required: false
+  },
+  coordinateLocation: {
+    type: Array,
+    required: false
+  },
+  tableStyle: {
+    type: String,
+    enum: ['fixed-height', 'adjustable', 'portable'],
+    required: false
+  },
+
+  tableNotes: {
+    type: String,
+    required: false
+  },
+  publicAccessiblity: {
+    type: String,
+    enum: ['Patrons/Patients Only', 'Accessible to the Public'],
     required: true
   },
   hours: {
-    type: String
+    type: String,
+    required: false
   },
   contactPhone: {
-    type: String
+    type: String,
+    required: false
   },
   contactEmail: {
-    type: String
+    type: String,
+    required: false
   },
-  publiclyAccessible: {
-    type: Boolean,
+  additionalInfo: {
+    type: String,
+    required: false
+    //prompt
+  },
+  status: {
+    type: String,
+    enum: ['submitted', 'approved', 'deleted', 'reported'],
+    default: 'submitted',
     required: true
   }
+  
 });
 
 module.exports = Table = mongoose.model("tables", TableSchema);
