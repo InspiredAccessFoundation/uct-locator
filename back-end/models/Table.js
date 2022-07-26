@@ -4,12 +4,6 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const TableSchema = new Schema({
-
-  ID:{
-    type: Number,
-    required:true
-
-  },
   locationName: {
     type: String,
     required: true
@@ -22,7 +16,6 @@ const TableSchema = new Schema({
     type: String,
     required: false
   },
-
   state: {
     type: String,
     required: false
@@ -32,7 +25,6 @@ const TableSchema = new Schema({
     required: false,
     max:5
   },
-
   locationWithinBuilding: {
     type: String,
     required: false
@@ -51,12 +43,11 @@ const TableSchema = new Schema({
     enum: ['fixed-height', 'adjustable', 'portable'],
     required: false
   },
-
   tableNotes: {
     type: String,
     required: false
   },
-  publicAccessiblity: {
+  publicAccessibility: {
     type: String,
     enum: ['Patrons/Patients Only', 'Accessible to the Public'],
     required: true
@@ -76,7 +67,6 @@ const TableSchema = new Schema({
   additionalInfo: {
     type: String,
     required: false
-    //prompt
   },
   status: {
     type: String,
@@ -84,7 +74,6 @@ const TableSchema = new Schema({
     default: 'submitted',
     required: true
   }
-  
 });
 
 module.exports = Table = mongoose.model("tables", TableSchema);
