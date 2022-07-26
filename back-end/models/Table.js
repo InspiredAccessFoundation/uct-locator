@@ -4,17 +4,12 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const TableSchema = new Schema({
-  
-  ID: {
-    type: Number,
-    required: true
-  },
   locationName: {
     type: String,
     required: true
   },
   streetAddress: {
-    type: String, 
+    type: String,
     required: false
   },
   city: {
@@ -28,7 +23,7 @@ const TableSchema = new Schema({
   zipcode: {
     type: String,
     required: false,
-    max: 5
+    max:5
   },
   locationWithinBuilding: {
     type: String,
@@ -48,20 +43,16 @@ const TableSchema = new Schema({
     enum: ['fixed-height', 'adjustable', 'portable'],
     required: false
   },
-
   tableNotes: {
     type: String,
-    
     required: false
   },
-  
-  publiclyAccessible: {
-    type: Boolean,
-    required: false
+  publicAccessibility: {
+    type: String,
+    enum: ['Patrons/Patients Only', 'Accessible to the Public'],
+    required: true
   },
-  
- 
-  operatingHours: {
+  hours: {
     type: String,
     required: false
   },
@@ -73,7 +64,7 @@ const TableSchema = new Schema({
     type: String,
     required: false
   },
-  additionalInformation: {
+  additionalInfo: {
     type: String,
     required: false
   },
