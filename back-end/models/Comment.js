@@ -13,11 +13,10 @@ const CommentSchema = new Schema({
     ref: 'User',
     required: true
   },
-  Body: {
+  body: {
     type: String,
     required: true
   }
 });
- 
-module.exports = comment = mongoose.model("comments", commentSchema);
 
+module.exports = comment = mongoose.model("comments", commentSchema);
