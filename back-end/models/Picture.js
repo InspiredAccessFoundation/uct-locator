@@ -3,23 +3,24 @@ const PointSchema = require("./Point");
 const Schema = mongoose.Schema;
 
 const PictureSchema = new Schema({
-    ID: {
-        type: Number,
-        required: true
-      },
-    tableID: {
-        type: Number,
-        required: true
-      },
-    Name: {
-        type: String,
-        required: false
-      },
-    URL: {
-        type: String,
-        required: true
-      }
-
-})
+  tableID: {
+    type: Schema.Types.ObjectId,
+    ref: 'Table',
+    required: true
+  },
+  uploaderID: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  name: {
+    type: String,
+    required: false
+  },
+  url: {
+    type: String,
+    required: true
+  }
+});
 
 module.exports = Picture = mongoose.model("pictures", PictureSchema);
