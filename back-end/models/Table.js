@@ -1,11 +1,16 @@
 const mongoose = require("mongoose");
 const PointSchema = require("./Point");
+const UserSchema = require("./User");
 const Schema = mongoose.Schema;
 
 // Create Schema
 const TableSchema = new Schema({
   locationName: {
     type: String,
+    required: true
+  },
+  theUser: {
+    type: UserSchema,
     required: true
   },
   streetAddress: {
