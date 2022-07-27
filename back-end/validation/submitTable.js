@@ -11,24 +11,24 @@ module.exports = function validateSubmitTableInput(data) {
   }
 
   // Empty checks
-  if (Validator.isEmpty(dataCop.location)) {
-    errors.location = "Location field is required";
-  }
-  if (Validator.isEmpty(dataCop.name)) {
-    errors.name = "Name field is required";
-  }
-  if (Validator.isEmpty(dataCop.tableType)) {
-    errors.tableType = "Table Type field is required";
-  }
-  if (Validator.isEmpty(dataCop.description)) {
-    errors.description = "Description field is required";
-  }
-  if (Validator.isEmpty(dataCop.restroomType)) {
-    errors.restroomType = "Restroom Type field is required";
-  }
-  if (Validator.isEmpty(dataCop.publiclyAccessible)) {
-    errors.publiclyAccessible = "Public Accessibility field is required";
-  }
+  // if (Validator.isEmpty(dataCop.location)) {
+  //   errors.location = "Location field is required";
+  // }
+  // if (Validator.isEmpty(dataCop.name)) {
+  //   errors.name = "Name field is required";
+  // }
+  // if (Validator.isEmpty(dataCop.tableType)) {
+  //   errors.tableType = "Table Type field is required";
+  // }
+  // if (Validator.isEmpty(dataCop.description)) {
+  //   errors.description = "Description field is required";
+  // }
+  // if (Validator.isEmpty(dataCop.restroomType)) {
+  //   errors.restroomType = "Restroom Type field is required";
+  // }
+  // if (Validator.isEmpty(dataCop.publiclyAccessible)) {
+  //   errors.publiclyAccessible = "Public Accessibility field is required";
+  // }
 
   return {
     errors: errors,

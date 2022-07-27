@@ -56,7 +56,7 @@ const TableSchema = new Schema({
   publicAccessibility: {
     type: String,
     enum: ['Patrons/Patients Only', 'Accessible to the Public'],
-    required: true
+    required: false
   },
   hours: {
     type: String,
