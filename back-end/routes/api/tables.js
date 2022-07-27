@@ -24,12 +24,20 @@ router.post("/submit", async (req, res) => {
     return res.status(400).json(errors);
   }
 
+  // Get user
+  let loggedInUser;
+
+  try {
+    loggedInUser = jwt.verify(req.headers.authorization, keys.secretOrKey);
+  } catch (error) {
+    return res.status(401).json(error);
+  }
+
   // Create a new table
   const newTable = new Table({
     locationName: req.body.locationName,
-    theUser: req.body.theUser,
+    userId: loggedInUser.id,
     streetAddress: req.body.streetAddress,
-    description: req.body.description,
     city: req.body.city,
     state: req.body.state,
     zipcode: req.body.zipcode,
@@ -47,8 +55,11 @@ router.post("/submit", async (req, res) => {
   });
 
   newTable.save()
-    .then(table => res.json(table))
-    .catch(err => console.log(err));
+    .then(table => res.json({
+      "success": true,
+      "data": table
+    }))
+    .catch(err => res.status(500).json({error: err}));
 });
 
 // Export routes
