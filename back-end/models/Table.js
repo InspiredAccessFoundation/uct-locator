@@ -9,8 +9,9 @@ const TableSchema = new Schema({
     type: String,
     required: true
   },
-  theUser: {
-    type: UserSchema,
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   streetAddress: {
