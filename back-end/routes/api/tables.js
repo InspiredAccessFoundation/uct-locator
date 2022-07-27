@@ -26,16 +26,24 @@ router.post("/submit", async (req, res) => {
 
   // Create a new table
   const newTable = new Table({
-    location: req.body.location,
-    name: req.body.name,
+    locationName: req.body.locationName,
+    theUser: req.body.theUser,
+    streetAddress: req.body.streetAddress,
     description: req.body.description,
-    status: 'submitted',
-    tableType: req.body.tableType,
+    city: req.body.city,
+    state: req.body.state,
+    zipcode: req.body.zipcode,
+    locationWithinBuilding: req.body.locationWithinBuilding,
     restroomType: req.body.restroomType,
+    coordinateLocation: req.body.coordinateLocation,
+    tableStyle: req.body.tableStyle,
+    tableNotes: req.body.tableNotes,
+    publiclyAccessible: req.body.publiclyAccessible,
     hours: req.body.hours,
     contactPhone: req.body.contactPhone,
     contactEmail: req.body.contactEmail,
-    publiclyAccessible: req.body.publiclyAccessible
+    additionalInfo: req.body.additionalInfo,
+    status: 'submitted'
   });
 
   newTable.save()
