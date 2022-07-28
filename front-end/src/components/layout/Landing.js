@@ -23,6 +23,7 @@ class Landing extends Component {
           <p><Link to="/login">Login</Link> or <Link to="/register">Register</Link></p>
         }
         <p><Button onClick={this.testAuth}>Test Auth</Button></p>
+        <p><Link to="/map">Map</Link></p>
       </div>
     );
   }
