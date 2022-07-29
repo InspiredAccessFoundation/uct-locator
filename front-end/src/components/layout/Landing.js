@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Button from '@mui/material/Button';
+import MapContainer from '../Map/MapContainer';
 
 import { testAuth } from "../../actions/authActions";
 
@@ -23,7 +24,7 @@ class Landing extends Component {
           <p><Link to="/login">Login</Link> or <Link to="/register">Register</Link></p>
         }
         <p><Button onClick={this.testAuth}>Test Auth</Button></p>
-        <p><Link to="/map">Map</Link></p>
+        <MapContainer />
       </div>
     );
   }
