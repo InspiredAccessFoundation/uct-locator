@@ -2,6 +2,7 @@ import React from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import TableMap from "./TableMap";
 import Marker from "./Marker";
+import TablePopup from "./TablePopup";
 import Button from "@mui/material/Button";
 
 const render = (status) => {
@@ -15,6 +16,7 @@ const LocationViewMap = () => {
     lng: -97,
   });
 
+  const [currentTableId, setCurrentTableId] = React.useState('');
   const [tableLocations, setTableLocations] = React.useState([]);
 
   React.useEffect(() => {
@@ -129,9 +131,10 @@ const LocationViewMap = () => {
             style={{ width: "100%", height: "500px" }}
           >
             {tableLocations.map((tbl, i) => (
-              <Marker key={i} position={tbl.pos} tableId={tbl.id} />
+              <Marker key={i} position={tbl.pos} onClick={() => setCurrentTableId(tbl.tableId)} tableId={tbl.id} />
             ))}
           </TableMap>
+          <TablePopup tableId={currentTableId} onClose={() => setCurrentTableId('')} />
         </Wrapper>
         {form}
       </div>
