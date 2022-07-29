@@ -2,6 +2,7 @@ import * as React from "react";
 
 const Marker = (props) => {
   const [marker, setMarker] = React.useState();
+  const onClick = props.onClick;
 
   React.useEffect(() => {
     if (!marker) {
@@ -15,6 +16,12 @@ const Marker = (props) => {
       }
     };
   }, [marker]);
+
+  React.useEffect(() => {
+    if (marker) {
+      marker.addListener("click", onClick);
+    }
+  }, [marker, onClick]);
 
   React.useEffect(() => {
     if (marker) {
