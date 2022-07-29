@@ -8,7 +8,7 @@ const render = (status) => {
   return <h1>{status}</h1>;
 };
 
-const MapContainer = () => {
+const LocationViewMap = () => {
   const [zoom, setZoom] = React.useState(3); // initial zoom
   const [center, setCenter] = React.useState({
     lat: 40,
@@ -139,4 +139,4 @@ const MapContainer = () => {
   );
 }
 
-export default MapContainer;
+export default LocationViewMap;
