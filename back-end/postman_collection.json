@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "1d5129ba-63ed-4ec9-a0e9-4173d0b07950",
+		"name": "UCT Back-end",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Submit New Table",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDk4ZmRlNGY5YTU5MzliNDdlM2JkMyIsIm5hbWUiOiJhIiwiaWF0IjoxNjU4OTQyMDk2LCJleHAiOjE2OTA0OTkwMjJ9.jscfMtn5gDK5SdauVX1UVmcf-a3Vxkny6NG_hkibi7o",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "locationName",
+							"value": "Park",
+							"type": "text"
+						},
+						{
+							"key": "streetAddress",
+							"value": "123 Park Rd",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Lakewood",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "Ohio",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "44107",
+							"type": "text"
+						},
+						{
+							"key": "locationWithinBuilding",
+							"value": "By the tree",
+							"type": "text"
+						},
+						{
+							"key": "restroomType",
+							"value": "men",
+							"type": "text"
+						},
+						{
+							"key": "tableStyle",
+							"value": "fixed-height",
+							"type": "text"
+						},
+						{
+							"key": "publicAccessibility",
+							"value": "Accessible to the Public",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/tables/submit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"tables",
+						"submit"
+					],
+					"query": [
+						{
+							"key": "locationName",
+							"value": "ok",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "a@a.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "aaaaaa",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "a@a.com",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "aaaaaa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

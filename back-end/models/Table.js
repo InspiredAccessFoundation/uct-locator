@@ -1,11 +1,17 @@
 const mongoose = require("mongoose");
 const PointSchema = require("./Point");
+const UserSchema = require("./User");
 const Schema = mongoose.Schema;
 
 // Create Schema
 const TableSchema = new Schema({
   locationName: {
     type: String,
+    required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   streetAddress: {
@@ -50,7 +56,7 @@ const TableSchema = new Schema({
   publicAccessibility: {
     type: String,
     enum: ['Patrons/Patients Only', 'Accessible to the Public'],
-    required: true
+    required: false
   },
   hours: {
     type: String,
