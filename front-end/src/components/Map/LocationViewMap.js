@@ -4,51 +4,53 @@ import TableMap from "./TableMap";
 import Marker from "./Marker";
 import TablePopup from "./TablePopup";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 const render = (status) => {
   return <h1>{status}</h1>;
 };
 
+const getTablePosition = tbl => {
+  const coords = tbl.coordinateLocation.coordinates;
+
+  return {
+    lat: coords[1],
+    lng: coords[0]
+  }
+};
+
 const LocationViewMap = () => {
-  const [zoom, setZoom] = React.useState(3); // initial zoom
+  const [zoom, setZoom] = React.useState(Number(localStorage.getItem('zoom')) || 3);
   const [center, setCenter] = React.useState({
-    lat: 40,
-    lng: -97,
+    lat: Number(localStorage.getItem('center-lat')) || 40,
+    lng: Number(localStorage.getItem('center-lng')) || -97,
   });
 
   const [currentTableId, setCurrentTableId] = React.useState('');
   const [tableLocations, setTableLocations] = React.useState([]);
 
   React.useEffect(() => {
-    setTableLocations([{
-      "pos": {
-        "lat": 41.47848602493825,
-        "lng": -81.77971005921842
-      },
-      "tableId": "1a"
-    },
-    {
-      "pos": {
-        "lat": 41.47771436351364,
-        "lng": -81.78164124970914
-      },
-      "tableId": "1b"
-    },
-    {
-      "pos": {
-        "lat": 41.47554681429229,
-        "lng": -81.77224227644933
-      },
-      "tableId": "1c"
-    },
-    {
-      "pos": {
-        "lat": 41.478648495430846,
-        "lng": -81.80258868862971
-      },
-      "tableId": "1d"
-    }]);
-  }, [])
+    localStorage.setItem('zoom', zoom);
+  }, [zoom]);
+
+  React.useEffect(() => {
+    localStorage.setItem('center-lat', center.lat);
+    localStorage.setItem('center-lng', center.lng);
+  }, [center]);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        let response = await axios.get("api/tables/all");
+        setTableLocations(response.data);
+      } catch (e) {
+        console.log(e);
+        return [];
+      }
+    }
+    
+    fetchData();
+  }, []);
 
   const centerCurrentLocation = e => {
     e.preventDefault();
@@ -61,7 +63,7 @@ const LocationViewMap = () => {
         });
       });
     } else {
-      alert("Geolocation is not supported by this browser.")
+      alert("Geolocation is not supported by this browser.");
     }
   }
 
@@ -77,48 +79,6 @@ const LocationViewMap = () => {
     }
   };
 
-  const form = (
-    <div
-      style={{
-        padding: "1rem",
-        flexBasis: "250px",
-        height: "100%",
-        overflow: "auto",
-      }}
-    >
-      <label htmlFor="zoom">Zoom</label>
-      <input
-        type="number"
-        id="zoom"
-        name="zoom"
-        value={zoom}
-        onChange={(event) => setZoom(Number(event.target.value))}
-      />
-      <br />
-      <label htmlFor="lat">Latitude</label>
-      <input
-        type="number"
-        id="lat"
-        name="lat"
-        value={center.lat}
-        onChange={(event) =>
-          setCenter({ ...center, lat: Number(event.target.value) })
-        }
-      />
-      <br />
-      <label htmlFor="lng">Longitude</label>
-      <input
-        type="number"
-        id="lng"
-        name="lng"
-        value={center.lng}
-        onChange={(event) =>
-          setCenter({ ...center, lng: Number(event.target.value) })
-        }
-      />
-    </div>
-  );
-
   return (
     <>
       <p><Button onClick={centerCurrentLocation}>Use My Location</Button></p>
@@ -131,12 +91,11 @@ const LocationViewMap = () => {
             style={{ width: "100%", height: "500px" }}
           >
             {tableLocations.map((tbl, i) => (
-              <Marker key={i} position={tbl.pos} onClick={() => setCurrentTableId(tbl.tableId)} tableId={tbl.id} />
+              <Marker key={i} position={getTablePosition(tbl)} onClick={() => setCurrentTableId(tbl._id)} />
             ))}
           </TableMap>
           <TablePopup tableId={currentTableId} onClose={() => setCurrentTableId('')} />
         </Wrapper>
-        {form}
       </div>
     </>
   );
