@@ -42,7 +42,7 @@ const TableSchema = new Schema({
   },
   coordinateLocation: {
     type: PointSchema,
-    required: false
+    required: true
   },
   tableStyle: {
     type: String,
