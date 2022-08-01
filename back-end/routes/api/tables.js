@@ -78,6 +78,26 @@ router.get("/all", async (req, res) => {
   res.json(allTables);
 });
 
+// @route GET api/tables/within-bounds
+// @desc Get tables (just coordinates and ids) within a bounding box
+// @access Public
+router.get("/within-bounds", async (req, res) => {
+  let where = {
+    coordinateLocation: {
+      $geoWithin: {
+        $box: [
+          [req.body.west, req.body.south],
+          [req.body.east, req.body.north]
+        ]
+      }
+    }  
+  };
+
+  let select = '_id coordinateLocation';
+  let boundedTables = await Table.find(where, select);
+  res.json(boundedTables);
+});
+
 // @route GET api/tables/:id
 // @desc Get data for a table by id
 // @access Public
