@@ -1,8 +1,5 @@
 import * as React from "react";
-import Axios from "axios";
-import { setupCache } from 'axios-cache-interceptor';
-
-const axios = setupCache(Axios);
+import axios from "../../axiosRequests";
 
 const TableData = (props) => {
   const [tableData, setTableData] = React.useState({});

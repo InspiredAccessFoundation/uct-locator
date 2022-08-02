@@ -7,7 +7,7 @@ import TablePopup from "./TablePopup";
 import Button from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
 import * as constants from "../../constants";
-import axios from "axios";
+import axios from "../../axiosRequests";
 
 const render = () => {
   return (
