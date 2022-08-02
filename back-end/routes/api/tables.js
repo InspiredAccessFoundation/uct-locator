@@ -86,8 +86,8 @@ router.get("/within-bounds", async (req, res) => {
     coordinateLocation: {
       $geoWithin: {
         $box: [
-          [req.body.west, req.body.south],
-          [req.body.east, req.body.north]
+          [req.query.west, req.query.south],
+          [req.query.east, req.query.north]
         ]
       }
     }  
