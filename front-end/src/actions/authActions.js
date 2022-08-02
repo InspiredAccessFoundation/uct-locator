@@ -48,8 +48,6 @@ export const testAuth = () => dispatch => {
     .get("/api/users/test-auth")
     .then(res => {
       alert(res.data.token);
-      alert(res.data.id);
-      alert(res.data.name);
     })
     .catch(err => 
       dispatch({
