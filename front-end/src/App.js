@@ -13,7 +13,8 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import SubmitTable from "./components/Tables/SubmitTable";
-import LocationViewMap from "./components/Map/LocationViewMap"
+import LocationViewMap from "./components/Map/LocationViewMap";
+import ViewTable from "./components/Tables/ViewTable";
 
 import Container from '@mui/material/Container';
 
@@ -49,6 +50,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/find" component={LocationViewMap} />
+            <Route path="/view-table/:tableId" component={ViewTable} />
             <Switch>
               <PrivateRoute exact path="/submit-table" component={SubmitTable} />
             </Switch>

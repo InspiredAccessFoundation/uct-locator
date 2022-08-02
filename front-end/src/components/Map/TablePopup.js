@@ -1,5 +1,4 @@
 import * as React from "react";
-import Axios from "axios";
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,43 +10,16 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/material";
-import { setupCache } from 'axios-cache-interceptor';
-
-const axios = setupCache(Axios);
+import { Link } from "react-router-dom";
 
 const TablePopup = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [tableData, setTableData] = React.useState({});
-  const [loading, setLoading] = React.useState(false);
-
-  const tableId = props.tableId;
-
-  React.useEffect(() => {
-    if (!tableId) {
-      setTableData({});
-    }
-  }, [tableId]);
-
-  React.useEffect(() => {
-    if (tableId) {
-      async function fetchData() {
-        try {
-          let response = await axios.get(`api/tables/${tableId}`);
-          setTableData(response.data);
-        } catch (e) {
-          console.error("Something went wrong:", e);
-          return [];
-        } finally {
-          setLoading(false);
-        }
-      }
-      
-      setLoading(true);
-      fetchData();
-    }
-  }, [tableId]);
+  const tableData = props.tableData;
+  const loading = props.loading;
+  const open = props.open;
+  const onClose = props.onClose;
 
   return (
     <>
@@ -56,8 +28,8 @@ const TablePopup = (props) => {
         fullWidth
         maxWidth="md"
         scroll="paper"
-        open={tableId !== ''}
-        onClose={props.onClose}
+        open={open}
+        onClose={onClose}
         PaperProps={{
           sx: {
             height: "100vh"
@@ -72,7 +44,7 @@ const TablePopup = (props) => {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={props.onClose}
+              onClick={onClose}
               aria-label="close"
               >
                 <CloseIcon />
@@ -92,6 +64,7 @@ const TablePopup = (props) => {
           </Box> : 
           <DialogContent>
             <p>{tableData.locationName}</p>
+            <p><Link to={`/view-table/${tableData._id}`}>More Info</Link></p>
           </DialogContent>
         }
       </Dialog>
