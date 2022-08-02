@@ -4,10 +4,13 @@ import TableMap from "./TableMap";
 import Marker from "./Marker";
 import TablePopup from "./TablePopup";
 import Button from "@mui/material/Button";
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
 
 const render = (status) => {
-  return <h1>{status}</h1>;
+  return (
+    <CircularProgress size="100px" />
+  );
 };
 
 const getTablePosition = tbl => {
