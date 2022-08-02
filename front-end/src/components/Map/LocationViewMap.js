@@ -43,20 +43,16 @@ const LocationViewMap = () => {
     localStorage.setItem('center-lng', center.lng);
   }, [center]);
 
-  // TODO: no empty dependency list
-  React.useEffect(() => {
-    async function fetchData() {
-      try {
-        let response = await axios.get("api/tables/all");
-        setTableLocations(response.data);
-      } catch (e) {
-        console.log(e);
-        return [];
-      }
+  const search = async (e) => {
+    e.preventDefault();
+    try {
+      let response = await axios.get("api/tables/all");
+      setTableLocations(response.data);
+    } catch (e) {
+      console.log(e);
+      return [];
     }
-    
-    fetchData();
-  }, []);
+  }
 
   const centerCurrentLocation = e => {
     e.preventDefault();
@@ -87,7 +83,10 @@ const LocationViewMap = () => {
 
   return (
     <>
-      <p><Button onClick={centerCurrentLocation}>Use My Location</Button></p>
+      <p>
+        <Button onClick={centerCurrentLocation}>Use My Location</Button>
+        <Button onClick={search}>Search</Button>
+      </p>
       <div style={{ height: "100%" }}>
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
           <TableMap
