@@ -1,36 +1,11 @@
 import React from "react";
-import { createCustomEqual } from "fast-equals";
-
-const deepCompareEqualsForMaps = createCustomEqual(
-  (deepEqual) => (a, b) => {
-    if (a instanceof window.google.maps.LatLng || b instanceof window.google.maps.LatLng) {
-      return new window.google.maps.LatLng(a).equals(new window.google.maps.LatLng(b));
-    }
-
-    // TODO extend to other types
-
-    // use fast-equals for other objects
-    return deepEqual(a, b);
-  }
-);
-
-function useDeepCompareMemoize(value) {
-  const ref = React.useRef();
-
-  if (!deepCompareEqualsForMaps(value, ref.current)) {
-    ref.current = value;
-  }
-
-  return ref.current;
-}
-
-function useDeepCompareEffectForMaps(callback, dependencies) {
-  React.useEffect(callback, [...dependencies.map(useDeepCompareMemoize), callback]);
-}
 
 const TableMap = (props) => {
   const ref = React.useRef(null);
   const [map, setMap] = React.useState();
+
+  const zoom = props.zoom;
+  const center = props.center;
   
   React.useEffect(() => {
     if (ref.current && !map) {
@@ -46,26 +21,21 @@ const TableMap = (props) => {
         ]
       });
 
+      map.setZoom(zoom);
+      map.setCenter(center);
+
       setMap(map);
 
     }
-  }, [ref, map]);
+  }, [ref, map, zoom, center]);
 
   const onClick = props.onClick;
   const onIdle = props.onIdle;
   const style = props.style;
   const children = props.children;
-  const center = props.center;
-  const zoom = props.zoom;
-
-  // because React does not do deep comparisons, a custom hook is used
-  // see discussion in https://github.com/googlemaps/js-samples/issues/946
-  useDeepCompareEffectForMaps(() => {
-    if (map) {
-      map.setCenter(center);
-      map.setZoom(zoom);
-    }
-  }, [map, center, zoom]);
+  const onBoundsChanged = props.onBoundsChanged;
+  const onCenterChanged = props.onCenterChanged;
+  const onZoomChanged = props.onZoomChanged;
 
   React.useEffect(() => {
     if (map) {
@@ -80,8 +50,20 @@ const TableMap = (props) => {
       if (onIdle) {
         map.addListener("idle", () => onIdle(map));
       }
+
+      if (onBoundsChanged) {
+        map.addListener("bounds_changed", () => onBoundsChanged(map.getBounds()));
+      }
+
+      if (onCenterChanged) {
+        map.addListener("center_changed", () => onCenterChanged(map.getCenter()));
+      }
+
+      if (onZoomChanged) {
+        map.addListener("zoom_changed", () => onZoomChanged(map.getZoom()));
+      }
     }
-  }, [map, onClick, onIdle]);
+  }, [map, onClick, onIdle, onBoundsChanged, onCenterChanged, onZoomChanged]);
 
   return (
     <>

@@ -30,6 +30,7 @@ const LocationViewMap = () => {
     lat: Number(localStorage.getItem('center-lat')) || 40,
     lng: Number(localStorage.getItem('center-lng')) || -97,
   });
+  const [bounds, setBounds] = React.useState();
 
   const [currentTableId, setCurrentTableId] = React.useState('');
   const [tableLocations, setTableLocations] = React.useState([]);
@@ -46,7 +47,18 @@ const LocationViewMap = () => {
   const search = async (e) => {
     e.preventDefault();
     try {
-      let response = await axios.get("api/tables/all");
+      let neCorner = bounds.getNorthEast();
+      let swCorner = bounds.getSouthWest();
+
+      let reqConfig = {
+        params: {
+          north: neCorner.lat(),
+          east: neCorner.lng(),
+          south: swCorner.lat(),
+          west: swCorner.lng(),
+        }
+      }
+      let response = await axios.get("api/tables/within-bounds", reqConfig);
       setTableLocations(response.data);
     } catch (e) {
       console.log(e);
@@ -69,17 +81,20 @@ const LocationViewMap = () => {
     }
   }
 
-  const onIdle = (m) => {
-    let zoom = m.getZoom();
-    if (zoom) {
-      setZoom(zoom);
-    }
+  const onBoundsChanged = (bounds) => {
+    setBounds(bounds);
+  }
 
-    let center = m.getCenter();
-    if (center) {
-      setCenter(center.toJSON());
-    }
-  };
+  const onCenterChanged = (center) => {
+    setCenter({
+      lat: center.lat(),
+      lng: center.lng()
+    });
+  }
+
+  const onZoomChanged = (zoom) => {
+    setZoom(zoom);
+  }
 
   return (
     <>
@@ -91,7 +106,9 @@ const LocationViewMap = () => {
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
           <TableMap
             center={center}
-            onIdle={onIdle}
+            onBoundsChanged={onBoundsChanged}
+            onCenterChanged={onCenterChanged}
+            onZoomChanged={onZoomChanged}
             zoom={zoom}
             style={{ width: "100%", height: "500px" }}
           >
