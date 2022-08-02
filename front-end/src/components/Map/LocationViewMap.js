@@ -6,6 +6,7 @@ import Marker from "./Marker";
 import TablePopup from "./TablePopup";
 import Button from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
+import * as constants from "../../constants";
 import axios from "axios";
 
 const render = () => {
@@ -18,8 +19,8 @@ const getTablePosition = tbl => {
   const coords = tbl.coordinateLocation.coordinates;
 
   return {
-    lat: coords[1],
-    lng: coords[0]
+    lat: coords[constants.GEOJSON_LATITUDE_INDEX],
+    lng: coords[constants.GEOJSON_LONGITUDE_INDEX]
   }
 };
 
@@ -42,6 +43,7 @@ const LocationViewMap = () => {
     localStorage.setItem('center-lng', center.lng);
   }, [center]);
 
+  // TODO: no empty dependency list
   React.useEffect(() => {
     async function fetchData() {
       try {
