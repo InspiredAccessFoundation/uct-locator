@@ -1,18 +1,20 @@
 const mongoose = require("mongoose");
 const PointSchema = require("./Point");
+const UserSchema = require("./User");
 const Schema = mongoose.Schema;
 
 // Create Schema
 const TableSchema = new Schema({
-  id: {
-    type: Number,
-    required: true
-  },
-  location_name: {
+  locationName: {
     type: String,
     required: true
   },
-  street_address: {
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  streetAddress: {
     type: String,
     required: false
   },
@@ -27,50 +29,48 @@ const TableSchema = new Schema({
   zipcode: {
     type: String,
     required: false,
-    min: 5,
-    max: 5
+    max:5
   },
-  location_within_building: {
+  locationWithinBuilding: {
     type: String,
     required: false
   },
-  restroom_type: {
+  restroomType: {
     type: String,
     enum: ['men', 'women', 'family', 'other'],
     required: false
   },
-  coordinate_location: {
-    type: "Point",
-    coordinates: [x1, y1],
-    required: false
+  coordinateLocation: {
+    type: PointSchema,
+    required: true
   },
-  table_style: {
+  tableStyle: {
     type: String,
     enum: ['fixed-height', 'adjustable', 'portable'],
     required: false
   },
-  table_notes: {
-    type: String,
-   
-    required: false
-  },
-  publicly_accessible: {
-    type: Boolean,
-    required: false
-  },
-  operating_hours: {
+  tableNotes: {
     type: String,
     required: false
   },
-  contact_phone: {
+  publicAccessibility: {
+    type: String,
+    enum: ['Patrons/Patients Only', 'Accessible to the Public'],
+    required: false
+  },
+  hours: {
     type: String,
     required: false
   },
-  contact_email: {
+  contactPhone: {
     type: String,
     required: false
   },
-  additional_information: {
+  contactEmail: {
+    type: String,
+    required: false
+  },
+  additionalInfo: {
     type: String,
     required: false
   },
@@ -79,7 +79,7 @@ const TableSchema = new Schema({
     enum: ['submitted', 'approved', 'deleted', 'reported'],
     default: 'submitted',
     required: true
-  } 
+  }
 });
 
 module.exports = Table = mongoose.model("tables", TableSchema);
