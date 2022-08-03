@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const PointSchema = require("./Point");
 const Schema = mongoose.Schema;
 
 const PictureSchema = new Schema({
