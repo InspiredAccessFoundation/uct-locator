@@ -3,3 +3,4 @@ build/
 .env
 coverage
 test-results
+**/.DS_Store
