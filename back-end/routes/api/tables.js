@@ -24,23 +24,87 @@ router.post("/submit", async (req, res) => {
     return res.status(400).json(errors);
   }
 
+  let coordLat = req.body.latitude;
+  let coordLng = req.body.longitude;
+
+  const newPoint = {
+    type: "Point",
+    coordinates: [coordLng, coordLat]
+  };
+
+  // Get user
+  let loggedInUser;
+
+  try {
+    loggedInUser = jwt.verify(req.headers.authorization, keys.secretOrKey);
+  } catch (error) {
+    return res.status(401).json(error);
+  }
+
   // Create a new table
   const newTable = new Table({
-    location: req.body.location,
-    name: req.body.name,
-    description: req.body.description,
-    status: 'submitted',
-    tableType: req.body.tableType,
+    locationName: req.body.locationName,
+    coordinateLocation: newPoint,
+    userId: loggedInUser.id,
+    streetAddress: req.body.streetAddress,
+    city: req.body.city,
+    state: req.body.state,
+    zipcode: req.body.zipcode,
+    locationWithinBuilding: req.body.locationWithinBuilding,
     restroomType: req.body.restroomType,
+    tableStyle: req.body.tableStyle,
+    tableNotes: req.body.tableNotes,
+    publiclyAccessible: req.body.publiclyAccessible,
     hours: req.body.hours,
     contactPhone: req.body.contactPhone,
     contactEmail: req.body.contactEmail,
-    publiclyAccessible: req.body.publiclyAccessible
+    additionalInfo: req.body.additionalInfo,
+    status: 'submitted'
   });
 
   newTable.save()
-    .then(table => res.json(table))
-    .catch(err => console.log(err));
+    .then(table => res.json({
+      "success": true,
+      "data": table
+    }))
+    .catch(err => res.status(500).json({error: err}));
+});
+
+// @route GET api/tables/all
+// @desc Get all tables (just coordinates and ids)
+// @access Public
+router.get("/all", async (req, res) => {
+  let allTables = await Table.find({}, '_id coordinateLocation');
+  res.json(allTables);
+});
+
+// @route GET api/tables/within-bounds
+// @desc Get tables (just coordinates and ids) within a bounding box
+// @access Public
+router.get("/within-bounds", async (req, res) => {
+  let where = {
+    coordinateLocation: {
+      $geoWithin: {
+        $box: [
+          [req.query.west, req.query.south],
+          [req.query.east, req.query.north]
+        ]
+      }
+    }  
+  };
+
+  let select = '_id coordinateLocation';
+  let boundedTables = await Table.find(where, select);
+  res.json(boundedTables);
+});
+
+// @route GET api/tables/:id
+// @desc Get data for a table by id
+// @access Public
+router.get("/:id", async (req, res) => {
+  let tableId = req.params.id;
+  let currentTable = await Table.findOne({ _id: tableId });
+  res.json(currentTable);
 });
 
 // Export routes

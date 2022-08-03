@@ -1,7 +1,7 @@
 import validate from "./submitTable";
 
 describe("validateSubmitTableInput", () => {
-  it("should validate data with all expected fields", () => {
+  xit("should validate data with all expected fields", () => {
     const input = {
       location: "test",
       name: "test",
@@ -16,7 +16,7 @@ describe("validateSubmitTableInput", () => {
     expect(result.isValid).toBeTruthy();
   });
 
-  it.each([
+  xit.each([
     ["location", "Location field is required"], 
     ["name", "Name field is required"],
     ["tableType", "Table Type field is required"],
