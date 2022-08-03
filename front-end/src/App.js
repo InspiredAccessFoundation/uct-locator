@@ -8,11 +8,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Navbar from "./components/layout/Navbar";
-import Landing from "./components/layout/Landing";
+import Home from "./components/layout/Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
-import Dashboard from "./components/dashboard/Dashboard";
+import SubmitTable from "./components/Tables/SubmitTable";
+import LocationViewMap from "./components/Map/LocationViewMap";
+import ViewTable from "./components/Tables/ViewTable";
 
 import Container from '@mui/material/Container';
 
@@ -44,11 +46,13 @@ class App extends Component {
         <Router>
           <Navbar />
           <Container>
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/find" component={LocationViewMap} />
+            <Route path="/view-table/:tableId" component={ViewTable} />
             <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/submit-table" component={SubmitTable} />
             </Switch>
           </Container>
         </Router>

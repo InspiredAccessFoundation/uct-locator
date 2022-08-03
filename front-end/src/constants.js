@@ -1,0 +1,2 @@
+export const GEOJSON_LATITUDE_INDEX = 1;
+export const GEOJSON_LONGITUDE_INDEX = 0;
