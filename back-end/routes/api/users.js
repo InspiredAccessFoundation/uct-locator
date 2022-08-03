@@ -120,8 +120,8 @@ router.post("/login", (req, res) => {
 // @access Private
 router.get("/test-auth", (req, res) => {
   try {
-    jwt.verify(req.headers.authorization, keys.secretOrKey);
-    res.json({token:'verified'});
+    const decoded = jwt.verify(req.headers.authorization, keys.secretOrKey);
+    res.json({token:'verified', id: decoded.id, name: decoded.name});
   } catch {
     res.json({token:'unverified'});
   }
