@@ -1,6 +1,6 @@
 import React from "react";
 
-const TableMap = (props) => {
+const TableMap = (props, forwardedRef) => {
   const ref = React.useRef(null);
   const [map, setMap] = React.useState();
 
@@ -65,6 +65,15 @@ const TableMap = (props) => {
     }
   }, [map, onClick, onIdle, onBoundsChanged, onCenterChanged, onZoomChanged]);
 
+  React.useImperativeHandle(forwardedRef, () => ({
+    setZoomAndCenter: (zoom, center) => {
+      if (map) {
+        map.setZoom(zoom);
+        map.setCenter(center);
+      }
+    }
+  }));
+
   return (
     <>
       <div ref={ref} style={style} />
@@ -76,6 +85,6 @@ const TableMap = (props) => {
       })}
     </>
   );
-}
+};
 
-export default TableMap;
+export default React.forwardRef(TableMap);
