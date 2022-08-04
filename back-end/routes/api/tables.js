@@ -15,6 +15,7 @@ const Table = require("../../models/Table");
 // @access Private
 router.post("/submit", async (req, res) => {
   // Form validation
+  console.log(req.body)
   const validationResult = validateSubmitTableInput(req.body);
   const isValid = validationResult.isValid;
   const errors = validationResult.errors;
