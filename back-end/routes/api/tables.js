@@ -52,16 +52,26 @@ router.post("/submit", async (req, res) => {
     state: req.body.state,
     zipcode: req.body.zipcode,
     locationWithinBuilding: req.body.locationWithinBuilding,
-    restroomType: req.body.restroomType,
-    tableStyle: req.body.tableStyle,
     tableNotes: req.body.tableNotes,
-    publiclyAccessible: req.body.publiclyAccessible,
     hours: req.body.hours,
     contactPhone: req.body.contactPhone,
     contactEmail: req.body.contactEmail,
     additionalInfo: req.body.additionalInfo,
     status: 'submitted'
   });
+
+  if (req.body.restroomType) {
+    newTable.restroomType = req.body.restroomType;
+  }
+
+  if (req.body.tableStyle){
+    newTable.tableStyle = req.body.tableStyle
+  }
+
+  if (req.body.publiclyAccessible){
+    newTable.publiclyAccessible = req.body.publiclyAccessible
+  }
+
 
   newTable.save()
     .then(table => res.json({

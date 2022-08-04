@@ -152,6 +152,7 @@ import axios from "axios";
           labelId="restroomType"
           id="restroomType"
           label="Restroom Type"
+          
           onChange={(e) => setRestroomType(e.target.value)}
                 value={restroomType}
           
@@ -161,6 +162,7 @@ import axios from "axios";
           <MenuItem value={"women"}>Women</MenuItem>
           <MenuItem value={"family"}>Family</MenuItem>
           <MenuItem value={"other"}>Other</MenuItem>
+          
         </Select>
       </FormControl>
     </Box>
@@ -173,6 +175,7 @@ import axios from "axios";
           labelId="tableStyle"
           id="tableStyle"
           label="Table Style"
+          
           onChange={(e) => setTableStyle(e.target.value)}
                 value={tableStyle}
        
@@ -192,8 +195,10 @@ import axios from "axios";
           labelId="publiclyAccessible"
           id="publiclyAccessible"
           label="Public Accessibility"
+          
           onChange={(e) => setPubliclyAccessible(e.target.value)}
               value={publiclyAccessible}
+
         >
           <MenuItem value={"Accessible to the Public"}>Accessible to the Public</MenuItem>
           <MenuItem value={"Patrons/Patients Only"}>Patrons/Patients Only</MenuItem>
