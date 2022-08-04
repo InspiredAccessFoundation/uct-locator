@@ -16,6 +16,7 @@ class Register extends Component {
     this.state = {
       name: "",
       email: "",
+      username: "",
       password: "",
       password2: "",
       errors: {}
@@ -47,6 +48,7 @@ class Register extends Component {
     const newUser = {
       name: this.state.name,
       email: this.state.email,
+      username: this.state.username,
       password: this.state.password,
       password2: this.state.password2
     };
@@ -68,6 +70,7 @@ class Register extends Component {
               </h2>
             <form noValidate onSubmit={this.onSubmit}>
             <Stack spacing = {1}>
+
               <TextField id='name' variant='outlined' label='Name'
                   onChange={this.onChange}
                   value={this.state.name}
@@ -76,7 +79,6 @@ class Register extends Component {
                     invalid: errors.name
                   })}
                 />
-
                 <span className="red-text">{errors.name}</span>
 
               <TextField id='email' variant='outlined' label='Email'
@@ -89,7 +91,16 @@ class Register extends Component {
                 />
                 <span className="red-text">{errors.email}</span>
 
-               <TextField id='password' variant='outlined' label='Password' type='password'
+              <TextField id='username' variant='outlined' label='Username'
+                  onChange={this.onChange}
+                  value={this.state.username}
+                  className = {classnames("", {
+                    invalid: errors.username
+                  })}
+                />
+                <span className="red-text">{errors.username}</span>
+                
+              <TextField id='password' variant='outlined' label='Password' type='password'
                   onChange={this.onChange}
                   value={this.state.password}
                   error={errors.password}
