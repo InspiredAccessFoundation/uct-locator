@@ -51,10 +51,7 @@ router.post("/submit", async (req, res) => {
     state: req.body.state,
     zipcode: req.body.zipcode,
     locationWithinBuilding: req.body.locationWithinBuilding,
-    restroomType: req.body.restroomType,
-    tableStyle: req.body.tableStyle,
     tableNotes: req.body.tableNotes,
-    publiclyAccessible: req.body.publiclyAccessible,
     hours: req.body.hours,
     contactPhone: req.body.contactPhone,
     contactEmail: req.body.contactEmail,
@@ -62,12 +59,27 @@ router.post("/submit", async (req, res) => {
     status: 'submitted'
   });
 
-  newTable.save()
-    .then(table => res.json({
+  if (req.body.restroomType) {
+    newTable.restroomType = req.body.restroomType;
+  }
+
+  if (req.body.tableStyle) {
+    newTable.tableStyle = req.body.tableStyle
+  }
+
+  if (req.body.publiclyAccessible) {
+    newTable.publiclyAccessible = req.body.publiclyAccessible
+  }
+
+  try {
+    const table = await newTable.save();
+    res.json({
       "success": true,
-      "data": table
-    }))
-    .catch(err => res.status(500).json({error: err}));
+      "tableId": table._id
+    });
+  } catch(err) {
+    res.status(400).json({error: err});
+  }
 });
 
 // @route GET api/tables/all
@@ -90,7 +102,7 @@ router.get("/within-bounds", async (req, res) => {
           [req.query.east, req.query.north]
         ]
       }
-    }  
+    } 
   };
 
   let select = '_id coordinateLocation';
