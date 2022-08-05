@@ -27,7 +27,10 @@ const Marker = (props) => {
   const map = props.map;
 
   React.useEffect(() => {
-    if (marker && map && position instanceof window.google.maps.LatLng) {
+    let positionSetLiteral = !!position.lat && !!position.lng;
+    let positionSetLatLng = position instanceof window.google.maps.LatLng;
+    
+    if (marker && map && (positionSetLiteral || positionSetLatLng)) {
       marker.setOptions({
         position: position,
         map: map

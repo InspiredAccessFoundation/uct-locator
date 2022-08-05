@@ -13,7 +13,9 @@ const SubmitTable = () => {
   return (
     <div>
       <p>This is where you can submit a table...</p>
-      <LocationSelectMap onClick={setCoordinates} />
+      <p>Latitude: {latitude}</p>
+      <p>Longitude: {longitude}</p>
+      <LocationSelectMap onCenterChanged={setCoordinates} />
     </div>
   )
 }
