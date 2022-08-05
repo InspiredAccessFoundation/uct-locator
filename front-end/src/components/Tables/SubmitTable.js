@@ -29,8 +29,8 @@ const SubmitTable = () => {
   }
 
   const [locationName, setLocationName] = useState("")
-  const [latitude, setLatitude] = React.useState("")
-  const [longitude, setLongitude] = React.useState("")
+  const [latitude, setLatitude] = useState("")
+  const [longitude, setLongitude] = useState("")
   const [streetAddress, setStreetAddress] = useState("")
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
