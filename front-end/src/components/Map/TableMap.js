@@ -1,25 +1,30 @@
 import React from "react";
+import { MAP_ZOOM_START, MAP_CENTER_LAT_START, MAP_CENTER_LNG_START, DEFAULT_MAP_STYLES } from "../../constants";
 import { Button } from "@mui/material";
 
 const TableMap = (props) => {
   const ref = React.useRef(null);
   const [map, setMap] = React.useState();
 
-  const zoom = props.zoom;
-  const center = props.center;
+  let zoom = props.zoom || MAP_ZOOM_START;
+  let center = props.center;
+  if (!center) {
+    center =  {
+      lat: MAP_CENTER_LAT_START,
+      lng: MAP_CENTER_LNG_START
+    };
+  }
+
+  let mapStyles = props.mapStyles;
+  if (!mapStyles) {
+    mapStyles = DEFAULT_MAP_STYLES;
+  }
   
   React.useEffect(() => {
     if (ref.current && !map) {
       let map = new window.google.maps.Map(ref.current, {});
       map.setOptions({
-        styles: [
-          {
-            "featureType": "poi",
-            "stylers": [
-              { "visibility": "off" }
-            ]
-          }
-        ]
+        styles: mapStyles
       });
 
       map.setZoom(zoom);
@@ -28,10 +33,9 @@ const TableMap = (props) => {
       setMap(map);
 
     }
-  }, [ref, map, zoom, center]);
+  }, [ref, map, mapStyles, zoom, center]);
 
   const onClick = props.onClick;
-  const onIdle = props.onIdle;
   const style = props.style;
   const children = props.children;
   const onBoundsChanged = props.onBoundsChanged;
@@ -48,10 +52,6 @@ const TableMap = (props) => {
         map.addListener("click", onClick);
       }
 
-      if (onIdle) {
-        map.addListener("idle", () => onIdle(map));
-      }
-
       if (onBoundsChanged) {
         map.addListener("bounds_changed", () => onBoundsChanged(map.getBounds()));
       }
@@ -64,7 +64,7 @@ const TableMap = (props) => {
         map.addListener("zoom_changed", () => onZoomChanged(map.getZoom()));
       }
     }
-  }, [map, onClick, onIdle, onBoundsChanged, onCenterChanged, onZoomChanged]);
+  }, [map, onClick, onBoundsChanged, onCenterChanged, onZoomChanged]);
 
   const centerCurrentLocation = e => {
     e.preventDefault();

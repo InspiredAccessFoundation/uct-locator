@@ -18,19 +18,22 @@ const Marker = (props) => {
   }, [marker]);
 
   React.useEffect(() => {
-    if (marker) {
+    if (marker && onClick) {
       marker.addListener("click", onClick);
     }
   }, [marker, onClick]);
 
+  const position = props.position;
+  const map = props.map;
+
   React.useEffect(() => {
-    if (marker) {
+    if (marker && map && position instanceof window.google.maps.LatLng) {
       marker.setOptions({
-        position: props.position,
-        map: props.map
+        position: position,
+        map: map
       });
     }
-  }, [marker, props]);
+  }, [marker, position, map]);
 
   return null;
 };
