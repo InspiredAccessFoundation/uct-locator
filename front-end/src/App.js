@@ -54,6 +54,7 @@ class App extends Component {
             <Switch>
               <PrivateRoute exact path="/submit-table" component={SubmitTable} />
             </Switch>
+            <div style={{ height: "50px" }} />
           </Container>
         </Router>
       </Provider>
