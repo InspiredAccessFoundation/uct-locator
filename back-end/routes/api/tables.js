@@ -118,6 +118,6 @@ router.get("/:id", async (req, res) => {
   let currentTable = await Table.findOne({ _id: tableId });
   res.json(currentTable);
 });
- 
+
 // Export routes
 module.exports = router;
