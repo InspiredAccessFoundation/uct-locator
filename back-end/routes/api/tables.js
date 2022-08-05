@@ -15,7 +15,6 @@ const Table = require("../../models/Table");
 // @access Private
 router.post("/submit", async (req, res) => {
   // Form validation
-  console.log(req.body)
   const validationResult = validateSubmitTableInput(req.body);
   const isValid = validationResult.isValid;
   const errors = validationResult.errors;
@@ -64,21 +63,24 @@ router.post("/submit", async (req, res) => {
     newTable.restroomType = req.body.restroomType;
   }
 
-  if (req.body.tableStyle){
+  if (req.body.tableStyle) {
     newTable.tableStyle = req.body.tableStyle
   }
 
-  if (req.body.publiclyAccessible){
+  if (req.body.publiclyAccessible) {
     newTable.publiclyAccessible = req.body.publiclyAccessible
   }
 
-  newTable.save()
-    .then(table => res.json({
+  try {
+    const table = await newTable.save();
+    res.json({
       "success": true,
-      "data": table
-    }))
-    .catch(err => res.status(500).json({error: err}));
-  });
+      "tableId": table._id
+    });
+  } catch(err) {
+    res.status(400).json({error: err});
+  }
+});
  
 // @route GET api/tables/all
 // @desc Get all tables (just coordinates and ids)
