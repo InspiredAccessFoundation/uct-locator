@@ -10,7 +10,9 @@ const render = () => {
 };
 
 const LocationSelectMap = (props) => {
-  const { onCenterChanged } = props;
+  const { onCenterChanged, tableMapStyle } = props;
+  tableMapStyle.width = "100%";
+  tableMapStyle.height = tableMapStyle.height || "500px";
 
   const mapOptions = {
     styles: [],
@@ -24,7 +26,7 @@ const LocationSelectMap = (props) => {
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
           <TableMap
             onCenterChanged={onCenterChanged}
-            style={{ width: "100%", height: "500px" }}
+            style={tableMapStyle}
             mapOptions={mapOptions}
             selectingLocation
           >

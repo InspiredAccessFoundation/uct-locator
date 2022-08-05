@@ -62,7 +62,11 @@ const TableMap = (props) => {
     e.preventDefault();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(p => {
-        map.setZoom(14);
+        // Zoom in if the map isn't already zoomed past the default
+        if (map.getZoom() < constants.CENTER_CURRENT_LOCATION_ZOOM_DEFAULT) {
+          map.setZoom(constants.CENTER_CURRENT_LOCATION_ZOOM_DEFAULT);
+        }
+
         map.setCenter({
           lat: p.coords.latitude,
           lng: p.coords.longitude

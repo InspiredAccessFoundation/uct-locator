@@ -7,21 +7,30 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Link } from '@mui/material';
 import React, { useState } from 'react';
 import axios from "axios";
 import LocationSelectMap from "../Map/LocationSelectMap";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from "@mui/material/styles";
 
 const SubmitTable = () => {
-  const [latitude, setLatitude] = React.useState();
-  const [longitude, setLongitude] = React.useState();
+  const theme = useTheme();
+  const smallWidth = useMediaQuery(theme.breakpoints.down('sm'));
+  let tableMapStyle = {};
 
-  const setCoordinates = (coords) => {
-    setLatitude(coords.lat());
-    setLongitude(coords.lng());
+  if (smallWidth) {
+    tableMapStyle.height = "350px";
   }
 
   const [locationName, setLocationName] = useState("")
+  const [latitude, setLatitude] = React.useState("")
+  const [longitude, setLongitude] = React.useState("")
   const [streetAddress, setStreetAddress] = useState("")
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
@@ -36,6 +45,11 @@ const SubmitTable = () => {
   const [publiclyAccessible, setPubliclyAccessible] = useState("")
 
   const [submittedTableId, setSubmittedTableId] = useState("");
+
+  const setCoordinates = (coords) => {
+    setLatitude(coords.lat());
+    setLongitude(coords.lng());
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -98,15 +112,17 @@ const SubmitTable = () => {
                 onChange={(e) => setLocationName(e.target.value)}
                 value={locationName} required
               />
-              <TextField id="latitude" label="Latitude" variant="outlined"
-                onChange={(e) => setLatitude(e.target.value)}
-                value={latitude} required
-              />
-              <TextField id="longitude" label="Longitude" variant="outlined"
-                onChange={(e) => setLongitude(e.target.value)}
-                value={longitude} required
-              />
-              <LocationSelectMap onCenterChanged={setCoordinates} />
+              <Accordion id="submit-select-location">
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} >
+                  <Typography>Select Location</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <LocationSelectMap
+                    onCenterChanged={setCoordinates}
+                    tableMapStyle={tableMapStyle}
+                  />
+                </AccordionDetails>
+              </Accordion>
               <TextField id="streetAddress" label="Street Address" variant="outlined"
                 onChange={(e) => setStreetAddress(e.target.value)}
                 value={streetAddress}

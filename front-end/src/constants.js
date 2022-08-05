@@ -13,5 +13,6 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  CENTER_CURRENT_LOCATION_ZOOM_DEFAULT: 14
 };
