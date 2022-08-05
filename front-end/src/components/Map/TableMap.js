@@ -1,6 +1,7 @@
 import React from "react";
+import { Button } from "@mui/material";
 
-const TableMap = (props, forwardedRef) => {
+const TableMap = (props) => {
   const ref = React.useRef(null);
   const [map, setMap] = React.useState();
 
@@ -65,17 +66,24 @@ const TableMap = (props, forwardedRef) => {
     }
   }, [map, onClick, onIdle, onBoundsChanged, onCenterChanged, onZoomChanged]);
 
-  React.useImperativeHandle(forwardedRef, () => ({
-    setZoomAndCenter: (zoom, center) => {
-      if (map) {
-        map.setZoom(zoom);
-        map.setCenter(center);
-      }
+  const centerCurrentLocation = e => {
+    e.preventDefault();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(p => {
+        map.setZoom(14);
+        map.setCenter({
+          lat: p.coords.latitude,
+          lng: p.coords.longitude
+        });
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
     }
-  }));
+  }
 
   return (
     <>
+    <Button onClick={centerCurrentLocation}>Use My Location</Button>
       <div ref={ref} style={style} />
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
@@ -87,4 +95,4 @@ const TableMap = (props, forwardedRef) => {
   );
 };
 
-export default React.forwardRef(TableMap);
+export default TableMap;

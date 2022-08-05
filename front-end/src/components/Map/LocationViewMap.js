@@ -25,8 +25,6 @@ const getTablePosition = tbl => {
 };
 
 const LocationViewMap = () => {
-  const childMapRef = React.useRef(null);
-
   const [zoom, setZoom] = React.useState(Number(localStorage.getItem('zoom')) || 3);
   const [center, setCenter] = React.useState({
     lat: Number(localStorage.getItem('center-lat')) || 40,
@@ -68,28 +66,6 @@ const LocationViewMap = () => {
     }
   }
 
-  const centerCurrentLocation = e => {
-    e.preventDefault();
-    if (!childMapRef.current) {
-      console.log("No child map ref");
-      return;
-    }
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(p => {
-        let zoom = 14;
-        let center = {
-          lat: p.coords.latitude,
-          lng: p.coords.longitude
-        };
-
-        childMapRef.current.setZoomAndCenter(zoom, center);
-      });
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  }
-
   const onBoundsChanged = (bounds) => {
     setBounds(bounds);
   }
@@ -108,13 +84,11 @@ const LocationViewMap = () => {
   return (
     <>
       <p>
-        <Button onClick={centerCurrentLocation}>Use My Location</Button>
         <Button onClick={search}>Search</Button>
       </p>
       <div style={{ height: "100%" }}>
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
           <TableMap
-            ref={childMapRef}
             center={center}
             onBoundsChanged={onBoundsChanged}
             onCenterChanged={onCenterChanged}
