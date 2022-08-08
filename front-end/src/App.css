@@ -2,7 +2,6 @@ body {
   font-family: 'Roboto', Arial;
 }
 
-.nav-link {
-  color: white;
+a {
   text-decoration: none;
 }
