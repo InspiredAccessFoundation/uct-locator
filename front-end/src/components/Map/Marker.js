@@ -12,10 +12,12 @@ const Marker = (props) => {
     // remove marker from map on unmount
     return () => {
       if (marker) {
-        marker.setMap(null);
+        if (props.markerClusterer) {
+          props.markerClusterer.removeMarker(marker);
+        }
       }
     };
-  }, [marker]);
+  }, [marker, props.markerClusterer]);
 
   React.useEffect(() => {
     if (marker) {
@@ -24,11 +26,14 @@ const Marker = (props) => {
   }, [marker, onClick]);
 
   React.useEffect(() => {
-    if (marker) {
+    if (marker && props.position.lat && props.position.lng) {
       marker.setOptions({
-        position: props.position,
-        map: props.map
+        position: props.position
       });
+
+      if (props.markerClusterer) {
+        props.markerClusterer.addMarker(marker);
+      }
     }
   }, [marker, props]);
 

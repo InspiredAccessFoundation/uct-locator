@@ -44,27 +44,6 @@ const LocationViewMap = () => {
     localStorage.setItem('center-lng', center.lng);
   }, [center]);
 
-  const search = async (e) => {
-    e.preventDefault();
-    try {
-      let neCorner = bounds.getNorthEast();
-      let swCorner = bounds.getSouthWest();
-
-      let reqConfig = {
-        params: {
-          north: neCorner.lat(),
-          east: neCorner.lng(),
-          south: swCorner.lat(),
-          west: swCorner.lng(),
-        }
-      }
-      let response = await axios.get("api/tables/within-bounds", reqConfig);
-      setTableLocations(response.data);
-    } catch (e) {
-      console.log(e);
-      return [];
-    }
-  }
 
   const centerCurrentLocation = e => {
     e.preventDefault();
@@ -95,12 +74,25 @@ const LocationViewMap = () => {
   const onZoomChanged = (zoom) => {
     setZoom(zoom);
   }
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response = await axios.get("api/tables/all");
+        setTableLocations(response.data);
+      } catch (e) {
+        alert("Something wrong with getting tables");
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
       <p>
         <Button onClick={centerCurrentLocation}>Use My Location</Button>
-        <Button onClick={search}>Search</Button>
       </p>
       <div style={{ height: "100%" }}>
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
