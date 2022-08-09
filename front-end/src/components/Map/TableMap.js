@@ -1,11 +1,12 @@
 import React from "react";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import constants from "../../constants";
 import { Button } from "@mui/material";
 
 const TableMap = (props) => {
   const ref = React.useRef(null);
   const [map, setMap] = React.useState();
-
+  const [markerClusterer, setMarkerClusterer] = React.useState();
   const { style, children, onBoundsChanged, onCenterChanged, onZoomChanged, selectingLocation } = props;
 
   let zoom = props.zoom || constants.MAP_ZOOM_START;
@@ -30,6 +31,7 @@ const TableMap = (props) => {
       map.setCenter(center);
 
       setMap(map);
+      setMarkerClusterer(new MarkerClusterer({ map }));
     }
   }, [ref, map, mapOptions, zoom, center]);
 
@@ -53,10 +55,13 @@ const TableMap = (props) => {
       }
 
       if (onZoomChanged) {
-        map.addListener("zoom_changed", () => onZoomChanged(map.getZoom()));
+        map.addListener("zoom_changed", () => {
+          onZoomChanged(map.getZoom());
+          markerClusterer.render();
+        });
       }
     }
-  }, [map, onBoundsChanged, onCenterChanged, onZoomChanged, selectingLocation]);
+  }, [map, onBoundsChanged, onCenterChanged, onZoomChanged, selectingLocation, markerClusterer]);
 
   const centerCurrentLocation = e => {
     e.preventDefault();
@@ -94,7 +99,7 @@ const TableMap = (props) => {
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child)) {
             // set the map prop on the child component
-            return React.cloneElement(child, { map });
+            return React.cloneElement(child, { markerClusterer });
           }
         })}
       </div>

@@ -5,6 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@googlemaps/js-api-loader": "^1.14.3",
+    "@googlemaps/markerclusterer": "^2.0.3",
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@mui/icons-material": "^5.8.2",
     "@mui/material": "^5.8.2",
     "axios": "^0.27.2",
@@ -19,9 +22,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1",
-    "@googlemaps/js-api-loader": "^1.14.3",
-    "@googlemaps/react-wrapper": "^1.1.35"
+    "redux-thunk": "^2.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

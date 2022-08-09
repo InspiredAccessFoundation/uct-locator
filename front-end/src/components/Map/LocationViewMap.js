@@ -80,10 +80,39 @@ const LocationViewMap = () => {
   const onZoomChanged = (zoom) => {
     setZoom(zoom);
   }
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response = await axios.get("api/tables/all");
+        setTableLocations(response.data);
+      } catch (e) {
+        alert("Something wrong with getting tables");
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response = await axios.get("api/tables/all");
+        setTableLocations(response.data);
+      } catch (e) {
+        alert("Something wrong with getting tables");
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
       <p>
+        <Button onClick={centerCurrentLocation}>Use My Location</Button>
         <Button onClick={search}>Search</Button>
       </p>
       <div style={{ height: "100%" }}>
