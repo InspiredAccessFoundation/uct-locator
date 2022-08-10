@@ -31,14 +31,14 @@ const Marker = (props) => {
     
     if (marker && (positionSetLiteral || positionSetLatLng)) {
       marker.setOptions({
-        position: props.position
+        position: position
       });
 
       if (props.markerClusterer) {
         props.markerClusterer.addMarker(marker);
       }
     }
-  }, [marker, props.position, props.markerClusterer]);
+  }, [marker, position, props.markerClusterer]);
 
   return null;
 };

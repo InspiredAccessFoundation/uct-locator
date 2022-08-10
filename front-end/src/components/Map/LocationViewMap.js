@@ -4,7 +4,6 @@ import TableMap from "./TableMap";
 import TableData from "../Tables/TableData";
 import Marker from "./Marker";
 import TablePopup from "./TablePopup";
-import Button from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
 import * as constants from "../../constants";
 import axios from "../../axiosRequests";
@@ -42,28 +41,6 @@ const LocationViewMap = () => {
     localStorage.setItem('center-lat', center.lat);
     localStorage.setItem('center-lng', center.lng);
   }, [center]);
-
-  const search = async (e) => {
-    e.preventDefault();
-    try {
-      let neCorner = bounds.getNorthEast();
-      let swCorner = bounds.getSouthWest();
-
-      let reqConfig = {
-        params: {
-          north: neCorner.lat(),
-          east: neCorner.lng(),
-          south: swCorner.lat(),
-          west: swCorner.lng(),
-        }
-      }
-      let response = await axios.get("api/tables/within-bounds", reqConfig);
-      setTableLocations(response.data);
-    } catch (e) {
-      console.log(e);
-      return [];
-    }
-  }
 
   const onCenterChanged = (center) => {
     setCenter({
@@ -106,10 +83,6 @@ const LocationViewMap = () => {
 
   return (
     <>
-      <p>
-        <Button onClick={centerCurrentLocation}>Use My Location</Button>
-        <Button onClick={search}>Search</Button>
-      </p>
       <div style={{ height: "100%" }}>
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
           <TableMap
