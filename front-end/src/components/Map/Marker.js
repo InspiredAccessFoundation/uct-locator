@@ -11,10 +11,8 @@ const Marker = (props) => {
 
     // remove marker from map on unmount
     return () => {
-      if (marker) {
-        if (props.markerClusterer) {
-          props.markerClusterer.removeMarker(marker);
-        }
+      if (marker && props.markerClusterer) {
+        props.markerClusterer.removeMarker(marker);
       }
     };
   }, [marker, props.markerClusterer]);
@@ -26,7 +24,7 @@ const Marker = (props) => {
   }, [marker, onClick]);
 
   React.useEffect(() => {
-    if (marker && props.position.lat && props.position.lng) {
+    if (marker) {
       marker.setOptions({
         position: props.position
       });
@@ -35,7 +33,7 @@ const Marker = (props) => {
         props.markerClusterer.addMarker(marker);
       }
     }
-  }, [marker, props]);
+  }, [marker, props.position, props.markerClusterer]);
 
   return null;
 };
