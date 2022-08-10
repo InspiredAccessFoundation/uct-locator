@@ -33,9 +33,9 @@ const TableMap = (props) => {
 
       setMap(map);
       setMarkerClusterer(new MarkerClusterer({ map }));
-      const input = document.getElementById("searchbar")
-      const autocomplete = new window.google.maps.places.Autocomplete(input)
-      setAutocomplete(autocomplete)
+      const input = document.getElementById("searchbar");
+      const autocomplete = new window.google.maps.places.Autocomplete(input);
+      setAutocomplete(autocomplete);
     }
   }, [ref, map, mapOptions, zoom, center]);
 
@@ -87,9 +87,8 @@ const TableMap = (props) => {
   }
 
   const searchClick = e => {
-    e.preventDefault()
-    const place = autocomplete.getPlace()
-    debugger
+    e.preventDefault();
+    const place = autocomplete.getPlace();
     map.setCenter({
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng()

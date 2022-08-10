@@ -23,7 +23,7 @@ const LocationSelectMap = (props) => {
   return (
     <>
       <div style={{ height: "100%" }}>
-        <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
+        <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render} libraries={["places"]}>
           <TableMap
             onCenterChanged={onCenterChanged}
             style={tableMapStyle}
