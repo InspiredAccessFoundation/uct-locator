@@ -66,21 +66,6 @@ const LocationViewMap = () => {
     }
   }
 
-  const centerCurrentLocation = e => {
-    e.preventDefault();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(p => {
-        setZoom(14);
-        setCenter({
-          lat: p.coords.latitude,
-          lng: p.coords.longitude
-        });
-      });
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  }
-
   const onBoundsChanged = (bounds) => {
     setBounds(bounds);
   }
@@ -99,7 +84,6 @@ const LocationViewMap = () => {
   return (
     <>
       <p>
-        <Button onClick={centerCurrentLocation}>Use My Location</Button>
         <Button onClick={search}>Search</Button>
       </p>
       <div style={{ height: "100%" }}>

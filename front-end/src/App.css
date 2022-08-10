@@ -5,3 +5,8 @@ body {
 a {
   text-decoration: none;
 }
+
+#submit-select-location.Mui-expanded {
+  margin-left: -30px;
+  margin-right: -30px;
+}
