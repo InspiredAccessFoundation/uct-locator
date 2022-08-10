@@ -19,6 +19,7 @@ import ViewTable from "./components/Tables/ViewTable";
 import Container from '@mui/material/Container';
 
 import "./App.css";
+import SubmitPicture from "./components/Pictures/SubmitPicture";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -51,6 +52,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/find" component={LocationViewMap} />
             <Route path="/view-table/:tableId" component={ViewTable} />
+            <Route path="/submit-picture/:tableId" component={SubmitPicture} />
             <Switch>
               <PrivateRoute exact path="/submit-table" component={SubmitTable} />
             </Switch>
