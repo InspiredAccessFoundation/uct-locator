@@ -11,10 +11,8 @@ const Marker = (props) => {
 
     // remove marker from map on unmount
     return () => {
-      if (marker) {
-        if (props.markerClusterer) {
-          props.markerClusterer.removeMarker(marker);
-        }
+      if (marker && props.markerClusterer) {
+        props.markerClusterer.removeMarker(marker);
       }
     };
   }, [marker, props.markerClusterer]);
