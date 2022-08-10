@@ -11,11 +11,11 @@ const Marker = (props) => {
 
     // remove marker from map on unmount
     return () => {
-      if (marker) {
-        marker.setMap(null);
+      if (marker && props.markerClusterer) {
+        props.markerClusterer.removeMarker(marker);
       }
     };
-  }, [marker]);
+  }, [marker, props.markerClusterer]);
 
   React.useEffect(() => {
     if (marker && onClick) {
@@ -24,19 +24,21 @@ const Marker = (props) => {
   }, [marker, onClick]);
 
   const position = props.position;
-  const map = props.map;
 
   React.useEffect(() => {
     let positionSetLiteral = !!position.lat && !!position.lng;
     let positionSetLatLng = position instanceof window.google.maps.LatLng;
     
-    if (marker && map && (positionSetLiteral || positionSetLatLng)) {
+    if (marker && (positionSetLiteral || positionSetLatLng)) {
       marker.setOptions({
-        position: position,
-        map: map
+        position: position
       });
+
+      if (props.markerClusterer) {
+        props.markerClusterer.addMarker(marker);
+      }
     }
-  }, [marker, position, map]);
+  }, [marker, position, props.markerClusterer]);
 
   return null;
 };

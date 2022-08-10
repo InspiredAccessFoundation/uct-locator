@@ -4,7 +4,6 @@ import TableMap from "./TableMap";
 import TableData from "../Tables/TableData";
 import Marker from "./Marker";
 import TablePopup from "./TablePopup";
-import Button from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
 import * as constants from "../../constants";
 import axios from "../../axiosRequests";
@@ -30,7 +29,6 @@ const LocationViewMap = () => {
     lat: Number(localStorage.getItem('center-lat')) || 40,
     lng: Number(localStorage.getItem('center-lng')) || -97,
   });
-  const [bounds, setBounds] = React.useState();
 
   const [currentTableId, setCurrentTableId] = React.useState('');
   const [tableLocations, setTableLocations] = React.useState([]);
@@ -44,32 +42,6 @@ const LocationViewMap = () => {
     localStorage.setItem('center-lng', center.lng);
   }, [center]);
 
-  const search = async (e) => {
-    e.preventDefault();
-    try {
-      let neCorner = bounds.getNorthEast();
-      let swCorner = bounds.getSouthWest();
-
-      let reqConfig = {
-        params: {
-          north: neCorner.lat(),
-          east: neCorner.lng(),
-          south: swCorner.lat(),
-          west: swCorner.lng(),
-        }
-      }
-      let response = await axios.get("api/tables/within-bounds", reqConfig);
-      setTableLocations(response.data);
-    } catch (e) {
-      console.log(e);
-      return [];
-    }
-  }
-
-  const onBoundsChanged = (bounds) => {
-    setBounds(bounds);
-  }
-
   const onCenterChanged = (center) => {
     setCenter({
       lat: center.lat(),
@@ -80,17 +52,27 @@ const LocationViewMap = () => {
   const onZoomChanged = (zoom) => {
     setZoom(zoom);
   }
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response = await axios.get("api/tables/all");
+        setTableLocations(response.data);
+      } catch (e) {
+        alert("Something wrong with getting tables");
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
-      <p>
-        <Button onClick={search}>Search</Button>
-      </p>
       <div style={{ height: "100%" }}>
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
           <TableMap
             center={center}
-            onBoundsChanged={onBoundsChanged}
             onCenterChanged={onCenterChanged}
             onZoomChanged={onZoomChanged}
             zoom={zoom}
