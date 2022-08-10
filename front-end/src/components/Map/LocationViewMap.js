@@ -30,7 +30,6 @@ const LocationViewMap = () => {
     lat: Number(localStorage.getItem('center-lat')) || 40,
     lng: Number(localStorage.getItem('center-lng')) || -97,
   });
-  const [bounds, setBounds] = React.useState();
 
   const [currentTableId, setCurrentTableId] = React.useState('');
   const [tableLocations, setTableLocations] = React.useState([]);
@@ -64,10 +63,6 @@ const LocationViewMap = () => {
       console.log(e);
       return [];
     }
-  }
-
-  const onBoundsChanged = (bounds) => {
-    setBounds(bounds);
   }
 
   const onCenterChanged = (center) => {
@@ -119,7 +114,6 @@ const LocationViewMap = () => {
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
           <TableMap
             center={center}
-            onBoundsChanged={onBoundsChanged}
             onCenterChanged={onCenterChanged}
             onZoomChanged={onZoomChanged}
             zoom={zoom}
