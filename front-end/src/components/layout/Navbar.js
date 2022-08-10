@@ -27,9 +27,9 @@ class Navbar extends Component {
             </Typography>
             {loggedIn ? (
               <div>
-                <Link className="nav-link">
+                <div className="nav-link">
                   <Button color="inherit" onClick={this.onLogoutClick}>Logout</Button>
-                </Link>
+                </div>
               </div>
             ) : (
               <div>

@@ -15,12 +15,8 @@ module.exports = function validateSubmitTableInput(data) {
     errors.locationName = "Location field is required";
   }
 
-  if (Validator.isEmpty(dataCop.latitude)) {
-    errors.latitude = "Latitude field is required";
-  }
-
-  if (Validator.isEmpty(dataCop.longitude)) {
-    errors.longitude = "Longitude field is required";
+  if (!dataCop.latitude || !dataCop.longitude) {
+    errors.coordinateLocation = "A location must be provided";
   }
 
   return {
