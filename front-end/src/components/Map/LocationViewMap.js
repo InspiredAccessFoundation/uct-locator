@@ -1,7 +1,6 @@
 import React from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import TableMap from "./TableMap";
-import TableData from "../Tables/TableData";
 import Marker from "./Marker";
 import TablePopup from "./TablePopup";
 import { CircularProgress } from "@mui/material";
@@ -82,9 +81,11 @@ const LocationViewMap = () => {
               <Marker key={i} position={getTablePosition(tbl)} onClick={() => setCurrentTableId(tbl._id)} />
             ))}
           </TableMap>
-          <TableData tableId={currentTableId}>
-            <TablePopup onClose={() => setCurrentTableId('')} open={!!currentTableId} />
-          </TableData>
+          <TablePopup
+            tableId={currentTableId}
+            onClose={() => setCurrentTableId('')}
+            open={!!currentTableId}
+          />
         </Wrapper>
       </div>
     </>
