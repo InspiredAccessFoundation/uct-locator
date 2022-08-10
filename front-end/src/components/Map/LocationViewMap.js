@@ -67,20 +67,6 @@ const LocationViewMap = () => {
     fetchData();
   }, []);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response = await axios.get("api/tables/all");
-        setTableLocations(response.data);
-      } catch (e) {
-        alert("Something wrong with getting tables");
-        console.log(e);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <>
       <div style={{ height: "100%" }}>
