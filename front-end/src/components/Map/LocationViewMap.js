@@ -70,7 +70,7 @@ const LocationViewMap = () => {
   return (
     <>
       <div style={{ height: "100%" }}>
-        <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
+        <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render} libraries={["places"]}>
           <TableMap
             center={center}
             onCenterChanged={onCenterChanged}
