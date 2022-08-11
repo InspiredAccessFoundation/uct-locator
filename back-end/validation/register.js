@@ -1,6 +1,11 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
+<<<<<<< Updated upstream
+=======
+const userRegex = new RegExp(/^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/);
+
+>>>>>>> Stashed changes
 module.exports = function validateRegisterInput(data) {
   let errors = {};
 
@@ -22,6 +27,17 @@ module.exports = function validateRegisterInput(data) {
     errors.email = "Email is invalid";
   }
 
+<<<<<<< Updated upstream
+=======
+  // Username checks
+  if (Validator.isEmpty(data.username)) {
+    errors.username = "Username field is required";
+  }
+  if (!userRegex.test(data.username)) {
+    errors.username = "Username cannot contain spaces or special characters other than . and _ (cannot occur at the beginning or end of username)";
+  }
+
+>>>>>>> Stashed changes
   // Password checks
   if (Validator.isEmpty(data.password)) {
     errors.password = "Password field is required";
