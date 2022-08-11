@@ -1,11 +1,8 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-<<<<<<< Updated upstream
-=======
-const userRegex = new RegExp(/^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/);
-
->>>>>>> Stashed changes
+const passRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/);
+ 
 module.exports = function validateRegisterInput(data) {
   let errors = {};
 
@@ -27,17 +24,6 @@ module.exports = function validateRegisterInput(data) {
     errors.email = "Email is invalid";
   }
 
-<<<<<<< Updated upstream
-=======
-  // Username checks
-  if (Validator.isEmpty(data.username)) {
-    errors.username = "Username field is required";
-  }
-  if (!userRegex.test(data.username)) {
-    errors.username = "Username cannot contain spaces or special characters other than . and _ (cannot occur at the beginning or end of username)";
-  }
-
->>>>>>> Stashed changes
   // Password checks
   if (Validator.isEmpty(data.password)) {
     errors.password = "Password field is required";
@@ -47,8 +33,8 @@ module.exports = function validateRegisterInput(data) {
     errors.password2 = "Confirm password field is required";
   }
 
-  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Password must be at least 6 characters";
+  if (!passRegex.test(data.password)) {
+    errors.password = "Password must be at least 6 characters, and contain at least one uppercase and one lowercase letter, one number, and one special character";
   }
 
   if (!Validator.equals(data.password, data.password2)) {
