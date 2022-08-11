@@ -64,6 +64,8 @@ const TablePopup = (props) => {
           </Box> : 
           <DialogContent>
             <p>{tableData.locationName}</p>
+            <p>{tableData.streetAddress}</p>
+            <p>{tableData.restroomType}</p>
             <p><Link to={`/view-table/${tableData._id}`}>More Info</Link></p>
           </DialogContent>
         }
