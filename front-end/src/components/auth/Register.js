@@ -94,12 +94,13 @@ class Register extends Component {
               <TextField id='username' variant='outlined' label='Username'
                   onChange={this.onChange}
                   value={this.state.username}
+                  error={errors.username}
                   className = {classnames("", {
                     invalid: errors.username
                   })}
                 />
                 <span className="red-text">{errors.username}</span>
-                
+
               <TextField id='password' variant='outlined' label='Password' type='password'
                   onChange={this.onChange}
                   value={this.state.password}
