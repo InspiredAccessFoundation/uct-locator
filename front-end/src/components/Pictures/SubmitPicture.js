@@ -72,9 +72,6 @@ const SubmitPicture = () => {
            </div>
          </Container>
          <Dialog
-           // open={!!submittedTableId}
-           // onClose={handleSuccessClose}
-           align="center"
          >
            <DialogTitle>Success!</DialogTitle>
            <DialogContent>
