@@ -16,7 +16,8 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Link } from '@mui/material';
- 
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
  
 const SubmitPicture = () => {
  
@@ -61,6 +62,16 @@ const SubmitPicture = () => {
                    onChange={(e) => setUrl(e.target.value)}
                    value={url}
                  />
+               <Stack direction="row" alignItems="center" spacing={2}>
+                 <Button variant="contained" component="label">
+                   Upload
+                   <input hidden accept="image/*" multiple type="file" />
+                 </Button>
+                 <IconButton color="primary" aria-label="upload picture" component="label">
+                   <input hidden accept="image/*" type="file" />
+                   <PhotoCamera />
+                 </IconButton>
+               </Stack>
                  <Button
                    variant="contained"
                    type="submit"
