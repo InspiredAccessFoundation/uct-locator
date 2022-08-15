@@ -24,16 +24,28 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 // import { useParams } from 'react-router-dom';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Link } from '@mui/material';
+import { GEOJSON_LATITUDE_INDEX, GEOJSON_LONGITUDE_INDEX } from "../../constants";
+import { useState } from 'react';
 
 
-
+// https://www.google.com/maps/search/?api=1&query=47.5951518%2C-122.3316393
 
 
 
 const TableInfo = (props) => {
-  const tableData = props.tableData;
   const loading = props.loading;
+  const tableData = props.tableData;
+
   const { tableId } = useParams();
+  const [coordinates, setCoordinate] = useState("")
+
+  React.useEffect(() => {
+    console.log(tableData)
+    if(tableData.coordinateLocation){
+      setCoordinate(tableData.coordinateLocation.coordinates)
+    }
+  }, [tableData]);
+  
 
 
 
@@ -46,6 +58,9 @@ const TableInfo = (props) => {
         <CircularProgress size="100px" /> : 
        // <><p>{JSON.stringify(tableData)}</p>
 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+          <Stack direction="row" spacing={3}>
+            <Button href={`https://www.google.com/maps/search/?api=1&query=${coordinates[1]}%2C${coordinates[0]}`}>Go to the coordinate location in google maps</Button>
+          </Stack>
       <ListItem>
         <ListItemAvatar>
           <Avatar>
