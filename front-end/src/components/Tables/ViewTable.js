@@ -20,14 +20,28 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CallIcon from '@mui/icons-material/Call';
 import FlagIcon from '@mui/icons-material/Flag';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+// import { useParams } from 'react-router-dom';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, Link } from '@mui/material';
+
+
+
+
+
+
 const TableInfo = (props) => {
   const tableData = props.tableData;
   const loading = props.loading;
+  const { tableId } = useParams();
 
 
 
   return (
     <>
+      <Stack direction="row" spacing={3}>
+        <Button href={`/submit-picture/${tableId}`}>Submit a picture for this table</Button>
+      </Stack>
       {loading ?
         <CircularProgress size="100px" /> : 
        // <><p>{JSON.stringify(tableData)}</p>
@@ -121,10 +135,10 @@ const TableInfo = (props) => {
         
        />
     </List>
-    
-        
       }
+      
     </>
+    
   );
 };
 
