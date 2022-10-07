@@ -1,6 +1,7 @@
 # U.C.T. Locator
+This is a web application that allows caregivers to locate accessible universal changing stations.
 
-A web application that allows caregivers to locate accessible universal changing stations
+New developers can [click here](Setup/DeveloperSetupGuide.md) to see how to get the app running locally.
 
 ## Getting Started
 
