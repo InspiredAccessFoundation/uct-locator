@@ -1,5 +1,7 @@
 # U.C.T. Locator
-A web application that allows caregivers to locate accessible universal changing stations
+This is a web application that allows caregivers to locate accessible universal changing stations.
+
+New developers can [click here](Setup/DeveloperSetupGuide.md) to see how to get the app running locally.
 
 ## Getting Started
 The front-end React app is in the [front-end](front-end/) folder, and the back-end Node/Express server is in the [back-end](back-end/) folder.
