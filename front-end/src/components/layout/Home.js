@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "./Link";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "@mui/system";
