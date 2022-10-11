@@ -1,0 +1,377 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Full-Stack Architecture · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="FrontEnd.html" />
+    
+    
+    <link rel="prev" href="BasicBackground.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../DeveloperSetupGuide.html">
+            
+                <a href="../DeveloperSetupGuide.html">
+            
+                    
+                    Developer Setup Guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../MongoAtlasSetup.html">
+            
+                <a href="../MongoAtlasSetup.html">
+            
+                    
+                    MongoDB Atlas Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../StartupLearning.html">
+            
+                <a href="../StartupLearning.html">
+            
+                    
+                    Startup Learning
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="BasicBackground.html">
+            
+                <a href="BasicBackground.html">
+            
+                    
+                    Basic Background
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.2" data-path="FullStackArchitecture.html">
+            
+                <a href="FullStackArchitecture.html">
+            
+                    
+                    Full-Stack Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="FrontEnd.html">
+            
+                <a href="FrontEnd.html">
+            
+                    
+                    Front-End
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="BackEnd.html">
+            
+                <a href="BackEnd.html">
+            
+                    
+                    Back-End
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="IntoTheCode.html">
+            
+                <a href="IntoTheCode.html">
+            
+                    
+                    Into the Code
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Full-Stack Architecture</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="full-stack-architecture">Full-Stack Architecture</h1>
+<p>One of the more difficult parts of this project will be understanding the big picture of how everything works together.</p>
+<p>Many of the concepts of a full-stack architecture are explained in the <a href="https://hylandtechclub.com/web-201/FullStackOverview/StudentDesc.html" target="_blank">Full-stack Overview</a> from Web 201. However, the architecture from that course is not exactly the same as the architecture for the UCT Locator.</p>
+<p>There are two basic parts of the product: the <strong>front-end</strong>, and the <strong>back-end</strong>. The two parts run separately, and each uses <strong>npm</strong>. You can think of them as two separate applications: the front-end is the <strong>client</strong>, and the back-end is the <strong>server</strong>. They are connected via <strong>HTTP</strong>, and generally follow the <strong>REST API</strong> paradigm.</p>
+<h2 id="structure">Structure</h2>
+<p>The overall product follows a client-server architecture. The back-end connects to the database, and the front-end connects to the back-end via <a href="https://hylandtechclub.com/web-201/HttpOverview/StudentDesc.html" target="_blank">HTTP</a>. The <a href="https://aws.amazon.com/what-is/restful-api/" target="_blank">REST API</a> looks something like this:</p>
+<p><img src="Assets/RestApi.png" alt=""></p>
+<p>Essentially:</p>
+<ol>
+<li>A user visits the front-end (surfaced as a website)</li>
+<li>The front-end figures out what the user wants to do, and makes a <em>request</em> through HTTP to the back-end</li>
+<li>The back-end server takes that request, talks to the database as needed, and sends back a <em>response</em></li>
+<li>The front-end then takes that response, and responds to the user appropriately</li>
+</ol>
+<h2 id="npm">NPM</h2>
+<p>Both the front-end and back-end use <a href="https://www.npmjs.com/" target="_blank">npm</a> to run. NPM stands for <strong>N</strong>ode <strong>P</strong>ackage <strong>M</strong>anager - it is a tool that allows developers to include libraries (or <em>packages</em>) of code that other people have written. It can also be used to manage and run projects. <a href="https://www.youtube.com/watch?v=ZNbFagCBlwo" target="_blank">This video</a> provides a quick introduction.</p>
+<p>For the UCT Locator, there are two important npm <em>scripts</em>:</p>
+<ul>
+<li><strong>back-end</strong>: <code>npm run server</code><ul>
+<li>Executing this command in the <strong>back-end</strong> directory will run the back-end application locally</li>
+</ul>
+</li>
+<li><strong>front-end</strong>: <code>npm run start</code><ul>
+<li>Executing this command in the <strong>front-end</strong> directory will run the front-end application locally</li>
+</ul>
+</li>
+</ul>
+<p>In Visual Studio Code, these scripts should be runnable in the <strong>NPM SCRIPTS</strong> section.</p>
+<h2 id="full-stack-starter-authentication-application">Full-Stack Starter: Authentication Application</h2>
+<p>This project started as a basic MERN Auth application, following <a href="https://blog.bitsrc.io/build-a-login-auth-app-with-mern-stack-part-1-c405048e3669" target="_blank">this tutorial</a>. More information about the authentication process, and overall starter application, may be found there.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="BasicBackground.html" class="navigation navigation-prev " aria-label="Previous page: Basic Background">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="FrontEnd.html" class="navigation navigation-next " aria-label="Next page: Front-End">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Full-Stack Architecture","level":"1.4.2","depth":2,"next":{"title":"Front-End","level":"1.4.3","depth":2,"path":"Setup/StartupLearning/FrontEnd.md","ref":"Setup/StartupLearning/FrontEnd.md","articles":[]},"previous":{"title":"Basic Background","level":"1.4.1","depth":2,"path":"Setup/StartupLearning/BasicBackground.md","ref":"Setup/StartupLearning/BasicBackground.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Setup/StartupLearning/FullStackArchitecture.md","mtime":"2022-10-11T17:55:11.646Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-10-11T17:55:44.542Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

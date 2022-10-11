@@ -1,0 +1,387 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>MongoDB Atlas Setup · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="StartupLearning.html" />
+    
+    
+    <link rel="prev" href="DeveloperSetupGuide.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="DeveloperSetupGuide.html">
+            
+                <a href="DeveloperSetupGuide.html">
+            
+                    
+                    Developer Setup Guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="MongoAtlasSetup.html">
+            
+                <a href="MongoAtlasSetup.html">
+            
+                    
+                    MongoDB Atlas Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="StartupLearning.html">
+            
+                <a href="StartupLearning.html">
+            
+                    
+                    Startup Learning
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="StartupLearning/BasicBackground.html">
+            
+                <a href="StartupLearning/BasicBackground.html">
+            
+                    
+                    Basic Background
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="StartupLearning/FullStackArchitecture.html">
+            
+                <a href="StartupLearning/FullStackArchitecture.html">
+            
+                    
+                    Full-Stack Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="StartupLearning/FrontEnd.html">
+            
+                <a href="StartupLearning/FrontEnd.html">
+            
+                    
+                    Front-End
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="StartupLearning/BackEnd.html">
+            
+                <a href="StartupLearning/BackEnd.html">
+            
+                    
+                    Back-End
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="StartupLearning/IntoTheCode.html">
+            
+                <a href="StartupLearning/IntoTheCode.html">
+            
+                    
+                    Into the Code
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >MongoDB Atlas Setup</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="mongodb---creating-a-cluster-using-atlas">MongoDB - Creating a Cluster using Atlas</h1>
+<p>Follow these instructions to set up a database for your project. You will want to go to the <a href="https://www.mongodb.com/docs/atlas/getting-started/" target="_blank">Get Started with Atlas</a> guide and follow those instructions.</p>
+<h2 id="create-an-atlas-account">Create an Atlas Account</h2>
+<p>Start by creating an account in MongoDB Atlas.</p>
+<ol>
+<li><a href="https://www.mongodb.com/cloud/atlas/register" target="_blank">Go here</a></li>
+<li>Fill out the First Name, Last Name, Email, and Password fields, or Sign Up with Google</li>
+<li>Agree to the terms and service and submit</li>
+</ol>
+<h2 id="deploy-a-free-cluster">Deploy a Free Cluster</h2>
+<p>Now that you have an account, it&apos;s time to make a cluster - this is where the database lives.</p>
+<ol>
+<li>From the <a href="https://cloud.mongodb.com/" target="_blank">homepage</a>, click &quot;Build a Database&quot;<br> <img src="Assets/AtlasBuildDb.png" alt=""></li>
+<li>Find the <strong>FREE</strong> Shared option and click &quot;Create&quot;<br> <img src="Assets/AtlasFreeSharedCreate.png" alt=""></li>
+<li>Keep all the default settings, scroll down, and click &quot;Create Cluster&quot;<br> <img src="Assets/AtlasCreateCluster.png" alt=""></li>
+</ol>
+<h2 id="set-up-the-cluster">Set Up the Cluster</h2>
+<p>Now that the cluster has been created, you will need to setup access rules.</p>
+<ol>
+<li>Under &quot;Security Quickstart&quot; with &quot;Username and Password&quot; selected, enter a username and password  <ul>
+<li>Feel free to use the &quot;Autogenerate Secure Password&quot; button - just make sure to copy/remember the password!</li>
+</ul>
+</li>
+<li>Click &quot;Create User&quot;<br> <img src="Assets/AtlasAuthUser.png" alt=""></li>
+<li>Scroll down to the &quot;Where would you like to connect from?&quot; section</li>
+<li>Click the &quot;Add My Current IP Address&quot; button<br> <img src="Assets/AtlasAddIp.png" alt=""></li>
+<li>Click the &quot;Finish and Close&quot; button<br> <img src="Assets/AtlasFinClose.png" alt=""></li>
+<li>In the popup, click the &quot;Go to Databases&quot; button<br> <img src="Assets/AtlasGoToDb.png" alt=""></li>
+</ol>
+<h2 id="get-a-connection-string">Get a Connection String</h2>
+<p>Now the database should be ready to go! You just need a special URL to connect your application to it.</p>
+<ol>
+<li>In the &quot;Cluster0&quot; deployment click the &quot;Connect&quot; button<br> <img src="Assets/AtlasConnect.png" alt=""></li>
+<li>In the popup that appears, click the &quot;Connect your application&quot; button<br> <img src="Assets/AtlasConnectApp.png" alt=""></li>
+<li>Make sure &quot;Node.js&quot; is selected as the driver</li>
+<li>Click the copy button next to the connection string<br> <img src="Assets/AtlasCopyString.png" alt=""></li>
+</ol>
+<p>In the string that is copied, the <code>&lt;password&gt;</code> will need to be replaced with your account&apos;s actual password. It should end up looking something like this:</p>
+<pre><code>mongodb+srv://username:password@cluster0.mfwj72d.mongodb.net/?retryWrites=true&amp;w=majority
+</code></pre><p>That URI string can be added to the <strong>.env</strong> file for the <code>MONGO_URI</code> variable!</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="DeveloperSetupGuide.html" class="navigation navigation-prev " aria-label="Previous page: Developer Setup Guide">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="StartupLearning.html" class="navigation navigation-next " aria-label="Next page: Startup Learning">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"MongoDB Atlas Setup","level":"1.3","depth":1,"next":{"title":"Startup Learning","level":"1.4","depth":1,"path":"Setup/StartupLearning.md","ref":"Setup/StartupLearning.md","articles":[{"title":"Basic Background","level":"1.4.1","depth":2,"path":"Setup/StartupLearning/BasicBackground.md","ref":"Setup/StartupLearning/BasicBackground.md","articles":[]},{"title":"Full-Stack Architecture","level":"1.4.2","depth":2,"path":"Setup/StartupLearning/FullStackArchitecture.md","ref":"Setup/StartupLearning/FullStackArchitecture.md","articles":[]},{"title":"Front-End","level":"1.4.3","depth":2,"path":"Setup/StartupLearning/FrontEnd.md","ref":"Setup/StartupLearning/FrontEnd.md","articles":[]},{"title":"Back-End","level":"1.4.4","depth":2,"path":"Setup/StartupLearning/BackEnd.md","ref":"Setup/StartupLearning/BackEnd.md","articles":[]},{"title":"Into the Code","level":"1.4.5","depth":2,"path":"Setup/StartupLearning/IntoTheCode.md","ref":"Setup/StartupLearning/IntoTheCode.md","articles":[]}]},"previous":{"title":"Developer Setup Guide","level":"1.2","depth":1,"path":"Setup/DeveloperSetupGuide.md","ref":"Setup/DeveloperSetupGuide.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Setup/MongoAtlasSetup.md","mtime":"2022-10-11T17:55:11.646Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-10-11T17:55:44.542Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
