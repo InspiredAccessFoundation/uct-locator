@@ -92,12 +92,11 @@ const LocationViewMap = () => {
               />
             ))}
           </TableMap>
-          <TableData tableId={currentTableId}>
-            <TablePopup
-              onClose={() => setCurrentTableId("")}
-              open={!!currentTableId}
-            />
-          </TableData>
+          <TablePopup
+            tableId={currentTableId}
+            onClose={() => setCurrentTableId('')}
+            open={!!currentTableId}
+          />
         </Wrapper>
       </div>
     </Container>
