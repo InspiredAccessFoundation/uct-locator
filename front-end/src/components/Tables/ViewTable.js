@@ -21,8 +21,8 @@ const ViewTable = () => {
         <CircularProgress size="100px" />
       ) : (
         <p>{JSON.stringify(tableData)}</p>
-      }
-    </>
+      )}
+    </Container>
   );
 };
 
