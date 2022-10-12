@@ -29,6 +29,7 @@ module.exports = function validateRegisterInput(data) {
   if (Validator.isEmpty(data.username)) {
     errors.username = "Username field is required";
   }
+  
   if (!userRegex.test(data.username)) {
     errors.username = "Username cannot contain spaces or special characters other than . and _ between alphanumerical characters";
   }
