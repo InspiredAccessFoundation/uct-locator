@@ -7,6 +7,7 @@ const TableMap = (props) => {
   const ref = React.useRef(null);
   const [map, setMap] = React.useState();
   const [markerClusterer, setMarkerClusterer] = React.useState();
+  const [autocomplete, setAutocomplete] = React.useState();
   const { style, children, onBoundsChanged, onCenterChanged, onZoomChanged, selectingLocation } = props;
 
   let zoom = props.zoom || constants.MAP_ZOOM_START;
@@ -32,6 +33,13 @@ const TableMap = (props) => {
 
       setMap(map);
       setMarkerClusterer(new MarkerClusterer({ map }));
+      const input = document.getElementById("searchbar");
+      const autocomplete = new window.google.maps.places.Autocomplete(input);
+      setAutocomplete(autocomplete);
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        map.fitBounds(place.geometry.viewport);
+      });
     }
   }, [ref, map, mapOptions, zoom, center]);
 
@@ -93,6 +101,7 @@ const TableMap = (props) => {
   return (
     <>
       <Button onClick={centerCurrentLocation}>Use My Location</Button>
+      <input id="searchbar"></input>
       <div style={{ position: "relative" }}>
         { selectingLocation && centerMarkerImg }
         <div ref={ref} style={style} />
