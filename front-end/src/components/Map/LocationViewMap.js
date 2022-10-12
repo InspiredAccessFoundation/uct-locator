@@ -5,7 +5,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import axios from "../../axiosRequests";
 import * as constants from "../../constants";
-import TableData from "../Tables/TableData";
 import Marker from "./Marker";
 import TableMap from "./TableMap";
 import TablePopup from "./TablePopup";
