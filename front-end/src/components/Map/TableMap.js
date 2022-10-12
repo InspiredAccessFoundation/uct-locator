@@ -36,6 +36,10 @@ const TableMap = (props) => {
       const input = document.getElementById("searchbar");
       const autocomplete = new window.google.maps.places.Autocomplete(input);
       setAutocomplete(autocomplete);
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        map.fitBounds(place.geometry.viewport);
+      });
     }
   }, [ref, map, mapOptions, zoom, center]);
 
@@ -86,15 +90,6 @@ const TableMap = (props) => {
     }
   }
 
-  const searchClick = e => {
-    e.preventDefault();
-    const place = autocomplete.getPlace();
-    map.setCenter({
-      lat: place.geometry.location.lat(),
-      lng: place.geometry.location.lng()
-    });
-  }
-
   const centerMarkerImg = (
     <img
       src="https://maps.gstatic.com/mapfiles/markers/marker.png"
@@ -107,7 +102,6 @@ const TableMap = (props) => {
     <>
       <Button onClick={centerCurrentLocation}>Use My Location</Button>
       <input id="searchbar"></input>
-      <Button onClick={searchClick}>Search</Button>
       <div style={{ position: "relative" }}>
         { selectingLocation && centerMarkerImg }
         <div ref={ref} style={style} />

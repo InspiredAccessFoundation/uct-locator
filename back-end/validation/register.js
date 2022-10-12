@@ -1,6 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
+const userRegex = new RegExp(/^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/);
 const passRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/);
  
 module.exports = function validateRegisterInput(data) {
@@ -9,6 +10,7 @@ module.exports = function validateRegisterInput(data) {
   // Convert empty fields to an empty string so we can use validator functions
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
+  data.username = !isEmpty(data.username) ? data.username : "";
   data.password = !isEmpty(data.password) ? data.password : "";
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
@@ -22,6 +24,15 @@ module.exports = function validateRegisterInput(data) {
     errors.email = "Email field is required";
   } else if (!Validator.isEmail(data.email)) {
     errors.email = "Email is invalid";
+  }
+
+  // Username checks
+  if (Validator.isEmpty(data.username)) {
+    errors.username = "Username field is required";
+  }
+
+  if (!userRegex.test(data.username)) {
+    errors.username = "Username cannot contain spaces or special characters other than . and _ between alphanumerical characters";
   }
 
   // Password checks
