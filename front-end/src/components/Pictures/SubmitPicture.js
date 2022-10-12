@@ -1,17 +1,7 @@
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
-import classnames from "classnames";
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import HomeIcon from '@mui/icons-material/Home';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import React, { useState } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
