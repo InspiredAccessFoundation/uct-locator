@@ -4,3 +4,4 @@ build/
 coverage
 test-results
 **/.DS_Store
+_book/

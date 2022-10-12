@@ -7,6 +7,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
+import Breadcrumbs from "./components/layout/Breadcrumbs";
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/layout/Home";
 import Register from "./components/auth/Register";
@@ -16,7 +17,7 @@ import SubmitTable from "./components/Tables/SubmitTable";
 import LocationViewMap from "./components/Map/LocationViewMap";
 import ViewTable from "./components/Tables/ViewTable";
 
-import Container from '@mui/material/Container';
+import Container from "@mui/material/Container";
 
 import "./App.css";
 import SubmitPicture from "./components/Pictures/SubmitPicture";
@@ -47,6 +48,7 @@ class App extends Component {
         <Router>
           <Navbar />
           <Container>
+            <Route component={Breadcrumbs} />
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
@@ -54,7 +56,11 @@ class App extends Component {
             <Route path="/view-table/:tableId" component={ViewTable} />
             <Route path="/submit-picture/:tableId" component={SubmitPicture} />
             <Switch>
-              <PrivateRoute exact path="/submit-table" component={SubmitTable} />
+              <PrivateRoute
+                exact
+                path="/submit-table"
+                component={SubmitTable}
+              />
             </Switch>
             <div style={{ height: "50px" }} />
           </Container>

@@ -11,18 +11,34 @@ import { useTheme } from '@mui/material/styles';
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import TableData from "../Tables/TableData";
 
 const TablePopup = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const tableData = props.tableData;
-  const loading = props.loading;
+  const tableId = props.tableId;
+  const [tableData, setTableData] = React.useState();
+  const [loading, setLoading] = React.useState(true);
+
+  const onDataReceived = data => {
+    setTableData(data);
+    setLoading(false);
+  }
+
+  React.useEffect(() => {
+    if (!tableId) {
+      setLoading(true);
+    }
+
+  }, [tableId]);
+
   const open = props.open;
   const onClose = props.onClose;
 
   return (
     <>
+      <TableData tableId={tableId} onDataReceived={onDataReceived} />
       <Dialog
         fullScreen={fullScreen}
         fullWidth
