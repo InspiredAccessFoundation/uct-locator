@@ -11,26 +11,34 @@ const Marker = (props) => {
 
     // remove marker from map on unmount
     return () => {
-      if (marker) {
-        marker.setMap(null);
+      if (marker && props.markerClusterer) {
+        props.markerClusterer.removeMarker(marker);
       }
     };
-  }, [marker]);
+  }, [marker, props.markerClusterer]);
 
   React.useEffect(() => {
-    if (marker) {
+    if (marker && onClick) {
       marker.addListener("click", onClick);
     }
   }, [marker, onClick]);
 
+  const position = props.position;
+
   React.useEffect(() => {
-    if (marker) {
+    let positionSetLiteral = !!position.lat && !!position.lng;
+    let positionSetLatLng = position instanceof window.google.maps.LatLng;
+    
+    if (marker && (positionSetLiteral || positionSetLatLng)) {
       marker.setOptions({
-        position: props.position,
-        map: props.map
+        position: position
       });
+
+      if (props.markerClusterer) {
+        props.markerClusterer.addMarker(marker);
+      }
     }
-  }, [marker, props]);
+  }, [marker, position, props.markerClusterer]);
 
   return null;
 };
