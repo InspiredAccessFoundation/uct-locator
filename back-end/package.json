@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "test": "jest",
+    "db-status": "migrate-mongo status",
+    "db-up": "migrate-mongo up",
+    "db-down": "migrate-mongo down"
   },
   "author": "",
   "license": "MIT",
@@ -23,6 +27,11 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "babel-jest": "^28.1.1",
+    "jest": "^28.1.1",
+    "migrate-mongo": "^9.0.0",
     "nodemon": "^2.0.16"
   }
 }

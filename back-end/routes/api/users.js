@@ -29,16 +29,23 @@ router.post("/register", async (req, res) => {
   }
 
   // Try to find an existing user
-  let user = await User.findOne({ email: req.body.email });
+  let userWithEmail = await User.findOne({ email: req.body.email });
+  let userWithUsername = await User.findOne({ username: req.body.username });
 
-  // If there is a user, return
-  if (user) {
+  // If there is already a user with this email, return an error
+  if (userWithEmail) {
     return res.status(400).json({ email: "Email already exists" });
+  }
+
+  // If there is already a user with this username, return an error
+  if (userWithUsername) {
+    return res.status(400).json({ username: "Username already exists"});
   }
 
   // There was not an existing user, create a new one
   const newUser = new User({
     name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     password: req.body.password
   });
@@ -120,8 +127,8 @@ router.post("/login", (req, res) => {
 // @access Private
 router.get("/test-auth", (req, res) => {
   try {
-    jwt.verify(req.headers.authorization, keys.secretOrKey);
-    res.json({token:'verified'});
+    const decoded = jwt.verify(req.headers.authorization, keys.secretOrKey);
+    res.json({token:'verified', id: decoded.id, name: decoded.name});
   } catch {
     res.json({token:'unverified'});
   }
