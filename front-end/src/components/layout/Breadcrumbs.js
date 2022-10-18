@@ -11,7 +11,7 @@ function getPathFriendlyName(path) {
   const friendlyNames = {
     register: "Register",
     login: "Login",
-    find: "Find Tables",
+    find: "Find a Table",
     "view-table/d+": "View Table",
     "submit-table": "Submit Table",
   };
