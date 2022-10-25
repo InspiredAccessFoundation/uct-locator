@@ -27,6 +27,7 @@ const Home = (props) => {
       <p>Welcome to the UCT Locator app!</p>
       {loggedIn ? loggedInContent : loggedOutContent}
       <Link to="/find">Find a Table</Link>
+      <p><Link to="/about">About Us</Link></p>
     </Container>
   );
 };
