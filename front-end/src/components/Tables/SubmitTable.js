@@ -105,9 +105,9 @@ const SubmitTable = () => {
       <Container maxWidth="md">
         <div style={{ marginTop: "1rem" }} className="row">
           <h2>Submit Table</h2>
-          <p>Enter information for your table here.</p>
+          <p>Enter information for your table here.</p><br></br>
           <form className='form' onSubmit={handleSubmit}>
-            <Stack spacing={1}>
+            <Stack spacing={2}>
               <TextField id="locationName" label="Location Name" variant="outlined"
                 onChange={(e) => setLocationName(e.target.value)}
                 value={locationName} required
