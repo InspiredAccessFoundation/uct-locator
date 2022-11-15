@@ -173,6 +173,8 @@ const SubmitTable = () => {
                     <MenuItem value={"women"}>Women</MenuItem>
                     <MenuItem value={"family"}>Family</MenuItem>
                     <MenuItem value={"other"}>Other</MenuItem>
+                    {restroomType.length > 0 &&
+                      <MenuItem value={""}>Clear</MenuItem>}
                   </Select>
                 </FormControl>
               </Box>
