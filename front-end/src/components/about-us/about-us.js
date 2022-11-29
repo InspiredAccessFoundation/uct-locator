@@ -17,17 +17,5 @@ class About extends Component {
   }
 }
 
-About.propTypes = {
-  auth: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps)(About);
-
-About.propTypes = {
-  auth: PropTypes.object.isRequired,
-};
+export default About;
 
