@@ -78,7 +78,7 @@ class Login extends Component {
                   {errors.email}
                   {errors.emailnotfound}
                 </span>
-
+                // If logged in and user navigates to Login page, should redirect them to the landing page
                 <TextField id="password" label="Password" type="password" variant="outlined"
                   onChange={this.onChange}
                   value={this.state.password}
@@ -106,6 +106,7 @@ class Login extends Component {
              </form>
           </div>
       </Container>
+      
     );
   }
 }
@@ -125,3 +126,42 @@ export default connect(
   mapStateToProps,
   { loginUser }
 )(Login);
+
+
+// import validator from 'validator'
+ 
+// const App = () => {
+ 
+//   const [errorMessage, setErrorMessage] = useState('')
+ 
+//   const validate = (value) => {
+ 
+//     if (validator.isStrongPassword(value, {
+//       minLength: 8, minLowercase: 1,
+//       minUppercase: 1, minNumbers: 1, minSymbols: 1
+//     })) {
+//       setErrorMessage('Is Strong Password')
+//     } else {
+//       setErrorMessage('Is Not Strong Password')
+//     }
+//   }
+ 
+//   return (
+//     <div style={{
+//       marginLeft: '200px',
+//     }}>
+//       <pre>
+//         <h2>Checking Password Strength in ReactJS</h2>
+//         <span>Enter Password: </span><input type="text"
+//           onChange={(e) => validate(e.target.value)}></input> <br />
+//         {errorMessage === '' ? null :
+//         <span style={{
+//           fontWeight: 'bold',
+//           color: 'red',
+//         }}>{errorMessage}</span>}
+//       </pre>
+//     </div>
+//   );
+// }
+ 
+// export default App
