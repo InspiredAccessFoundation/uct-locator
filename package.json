@@ -6,8 +6,5 @@
   ],
   "devDependencies": {
     "nx": "14.2.4"
-  },
-  "dependencies": {
-    "validator": "^13.7.0"
   }
 }
