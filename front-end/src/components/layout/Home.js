@@ -25,9 +25,9 @@ const Home = (props) => {
   return (
     <Container maxWidth="md">
       <p>Welcome to the UCT Locator app!</p>
-      <p>Many people with disablities and their caregivers find themselves planning vacations around the public resources and accomodations available in that area. In the past, adult-sized changing stations have been uncommon in museums, libraries, and other public places. However, these locations are making an effort to become just as accessible to people with special needs as they are to those who are ambulatory. With the UCT Locator, it is easier than ever for people with disablities and caregivers to find nearby adult-sized changing stations.</p>
       {loggedIn ? loggedInContent : loggedOutContent}
       <Link to="/find">Find a Table</Link>
+      <p><Link to="/about">About Us</Link></p>
     </Container>
   );
 };
