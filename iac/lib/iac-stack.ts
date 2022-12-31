@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr } from 'aws-cdk-lib';
+import { RemovalPolicy, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
 
@@ -44,7 +44,21 @@ export class CentralIacStack extends cdk.Stack {
       // TODO Make this not just hardcoded to develop
     });
 
+    // Allow for pushing and pulling from the ECR repo for docker images
     this.repository.grantPullPush(developmentActionsRole)
+
+    // Allow assume cdk iam roles to be able to do CDK things
+    developmentActionsRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: [
+          "sts:AssumeRole"
+        ],
+        effect: iam.Effect.ALLOW,
+        resources: [
+          "arn:aws:iam::*:role/cdk-*"
+        ]
+      })
+    )
   }
 }
 
