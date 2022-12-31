@@ -1,6 +1,8 @@
 import * as cdk from 'aws-cdk-lib';
 import { RemovalPolicy, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
+
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class CentralIacStack extends cdk.Stack {
@@ -32,6 +34,17 @@ export class CentralIacStack extends cdk.Stack {
       imageScanOnPush: true
     });
     this.repository.addLifecycleRule({ maxImageCount: 10 });
+
+    const provider = new GithubActionsIdentityProvider(this, 'GithubProvider');
+    const developmentActionsRole = new GithubActionsRole(this, 'GithubActionsRole', {
+      provider: provider,           // reference into the OIDC provider
+      owner: 'InspiredAccessFoundation',            // your repository owner (organization or user) name
+      repo: 'uct-locator',            // your repository name (without the owner name)
+      filter: `ref:refs/heads/develop`,   // JWT sub suffix filter, defaults to '*' 
+      // TODO Make this not just hardcoded to develop
+    });
+
+    this.repository.grantPullPush(developmentActionsRole)
   }
 }
 
