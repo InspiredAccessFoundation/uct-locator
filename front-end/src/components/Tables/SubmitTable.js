@@ -105,9 +105,9 @@ const SubmitTable = () => {
       <Container maxWidth="md">
         <div style={{ marginTop: "1rem" }} className="row">
           <h2>Submit Table</h2>
-          <p>Enter information for your table here.</p><br></br>
+          <p>Enter information for your table here.</p>
           <form className='form' onSubmit={handleSubmit}>
-            <Stack spacing={2}>
+            <Stack spacing={1}>
               <TextField id="locationName" label="Location Name" variant="outlined"
                 onChange={(e) => setLocationName(e.target.value)}
                 value={locationName} required
@@ -173,8 +173,6 @@ const SubmitTable = () => {
                     <MenuItem value={"women"}>Women</MenuItem>
                     <MenuItem value={"family"}>Family</MenuItem>
                     <MenuItem value={"other"}>Other</MenuItem>
-                    {restroomType.length > 0 &&
-                      <MenuItem value={""}>Clear</MenuItem>}
                   </Select>
                 </FormControl>
               </Box>

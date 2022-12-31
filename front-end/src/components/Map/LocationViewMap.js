@@ -71,8 +71,6 @@ const LocationViewMap = () => {
   return (
     <Container maxWidth="md">
       <div style={{ height: "100%" }}>
-        <h1>Find a Table</h1>
-        <p>Use this map to find the location of a universal changing table!</p>
         <Wrapper
           apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
           render={render}
