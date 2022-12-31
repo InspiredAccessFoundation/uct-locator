@@ -27,7 +27,9 @@ export class CentralIacStack extends cdk.Stack {
 
     this.repository = new ecr.Repository(this, "uct-private-repo", {
       repositoryName: "uct-private-repo",
-      removalPolicy: RemovalPolicy.DESTROY
+      removalPolicy: RemovalPolicy.DESTROY,
+      imageTagMutability: ecr.TagMutability.IMMUTABLE,
+      imageScanOnPush: true
     });
     this.repository.addLifecycleRule({ maxImageCount: 10 });
   }
