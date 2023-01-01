@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam } from 'aws-cdk-lib';
+import { RemovalPolicy, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
 
@@ -8,7 +8,8 @@ import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github
 export class CentralIacStack extends cdk.Stack {
   public readonly vpc: ec2.Vpc;
   public readonly cluster: ecs.Cluster;
-  public readonly repository: ecr.Repository;
+  public readonly frontend_repository: ecr.Repository;
+  public readonly backend_repository: ecr.Repository;
 
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -27,13 +28,21 @@ export class CentralIacStack extends cdk.Stack {
       enableFargateCapacityProviders: true
     })
 
-    this.repository = new ecr.Repository(this, "uct-private-repo", {
-      repositoryName: "uct-private-repo",
+    this.frontend_repository = new ecr.Repository(this, "uct-frontend-repo", {
+      repositoryName: "uct-frontend",
       removalPolicy: RemovalPolicy.DESTROY,
       imageTagMutability: ecr.TagMutability.IMMUTABLE,
       imageScanOnPush: true
     });
-    this.repository.addLifecycleRule({ maxImageCount: 10 });
+    this.frontend_repository.addLifecycleRule({ maxImageCount: 10 });
+
+    this.backend_repository = new ecr.Repository(this, "uct-backend-repo", {
+      repositoryName: "uct-backend",
+      removalPolicy: RemovalPolicy.DESTROY,
+      imageTagMutability: ecr.TagMutability.IMMUTABLE,
+      imageScanOnPush: true
+    });
+    this.backend_repository.addLifecycleRule({ maxImageCount: 10 });
 
     const provider = new GithubActionsIdentityProvider(this, 'GithubProvider');
     const developmentActionsRole = new GithubActionsRole(this, 'GithubActionsRole', {
@@ -45,7 +54,8 @@ export class CentralIacStack extends cdk.Stack {
     });
 
     // Allow for pushing and pulling from the ECR repo for docker images
-    this.repository.grantPullPush(developmentActionsRole)
+    this.frontend_repository.grantPullPush(developmentActionsRole)
+    this.backend_repository.grantPullPush(developmentActionsRole)
 
     // Allow assume cdk iam roles to be able to do CDK things
     developmentActionsRole.addToPolicy(
@@ -66,16 +76,55 @@ export class AppStack extends cdk.Stack {
   constructor(scope: Construct, id: string,
     vpc: ec2.Vpc,
     cluster: ecs.Cluster,
+    frontend_repository: ecr.Repository,
+    backend_repository: ecr.Repository,
     props?: cdk.StackProps
   ) {
     super(scope, id, props);
 
-    const taskDefinition = new ecs.FargateTaskDefinition(this, 'TaskDef');
-
-    taskDefinition.addContainer('DefaultContainer', {
-      image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
-      memoryLimitMiB: 512,
+    const taskDefinition = new ecs.FargateTaskDefinition(this, 'TaskDef', {
+      memoryLimitMiB: 2048,
     });
+
+    taskDefinition.addContainer('frontend-container', {
+      image: ecs.ContainerImage.fromEcrRepository(frontend_repository, "0.0.1"),
+      memoryLimitMiB: 512,
+      essential: true,
+      containerName: "frontend",
+      portMappings: [{
+        containerPort: 80,
+        protocol: ecs.Protocol.TCP
+      }],
+      logging: ecs.LogDriver.awsLogs({
+        streamPrefix: "/uct-locator",
+        logRetention: cdk.aws_logs.RetentionDays.ONE_DAY
+      })
+    });
+
+    const mongo_uri_secret = secretsmanager.Secret.fromSecretNameV2(this, "mongo-uri-secret", "/uct-locator/mongo-uri")
+    const jwt_secret_key = secretsmanager.Secret.fromSecretNameV2(this, "jwt-secret-key", "/uct-locator/secret-key")
+
+    taskDefinition.addContainer('backend-container', {
+      image: ecs.ContainerImage.fromEcrRepository(backend_repository, "0.0.2"),
+      memoryLimitMiB: 1280,
+      essential: true,
+      containerName: "backend",
+      portMappings: [{
+        containerPort: 5000,
+        protocol: ecs.Protocol.TCP
+      }],
+      secrets: {
+        "MONGO_URI": ecs.Secret.fromSecretsManager(mongo_uri_secret),
+        "SECRET_KEY": ecs.Secret.fromSecretsManager(jwt_secret_key),
+      },
+      logging: ecs.LogDriver.awsLogs({
+        streamPrefix: "/uct-locator",
+        logRetention: cdk.aws_logs.RetentionDays.ONE_DAY
+      })
+    });
+
+    mongo_uri_secret.grantRead(taskDefinition.taskRole)
+    jwt_secret_key.grantRead(taskDefinition.taskRole)
 
     const ecsSecurityGroup = new ec2.SecurityGroup(this, 'ecs-sg', {
       vpc,
@@ -86,7 +135,8 @@ export class AppStack extends cdk.Stack {
       cluster,
       taskDefinition,
       assignPublicIp: true,
-      securityGroups: [ecsSecurityGroup]
+      securityGroups: [ecsSecurityGroup],
+      enableExecuteCommand: true,
     });
 
   }
