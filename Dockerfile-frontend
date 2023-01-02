@@ -1,5 +1,9 @@
 # stage1 - build react app first 
 FROM node:16-alpine as build-frontend
+
+ARG API_KEY
+ENV REACT_APP_GOOGLE_MAPS_API_KEY=$API_KEY
+
 WORKDIR /app
 COPY . .
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
