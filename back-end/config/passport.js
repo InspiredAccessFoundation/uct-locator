@@ -1,10 +1,10 @@
 // Tools to use
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const mongoose = require("mongoose");
 
+// Load User model
+var models = require('../models');
 // Other constants
-const User = mongoose.model("users");
 const keys = require("./keys");
 const opts = {};
 
@@ -17,7 +17,7 @@ module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
       // Find current
-      User.findById(jwt_payload.id)
+      models.User.findByPk(jwt_payload.id)
         .then(user => {
           if (user) {
             return done(null, user);
@@ -25,7 +25,7 @@ module.exports = passport => {
             return done(null, false);
           }
         })
-      .catch(err => console.log(err));
+        .catch(err => console.log(err));
     })
   );
 };

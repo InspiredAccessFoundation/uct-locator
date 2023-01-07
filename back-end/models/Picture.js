@@ -1,25 +1,59 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+module.exports = (sequelize, DataTypes) => {
+  const Picture = sequelize.define("Picture", {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    tableID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'tables',
+        key: 'id',
+      },
+    },
+    uploaderID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id',
+      },
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+  }, {
+    tableName: 'pictures',
+    sequelize,
+  });
 
-const PictureSchema = new Schema({
-  tableID: {
-    type: Schema.Types.ObjectId,
-    ref: 'Table',
-    required: true
-  },
-  uploaderID: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  name: {
-    type: String,
-    required: false
-  },
-  url: {
-    type: String,
-    required: true
+  Picture.associate = (models) => {
+    Picture.belongsTo(models.User, {
+      foreignKey: {
+        name: "uploaderID", allowNull: false
+      }
+    })
+    Picture.belongsTo(models.Table, {
+      foreignKey: {
+        name: "tableID", allowNull: false
+      }
+    })
   }
-});
 
-module.exports = Picture = mongoose.model("pictures", PictureSchema);
+  return Picture;
+};

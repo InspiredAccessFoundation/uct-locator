@@ -117,20 +117,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="Setup/MongoAtlasSetup.html">
-            
-                <a href="Setup/MongoAtlasSetup.html">
-            
-                    
-                    MongoDB Atlas Setup
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="Setup/StartupLearning.html">
+        <li class="chapter " data-level="1.3" data-path="Setup/StartupLearning.html">
             
                 <a href="Setup/StartupLearning.html">
             
@@ -144,7 +131,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="Setup/StartupLearning/BasicBackground.html">
+        <li class="chapter " data-level="1.3.1" data-path="Setup/StartupLearning/BasicBackground.html">
             
                 <a href="Setup/StartupLearning/BasicBackground.html">
             
@@ -157,7 +144,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="Setup/StartupLearning/FullStackArchitecture.html">
+        <li class="chapter " data-level="1.3.2" data-path="Setup/StartupLearning/FullStackArchitecture.html">
             
                 <a href="Setup/StartupLearning/FullStackArchitecture.html">
             
@@ -170,7 +157,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="Setup/StartupLearning/FrontEnd.html">
+        <li class="chapter " data-level="1.3.3" data-path="Setup/StartupLearning/FrontEnd.html">
             
                 <a href="Setup/StartupLearning/FrontEnd.html">
             
@@ -183,7 +170,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="Setup/StartupLearning/BackEnd.html">
+        <li class="chapter " data-level="1.3.4" data-path="Setup/StartupLearning/BackEnd.html">
             
                 <a href="Setup/StartupLearning/BackEnd.html">
             
@@ -196,7 +183,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="Setup/StartupLearning/IntoTheCode.html">
+        <li class="chapter " data-level="1.3.5" data-path="Setup/StartupLearning/IntoTheCode.html">
             
                 <a href="Setup/StartupLearning/IntoTheCode.html">
             
@@ -266,24 +253,26 @@
 <p>The front-end React app is in the <a href="front-end">front-end</a> folder, and the back-end Node/Express server is in the <a href="back-end">back-end</a> folder.</p>
 <h3 id="back-end">Back-End</h3>
 <p>First, you will need to create a <strong>.env</strong> file in the <a href="back-end">back-end</a> directory. It should look something like this:</p>
-<pre><code class="lang-sh">MONGO_URI=<span class="hljs-string">&quot;&lt;secret uri&gt;&quot;</span>
-SECRET_KEY=<span class="hljs-string">&quot;&lt;secret key&gt;&quot;</span>
+<pre><code class="lang-sh">SECRET_KEY=<span class="hljs-string">&quot;&lt;secret key&gt;&quot;</span>
 </code></pre>
-<p>To get a Mongo URI, you can create a free DB using <a href="https://www.mongodb.com/docs/atlas/getting-started/" target="_blank">Mongo Atlas</a>. The Secret Key can be any string.</p>
+<p>The Secret Key can be any string, its the key for the JWT.</p>
 <p>Once the <strong>.env</strong> file has been created, <code>cd</code> into the <strong>back-end</strong> directory, and run these:</p>
 <pre><code class="lang-sh">npm install
 npm run server
 </code></pre>
-<h4 id="database-migrations">Database Migrations</h4>
-<p>In order to keep databases up-to-date with schema changes, this repo uses <a href="https://github.com/seppevs/migrate-mongo" target="_blank">migrate-mongo</a> to manage and run schema migrations. <code>migrate-mongo</code> is configured to use the current <code>MONGO_URI</code> environment variable defined in the <code>.env</code>.</p>
+<h4 id="database">Database</h4>
+<p>The backing database for this project is Postgres. Easiest way to get one of those running locally is simply to use Docker. You can use the following command to get a Postgis enabled Postgres instance up and running. </p>
+<pre><code>docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-password -p 5432:5432 -v pg-data:/var/lib/postgresql/data -d postgis/postgis
+</code></pre><h4 id="migrations">Migrations</h4>
+<p>In order to keep databases up-to-date with schema changes, this repo uses <a href="https://github.com/brianschardt/sequelize-auto-migrations" target="_blank">sequelize-auto-migrations-v2</a> to manage and run schema migrations. </p>
 <p>Use the following commands for common tasks for schema migrations:</p>
 <ol>
-<li>Check migrations status for the current db: <code>npx nx run:db-status</code></li>
-<li>Run any pending migrations: <code>npx nx run:db-up</code></li>
-<li>Revert db changes from the last migration: <code>npx nx run:db-down</code></li>
-<li><p>Add a new migration script:</p>
+<li>Check migrations status for the current db: <code>npx runmigration --list</code></li>
+<li>Run any pending migrations: <code>npx runmigration</code></li>
+<li>Revert db changes from the last migration: <code>npx runmigration --pos &lt;previous migration file&gt;</code></li>
+<li><p>Add a new migration script by updating your models and then running:</p>
 <pre><code class="lang-sh"> <span class="hljs-built_in">cd</span> back-end
- npx migrate-mongo create &lt;migration-name&gt;
+ npx makemigration --name <span class="hljs-string">&apos;&lt;name that describes you changes&gt;&apos;</span>
 </code></pre>
 </li>
 </ol>
@@ -347,7 +336,7 @@ npm run start
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Developer Setup Guide","level":"1.2","depth":1,"path":"Setup/DeveloperSetupGuide.md","ref":"Setup/DeveloperSetupGuide.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2022-12-31T02:18:51.794Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-12-31T02:19:24.442Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Developer Setup Guide","level":"1.2","depth":1,"path":"Setup/DeveloperSetupGuide.md","ref":"Setup/DeveloperSetupGuide.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2023-01-07T21:00:54.018Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-07T21:01:24.469Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
