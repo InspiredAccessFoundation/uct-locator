@@ -5,10 +5,7 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
-    "test": "jest",
-    "db-status": "migrate-mongo status",
-    "db-up": "migrate-mongo up",
-    "db-down": "migrate-mongo down"
+    "test": "jest"
   },
   "author": "",
   "license": "MIT",
