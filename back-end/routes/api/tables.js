@@ -8,7 +8,7 @@ const keys = require("../../config/keys");
 const validateSubmitTableInput = require("../../validation/submitTable");
 
 // Load Table model
-const Table = require("../../models/Table");
+var models = require('../../models');
 
 // @route POST api/tables/submit
 // @desc Submit a table
@@ -42,7 +42,7 @@ router.post("/submit", async (req, res) => {
   }
 
   // Create a new table
-  const newTable = new Table({
+  const newTable = models.Table.build({
     locationName: req.body.locationName,
     coordinateLocation: newPoint,
     userId: loggedInUser.id,
@@ -75,10 +75,10 @@ router.post("/submit", async (req, res) => {
     const table = await newTable.save();
     res.json({
       "success": true,
-      "tableId": table._id
+      "tableId": table.id
     });
-  } catch(err) {
-    res.status(400).json({error: err});
+  } catch (err) {
+    res.status(400).json({ error: err });
   }
 });
 
@@ -86,7 +86,7 @@ router.post("/submit", async (req, res) => {
 // @desc Get all tables (just coordinates and ids)
 // @access Public
 router.get("/all", async (req, res) => {
-  let allTables = await Table.find({}, '_id coordinateLocation');
+  let allTables = await models.Table.findAll({ attributes: ['id', 'coordinateLocation'] });
   res.json(allTables);
 });
 
@@ -102,11 +102,11 @@ router.get("/within-bounds", async (req, res) => {
           [req.query.east, req.query.north]
         ]
       }
-    } 
+    }
   };
 
   let select = '_id coordinateLocation';
-  let boundedTables = await Table.find(where, select);
+  let boundedTables = await models.Table.find(where, select);
   res.json(boundedTables);
 });
 
@@ -115,7 +115,7 @@ router.get("/within-bounds", async (req, res) => {
 // @access Public
 router.get("/:id", async (req, res) => {
   let tableId = req.params.id;
-  let currentTable = await Table.findOne({ _id: tableId });
+  let currentTable = await models.Table.findOne({ where: { id: tableId } });
   res.json(currentTable);
 });
 
