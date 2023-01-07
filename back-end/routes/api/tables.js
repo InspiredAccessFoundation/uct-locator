@@ -104,10 +104,9 @@ router.get("/within-bounds", async (req, res) => {
       }
     }
   };
-
-  let select = '_id coordinateLocation';
-  let boundedTables = await models.Table.find(where, select);
-  res.json(boundedTables);
+  // TODO Fix this query to use POSTGIS syntax
+  // let boundedTables = await models.Table.find(where, select);
+  res.json([]);
 });
 
 // @route GET api/tables/:id
