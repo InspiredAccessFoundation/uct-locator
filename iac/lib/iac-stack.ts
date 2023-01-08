@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
+import { RemovalPolicy, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
 
@@ -69,6 +69,33 @@ export class CentralIacStack extends cdk.Stack {
         ]
       })
     )
+
+
+    // Creates an admin user of uctadmin with a generated password
+    const rds_master_creds = rds.Credentials.fromGeneratedSecret('uctadmin')
+    // Using the secret
+    const uct_postgres_rds = new rds.DatabaseInstance(this, "uct-postgres", {
+      engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_14 }),
+      credentials: rds_master_creds,
+      vpc: this.vpc,
+      storageEncrypted: true,
+      allocatedStorage: 5,
+      maxAllocatedStorage: 50,
+      allowMajorVersionUpgrade: false,
+      autoMinorVersionUpgrade: true,
+      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),
+      enablePerformanceInsights: true,
+      performanceInsightRetention: rds.PerformanceInsightRetention.DEFAULT,
+      multiAz: false,
+      publiclyAccessible: false,
+      backupRetention: Duration.days(1),
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      parameters: {
+        "pg_stat_statements.track": "ALL"
+      }
+    });
   }
 }
 
