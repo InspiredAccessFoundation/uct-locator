@@ -1,9 +1,9 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-const userRegex = new RegExp(/^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/);
+const userRegex = new RegExp(/^[a-zA-Z0-9]+(?:[._][a-zA-Z0-9]+)*$/);
 const passRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/);
- 
+
 module.exports = function validateRegisterInput(data) {
   let errors = {};
 
