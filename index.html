@@ -261,21 +261,18 @@
                                 
                                 <h1 id="uct-locator">U.C.T. Locator</h1>
 <p>This is a web application that allows caregivers to locate accessible universal changing stations.</p>
-<p>New developers can <a href="Setup/DeveloperSetupGuide.html">click here</a> to see how to get the app running locally.</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>The front-end React app is in the <a href="front-end">front-end</a> folder, and the back-end Node/Express server is in the <a href="back-end">back-end</a> folder.</p>
-<h3 id="back-end">Back-End</h3>
-<p>First, you will need to create a <strong>.env</strong> file in the <a href="back-end">back-end</a> directory. It should look something like this:</p>
-<pre><code class="lang-sh">MONGO_URI=<span class="hljs-string">&quot;&lt;secret uri&gt;&quot;</span>
-SECRET_KEY=<span class="hljs-string">&quot;&lt;secret key&gt;&quot;</span>
-</code></pre>
-<p>To get a Mongo URI, you can create a free DB using <a href="https://www.mongodb.com/docs/atlas/getting-started/" target="_blank">Mongo Atlas</a>. The Secret Key can be any string.</p>
-<p>Once the <strong>.env</strong> file has been created, <code>cd</code> into the <strong>back-end</strong> directory, and run these:</p>
-<pre><code class="lang-sh">npm install
-npm run server
-</code></pre>
-<h4 id="database-migrations">Database Migrations</h4>
-<p>In order to keep databases up-to-date with schema changes, this repo uses <a href="https://github.com/seppevs/migrate-mongo" target="_blank">migrate-mongo</a> to manage and run schema migrations. <code>migrate-mongo</code> is configured to use the current <code>MONGO_URI</code> environment variable defined in the <code>.env</code>.</p>
+<p>There are some things you&apos;ll want to read through before you get into the project.</p>
+<ul>
+<li>Follow the <a href="Setup/DeveloperSetupGuide.html">Developer Setup Guide</a> to get the app up and running locally.</li>
+<li>Follow the <a href="Setup/StartupLearning.html">Start-Up Learning</a> guide to learn more about the technologies in the app.</li>
+</ul>
+<p>Make sure to read everything thoroughly, and try to complete all the steps. Some of it may be somewhat confusing, but stick with it. It may take some time, but we believe in you!</p>
+<p><img src="Assets/YouCanDoIt.gif" alt=""></p>
+<h2 id="advanced">Advanced</h2>
+<p>Beyond the basics, there is some advanced tooling that may help with the development of the project.</p>
+<h3 id="database-migrations">Database Migrations</h3>
+<p>In order to keep databases up-to-date with schema changes, this repo uses <a href="https://github.com/seppevs/migrate-mongo" target="_blank">migrate-mongo</a> to manage and run schema migrations. <code>migrate-mongo</code> is configured to use the current <code>MONGO_URI</code> environment variable defined in the <strong>.env</strong> file.</p>
 <p>Use the following commands for common tasks for schema migrations:</p>
 <ol>
 <li>Check migrations status for the current db: <code>npx nx run:db-status</code></li>
@@ -287,17 +284,13 @@ npm run server
 </code></pre>
 </li>
 </ol>
-<h3 id="front-end">Front-End</h3>
-<p>For the front-end, you should be able to simply <code>cd</code> into the <strong>front-end</strong> directory, and run this:</p>
-<pre><code class="lang-sh">npm install
-npm run start
-</code></pre>
-<h2 id="advanced">Advanced</h2>
+<h3 id="nx">Nx</h3>
 <p>You can also use <a href="https://nx.dev/" target="_blank">Nx</a> to build, run, and manage projects in this repository.</p>
 <p>First, install Nx with <code>npm install nx --location=global</code>.</p>
 <p>Next, it&apos;s possible to run any script for any project anywhere in the repo, with no need to change directories to that project.</p>
-<p>Use <code>nx &lt;script-name&gt; &lt;project-name&gt;</code> where <code>script-name</code> is the npm script defined in the project&apos;s package.json to run, and <code>project-name</code> is the name specfied in the project&apos;s <code>package.json</code> name field.</p>
-<h3 id="examples">Examples</h3>
+<p>Use <code>nx &lt;script-name&gt; &lt;project-name&gt;</code> where <code>script-name</code> is the npm script defined in the project&apos;s package.json to run, and <code>project-name</code> is the name specified in the project&apos;s <code>package.json</code> name field.</p>
+<h4 id="examples">Examples</h4>
+<p>Here are some examples showing how to run the front-end and back-end.</p>
 <ol>
 <li><p>Start UCT Locator Front-End</p>
 <pre><code class="lang-sh"> nx start uct-locator-front-end
@@ -347,7 +340,7 @@ npm run start
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Developer Setup Guide","level":"1.2","depth":1,"path":"Setup/DeveloperSetupGuide.md","ref":"Setup/DeveloperSetupGuide.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2023-01-08T01:58:38.065Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-08T01:59:19.406Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Developer Setup Guide","level":"1.2","depth":1,"path":"Setup/DeveloperSetupGuide.md","ref":"Setup/DeveloperSetupGuide.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2023-01-08T02:00:26.478Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-08T02:01:04.628Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

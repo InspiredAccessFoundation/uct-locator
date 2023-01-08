@@ -12,6 +12,7 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./components/layout/Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import About from "./components/about-us/about-us"
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import SubmitTable from "./components/Tables/SubmitTable";
 import LocationViewMap from "./components/Map/LocationViewMap";
@@ -53,6 +54,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/find" component={LocationViewMap} />
             <Route path="/view-table/:tableId" component={ViewTable} />
+            <Route exact path="/about" component={About} />
             <Switch>
               <PrivateRoute
                 exact
