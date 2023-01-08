@@ -10,6 +10,7 @@ export class CentralIacStack extends cdk.Stack {
   public readonly cluster: ecs.Cluster;
   public readonly frontend_repository: ecr.Repository;
   public readonly backend_repository: ecr.Repository;
+  public readonly load_balancer: cdk.aws_elasticloadbalancingv2.ApplicationLoadBalancer
 
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -96,6 +97,11 @@ export class CentralIacStack extends cdk.Stack {
         "pg_stat_statements.track": "ALL"
       }
     });
+
+    this.load_balancer = new cdk.aws_elasticloadbalancingv2.ApplicationLoadBalancer(this, 'LoadBalancer', {
+      vpc: this.vpc,
+      internetFacing: true
+    });
   }
 }
 
@@ -105,6 +111,7 @@ export class AppStack extends cdk.Stack {
     cluster: ecs.Cluster,
     frontend_repository: ecr.Repository,
     backend_repository: ecr.Repository,
+    load_balancer: cdk.aws_elasticloadbalancingv2.ApplicationLoadBalancer,
     props?: cdk.StackProps
   ) {
     super(scope, id, props);
@@ -177,5 +184,18 @@ export class AppStack extends cdk.Stack {
       ],
     });
 
+    const listener = new cdk.aws_elasticloadbalancingv2.ApplicationListener(this, 'Listener', {
+      loadBalancer: load_balancer, // ! need to pass load balancer to attach to !
+      port: 80,
+      defaultAction: cdk.aws_elasticloadbalancingv2.ListenerAction.fixedResponse(404)
+    });
+
+
+    listener.addTargets('production_ecs', {
+      port: 80,
+      targets: [ecsService],
+      conditions: [cdk.aws_elasticloadbalancingv2.ListenerCondition.hostHeaders(["app.adultchangingtablemap.com"])],
+      priority: 1,
+    });
   }
 }
