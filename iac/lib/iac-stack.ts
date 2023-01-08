@@ -118,7 +118,9 @@ export class AppStack extends cdk.Stack {
     super(scope, id, props);
 
     const domains: string[] = [
-      "adultchangingtablemap.com"
+      "adultchangingtablemap.com",
+      "universalchangingtablemap.com",
+      "inclusiverestroommap.com"
     ]
 
     const hosts: string[] = []
