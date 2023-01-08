@@ -15,6 +15,7 @@ const appStack = new AppStack(app, 'AppStack',
   frontend_repository,
   backend_repository,
   load_balancer,
+  "app",
   {
     env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: "us-east-1" },
   }

@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
+import { RemovalPolicy, aws_elasticloadbalancingv2 as elbv2, aws_route53_targets as route53targets, aws_certificatemanager as certman, aws_route53 as route53, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
 
@@ -10,7 +10,7 @@ export class CentralIacStack extends cdk.Stack {
   public readonly cluster: ecs.Cluster;
   public readonly frontend_repository: ecr.Repository;
   public readonly backend_repository: ecr.Repository;
-  public readonly load_balancer: cdk.aws_elasticloadbalancingv2.ApplicationLoadBalancer
+  public readonly load_balancer: elbv2.ApplicationLoadBalancer
 
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -98,9 +98,9 @@ export class CentralIacStack extends cdk.Stack {
       }
     });
 
-    this.load_balancer = new cdk.aws_elasticloadbalancingv2.ApplicationLoadBalancer(this, 'LoadBalancer', {
+    this.load_balancer = new elbv2.ApplicationLoadBalancer(this, 'LoadBalancer', {
       vpc: this.vpc,
-      internetFacing: true
+      internetFacing: true,
     });
   }
 }
@@ -111,10 +111,32 @@ export class AppStack extends cdk.Stack {
     cluster: ecs.Cluster,
     frontend_repository: ecr.Repository,
     backend_repository: ecr.Repository,
-    load_balancer: cdk.aws_elasticloadbalancingv2.ApplicationLoadBalancer,
+    load_balancer: elbv2.ApplicationLoadBalancer,
+    subdomain: string,
     props?: cdk.StackProps
   ) {
     super(scope, id, props);
+
+    const domains: string[] = [
+      "adultchangingtablemap.com"
+    ]
+
+    const hosts: string[] = []
+    const certs: certman.Certificate[] = []
+    const zones: route53.HostedZone[] = []
+    for (const domain of domains) {
+      const hostname = `${subdomain}.${domain}`
+      const zone = new route53.HostedZone(this, `${hostname}-HostedZone`, {
+        zoneName: hostname,
+      });
+      const cert = new certman.Certificate(this, `${hostname}-Certificate`, {
+        domainName: hostname,
+        validation: certman.CertificateValidation.fromDns(zone),
+      });
+      certs.push(cert)
+      hosts.push(hostname)
+      zones.push(zone)
+    }
 
     const taskDefinition = new ecs.FargateTaskDefinition(this, 'TaskDef', {
       memoryLimitMiB: 2048,
@@ -184,18 +206,34 @@ export class AppStack extends cdk.Stack {
       ],
     });
 
-    const listener = new cdk.aws_elasticloadbalancingv2.ApplicationListener(this, 'Listener', {
+    const listener = new elbv2.ApplicationListener(this, 'Listener', {
       loadBalancer: load_balancer, // ! need to pass load balancer to attach to !
-      port: 80,
-      defaultAction: cdk.aws_elasticloadbalancingv2.ListenerAction.fixedResponse(404)
+      port: 443,
+      defaultAction: elbv2.ListenerAction.fixedResponse(404),
+      certificates: certs
     });
-
 
     listener.addTargets('production_ecs', {
-      port: 80,
+      port: 443,
       targets: [ecsService],
-      conditions: [cdk.aws_elasticloadbalancingv2.ListenerCondition.hostHeaders(["app.adultchangingtablemap.com"])],
+      conditions: [elbv2.ListenerCondition.hostHeaders(hosts)],
       priority: 1,
+      healthCheck: {
+        port: "80",
+        path: "/api/health/check",
+        protocol: elbv2.Protocol.HTTP
+      }
     });
+    // load_balancer.addRedirect()
+
+    for (const zone of zones) {
+      new route53.ARecord(this, `${zone.zoneName}-AliasRecord`, {
+        zone: zone,
+        target: route53.RecordTarget.fromAlias(
+          new route53targets.LoadBalancerTarget(load_balancer)
+        ),
+      });
+    }
+
   }
 }
