@@ -1,5 +1,5 @@
 # Back-End
-The back-end of a web application contains everything that happens behind the scenes to make the product work. For the UCT Locator, there is a Node.js/Express web server and a Postgres database. 
+The back-end of a web application contains everything that happens behind the scenes to make the product work. For the UCT Locator, there is a Node.js/Express web server and a MongoDB database. 
 
 ## Node.js
 [Node.js](https://nodejs.org/en/about/) is a JavaScript runtime environment. It is designed to build network applications, like web servers!
@@ -27,61 +27,53 @@ app.listen(port, () => {
 
 Follow [this guide](https://hylandtechclub.com/web-201/ExpressProjects/ExpressProjectCodeAlong.html) for an introductory Express activity.
 
-
-## Postgres with PostGIS extension
-PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance.
-
-There is a wealth of information to be found describing how to [install](https://www.postgresql.org/download/) and [use](https://www.postgresql.org/docs/) PostgreSQL through the official documentation.
+## MongoDB
+[MongoDB](https://www.mongodb.com/) is a document-oriented NoSQL database program. It uses [JSON](https://www.w3schools.com/js/js_json_intro.asp)-like documents with optional schemas.
 
 [This Web 201 lesson](https://hylandtechclub.com/web-201/DatabasesReplit/StudentDesc.html) introduces databases in general, but it does focus a little more on the specific Replit DB. However, many of the concepts will still be valuable if you do not have much experience with databases.
 
-## Sequelize
-[Sequelize](https://sequelize.org/) is a library that allows Node.js applications to communicate with a SQL database via an ORM (object relational model). [Here](https://sequelize.org/docs/v6/getting-started/) is a brief introduction that covers some of the core concepts; however, it might get a little over-complicated.
+[Here](https://www.tutorialspoint.com/mongodb/mongodb_overview.htm) is a quick overview of MongoDB in particular.
+
+For the UCT Locator, there is an existing test database setup and hosted in the cloud through [MongoDB Atlas](../MongoAtlasSetup.md).
+
+## Mongoose
+[Mongoose](https://mongoosejs.com/) is a library that allows Node.js applications to communicate with a MongoDB database. [Here](https://mongoosejs.com/docs/index.html) is a brief introduction that covers some of the core concepts; however, it might get a little over-complicated.
 
 ### Schemas/Models
-Sequelize uses [models](https://sequelize.org/docs/v6/core-concepts/model-basics/) to define the type and structure of the data in the database. _Models_ are fancy constructors compiled from schema definitions.
+Mongoose uses [schemas](https://www.mongodb.com/docs/atlas/app-services/schemas/) to define the type and structure of the data in the database. _Models_ are fancy constructors compiled from schema definitions.
 
-Creating a Sequelize schema/model looks something like this:
+Creating a Mongoose schema/model looks something like this:
 
 ```js
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define("User", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    role: {
-      type: DataTypes.ENUM('admin', 'user'),
-      defaultValue: 'user',
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-  }, {
-    tableName: 'users',
-    sequelize,
-  });
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-  return User;
-};
+// Create Schema
+const UserSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'user'],
+    default: 'user'
+  }
+});
+
+module.exports = User = mongoose.model("users", UserSchema);
 ```
 
 This example would allow for `User` objects to be stored in the database. Each user object would have:
@@ -104,17 +96,17 @@ Once the structure of the data has been defined, it will be possible to interact
 - **U**pdate: update the data for an existing object in the database
 - **D**elete: delete an object from the database
 
-[Here](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/) is a rundown of the available queries that can be run once the database has some data in it.
+[Here](https://mongoosejs.com/docs/queries.html) is a rundown of the available queries that can be run once the database has some data in it.
 
 #### Create
 Here is a basic way to add an object to the database:
 
 ```js
 // Load User model
-const models = require("../../models");
+const User = require("../../models/User");
 
 // Create User object
-const newUser = models.User.build({
+const newUser = new User({
   name: req.body.name,
   email: req.body.email,
   password: req.body.password
@@ -132,16 +124,16 @@ There are a few different ways to view different data in the database. Note that
 This query will return _all_ `User` objects:
 
 ```js
-const users = await models.User.findAll();
+const users = await User.find({});
 ```
 
 This query will return _one_ `User` object with an `email` of `"mark@facebook.com"` (if it exists):
 
 ```js
-const userByEmail = await models.User.findOne({ where: { email: "mark@facebook.com" } });
+const userByEmail = await User.findOne({ email: "mark@facebook.com" });
 ```
 
 There are many other ways to filter the results as well!
 
 #### Update & Delete
-It is also possible to [update](https://sequelize.org/docs/v6/core-concepts/model-instances/#updating-an-instance) or [delete](https://sequelize.org/docs/v6/core-concepts/model-instances/#deleting-an-instance) objects from the database, but the UCT Locator actually hasn't implemented those interactions yet!
+It is also possible to [update](https://mongoosejs.com/docs/api.html#model_Model-updateOne) or [delete](https://mongoosejs.com/docs/api.html#model_Model-deleteOne) objects from the database, but the UCT Locator actually hasn't implemented those interactions yet!

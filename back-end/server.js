@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const passport = require("passport");
 
 const users = require("./routes/api/users");
@@ -9,8 +10,21 @@ const passportConfig = require("./config/passport");
 const app = express();
 
 // setup middleware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+
+// db config
+const db = require("./config/keys").mongoURI;
+const dbSettings = {
+	useNewUrlParser: true,
+  useUnifiedTopology: true,
+  dbName: "uct_locator"
+}
+
+// connect to mongodb
+mongoose.connect(db, dbSettings)
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch(err => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
