@@ -119,7 +119,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="../StartupLearning.html">
+        <li class="chapter " data-level="1.3" data-path="../MongoAtlasSetup.html">
+            
+                <a href="../MongoAtlasSetup.html">
+            
+                    
+                    MongoDB Atlas Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../StartupLearning.html">
             
                 <a href="../StartupLearning.html">
             
@@ -133,7 +146,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="BasicBackground.html">
+        <li class="chapter " data-level="1.4.1" data-path="BasicBackground.html">
             
                 <a href="BasicBackground.html">
             
@@ -146,7 +159,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="FullStackArchitecture.html">
+        <li class="chapter " data-level="1.4.2" data-path="FullStackArchitecture.html">
             
                 <a href="FullStackArchitecture.html">
             
@@ -159,7 +172,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="FrontEnd.html">
+        <li class="chapter " data-level="1.4.3" data-path="FrontEnd.html">
             
                 <a href="FrontEnd.html">
             
@@ -172,7 +185,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.4" data-path="BackEnd.html">
+        <li class="chapter active" data-level="1.4.4" data-path="BackEnd.html">
             
                 <a href="BackEnd.html">
             
@@ -185,7 +198,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="IntoTheCode.html">
+        <li class="chapter " data-level="1.4.5" data-path="IntoTheCode.html">
             
                 <a href="IntoTheCode.html">
             
@@ -249,7 +262,7 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="back-end">Back-End</h1>
-<p>The back-end of a web application contains everything that happens behind the scenes to make the product work. For the UCT Locator, there is a Node.js/Express web server and a Postgres database. </p>
+<p>The back-end of a web application contains everything that happens behind the scenes to make the product work. For the UCT Locator, there is a Node.js/Express web server and a MongoDB database. </p>
 <h2 id="nodejs">Node.js</h2>
 <p><a href="https://nodejs.org/en/about/" target="_blank">Node.js</a> is a JavaScript runtime environment. It is designed to build network applications, like web servers!</p>
 <p>Follow <a href="https://hylandtechclub.com/web-201/TemplateLiterals/DriversLicenseCodeAlong.html" target="_blank">this guide</a> for an introductory Node.js activity. It is also possible to build full web servers in only Node.js, but there is actually another framework for that...</p>
@@ -269,53 +282,45 @@ app.listen(port, () =&gt; {
 })
 </code></pre>
 <p>Follow <a href="https://hylandtechclub.com/web-201/ExpressProjects/ExpressProjectCodeAlong.html" target="_blank">this guide</a> for an introductory Express activity.</p>
-<h2 id="postgres-with-postgis-extension">Postgres with PostGIS extension</h2>
-<p>PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance.</p>
-<p>There is a wealth of information to be found describing how to <a href="https://www.postgresql.org/download/" target="_blank">install</a> and <a href="https://www.postgresql.org/docs/" target="_blank">use</a> PostgreSQL through the official documentation.</p>
+<h2 id="mongodb">MongoDB</h2>
+<p><a href="https://www.mongodb.com/" target="_blank">MongoDB</a> is a document-oriented NoSQL database program. It uses <a href="https://www.w3schools.com/js/js_json_intro.asp" target="_blank">JSON</a>-like documents with optional schemas.</p>
 <p><a href="https://hylandtechclub.com/web-201/DatabasesReplit/StudentDesc.html" target="_blank">This Web 201 lesson</a> introduces databases in general, but it does focus a little more on the specific Replit DB. However, many of the concepts will still be valuable if you do not have much experience with databases.</p>
-<h2 id="sequelize">Sequelize</h2>
-<p><a href="https://sequelize.org/" target="_blank">Sequelize</a> is a library that allows Node.js applications to communicate with a SQL database via an ORM (object relational model). <a href="https://sequelize.org/docs/v6/getting-started/" target="_blank">Here</a> is a brief introduction that covers some of the core concepts; however, it might get a little over-complicated.</p>
+<p><a href="https://www.tutorialspoint.com/mongodb/mongodb_overview.htm" target="_blank">Here</a> is a quick overview of MongoDB in particular.</p>
+<p>For the UCT Locator, there is an existing test database setup and hosted in the cloud through <a href="../MongoAtlasSetup.html">MongoDB Atlas</a>.</p>
+<h2 id="mongoose">Mongoose</h2>
+<p><a href="https://mongoosejs.com/" target="_blank">Mongoose</a> is a library that allows Node.js applications to communicate with a MongoDB database. <a href="https://mongoosejs.com/docs/index.html" target="_blank">Here</a> is a brief introduction that covers some of the core concepts; however, it might get a little over-complicated.</p>
 <h3 id="schemasmodels">Schemas/Models</h3>
-<p>Sequelize uses <a href="https://sequelize.org/docs/v6/core-concepts/model-basics/" target="_blank">models</a> to define the type and structure of the data in the database. <em>Models</em> are fancy constructors compiled from schema definitions.</p>
-<p>Creating a Sequelize schema/model looks something like this:</p>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = (sequelize, DataTypes) =&gt; {
-  <span class="hljs-keyword">const</span> User = sequelize.define(<span class="hljs-string">&quot;User&quot;</span>, {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: <span class="hljs-literal">true</span>,
-      primaryKey: <span class="hljs-literal">true</span>,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: <span class="hljs-literal">false</span>,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: <span class="hljs-literal">false</span>,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: <span class="hljs-literal">false</span>,
-    },
-    role: {
-      type: DataTypes.ENUM(<span class="hljs-string">&apos;admin&apos;</span>, <span class="hljs-string">&apos;user&apos;</span>),
-      defaultValue: <span class="hljs-string">&apos;user&apos;</span>,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: <span class="hljs-literal">false</span>,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: <span class="hljs-literal">false</span>,
-    },
-  }, {
-    tableName: <span class="hljs-string">&apos;users&apos;</span>,
-    sequelize,
-  });
+<p>Mongoose uses <a href="https://www.mongodb.com/docs/atlas/app-services/schemas/" target="_blank">schemas</a> to define the type and structure of the data in the database. <em>Models</em> are fancy constructors compiled from schema definitions.</p>
+<p>Creating a Mongoose schema/model looks something like this:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;mongoose&quot;</span>);
+<span class="hljs-keyword">const</span> Schema = mongoose.Schema;
 
-  <span class="hljs-keyword">return</span> User;
-};
+<span class="hljs-comment">// Create Schema</span>
+<span class="hljs-keyword">const</span> UserSchema = <span class="hljs-keyword">new</span> Schema({
+  name: {
+    type: <span class="hljs-built_in">String</span>,
+    required: <span class="hljs-literal">true</span>
+  },
+  email: {
+    type: <span class="hljs-built_in">String</span>,
+    required: <span class="hljs-literal">true</span>
+  },
+  password: {
+    type: <span class="hljs-built_in">String</span>,
+    required: <span class="hljs-literal">true</span>
+  },
+  createdDate: {
+    type: <span class="hljs-built_in">Date</span>,
+    <span class="hljs-keyword">default</span>: <span class="hljs-built_in">Date</span>.now
+  },
+  role: {
+    type: <span class="hljs-built_in">String</span>,
+    enum: [<span class="hljs-string">&apos;admin&apos;</span>, <span class="hljs-string">&apos;user&apos;</span>],
+    <span class="hljs-keyword">default</span>: <span class="hljs-string">&apos;user&apos;</span>
+  }
+});
+
+<span class="hljs-built_in">module</span>.exports = User = mongoose.model(<span class="hljs-string">&quot;users&quot;</span>, UserSchema);
 </code></pre>
 <p>This example would allow for <code>User</code> objects to be stored in the database. Each user object would have:</p>
 <ul>
@@ -338,14 +343,14 @@ app.listen(port, () =&gt; {
 <li><strong>U</strong>pdate: update the data for an existing object in the database</li>
 <li><strong>D</strong>elete: delete an object from the database</li>
 </ul>
-<p><a href="https://sequelize.org/docs/v6/core-concepts/model-querying-basics/" target="_blank">Here</a> is a rundown of the available queries that can be run once the database has some data in it.</p>
+<p><a href="https://mongoosejs.com/docs/queries.html" target="_blank">Here</a> is a rundown of the available queries that can be run once the database has some data in it.</p>
 <h4 id="create">Create</h4>
 <p>Here is a basic way to add an object to the database:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// Load User model</span>
-<span class="hljs-keyword">const</span> models = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;../../models&quot;</span>);
+<span class="hljs-keyword">const</span> User = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;../../models/User&quot;</span>);
 
 <span class="hljs-comment">// Create User object</span>
-<span class="hljs-keyword">const</span> newUser = models.User.build({
+<span class="hljs-keyword">const</span> newUser = <span class="hljs-keyword">new</span> User({
   name: req.body.name,
   email: req.body.email,
   password: req.body.password
@@ -359,14 +364,14 @@ newUser.save()
 <h4 id="read">Read</h4>
 <p>There are a few different ways to view different data in the database. Note that the <code>User</code> model must be loaded into the script for this to work.</p>
 <p>This query will return <em>all</em> <code>User</code> objects:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> models.User.findAll();
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> User.find({});
 </code></pre>
 <p>This query will return <em>one</em> <code>User</code> object with an <code>email</code> of <code>&quot;mark@facebook.com&quot;</code> (if it exists):</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> userByEmail = <span class="hljs-keyword">await</span> models.User.findOne({ where: { email: <span class="hljs-string">&quot;mark@facebook.com&quot;</span> } });
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> userByEmail = <span class="hljs-keyword">await</span> User.findOne({ email: <span class="hljs-string">&quot;mark@facebook.com&quot;</span> });
 </code></pre>
 <p>There are many other ways to filter the results as well!</p>
 <h4 id="update--delete">Update &amp; Delete</h4>
-<p>It is also possible to <a href="https://sequelize.org/docs/v6/core-concepts/model-instances/#updating-an-instance" target="_blank">update</a> or <a href="https://sequelize.org/docs/v6/core-concepts/model-instances/#deleting-an-instance" target="_blank">delete</a> objects from the database, but the UCT Locator actually hasn&apos;t implemented those interactions yet!</p>
+<p>It is also possible to <a href="https://mongoosejs.com/docs/api.html#model_Model-updateOne" target="_blank">update</a> or <a href="https://mongoosejs.com/docs/api.html#model_Model-deleteOne" target="_blank">delete</a> objects from the database, but the UCT Locator actually hasn&apos;t implemented those interactions yet!</p>
 
                                 
                                 </section>
@@ -410,7 +415,7 @@ newUser.save()
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Back-End","level":"1.3.4","depth":2,"next":{"title":"Into the Code","level":"1.3.5","depth":2,"path":"Setup/StartupLearning/IntoTheCode.md","ref":"Setup/StartupLearning/IntoTheCode.md","articles":[]},"previous":{"title":"Front-End","level":"1.3.3","depth":2,"path":"Setup/StartupLearning/FrontEnd.md","ref":"Setup/StartupLearning/FrontEnd.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Setup/StartupLearning/BackEnd.md","mtime":"2023-01-08T02:04:35.061Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-08T02:05:08.077Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Back-End","level":"1.4.4","depth":2,"next":{"title":"Into the Code","level":"1.4.5","depth":2,"path":"Setup/StartupLearning/IntoTheCode.md","ref":"Setup/StartupLearning/IntoTheCode.md","articles":[]},"previous":{"title":"Front-End","level":"1.4.3","depth":2,"path":"Setup/StartupLearning/FrontEnd.md","ref":"Setup/StartupLearning/FrontEnd.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Setup/StartupLearning/BackEnd.md","mtime":"2023-01-08T02:04:45.550Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-08T02:05:16.334Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

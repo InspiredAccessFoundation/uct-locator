@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="StartupLearning.html" />
+    <link rel="next" href="MongoAtlasSetup.html" />
     
     
     <link rel="prev" href="../" />
@@ -119,7 +119,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="StartupLearning.html">
+        <li class="chapter " data-level="1.3" data-path="MongoAtlasSetup.html">
+            
+                <a href="MongoAtlasSetup.html">
+            
+                    
+                    MongoDB Atlas Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="StartupLearning.html">
             
                 <a href="StartupLearning.html">
             
@@ -133,7 +146,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="StartupLearning/BasicBackground.html">
+        <li class="chapter " data-level="1.4.1" data-path="StartupLearning/BasicBackground.html">
             
                 <a href="StartupLearning/BasicBackground.html">
             
@@ -146,7 +159,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="StartupLearning/FullStackArchitecture.html">
+        <li class="chapter " data-level="1.4.2" data-path="StartupLearning/FullStackArchitecture.html">
             
                 <a href="StartupLearning/FullStackArchitecture.html">
             
@@ -159,7 +172,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="StartupLearning/FrontEnd.html">
+        <li class="chapter " data-level="1.4.3" data-path="StartupLearning/FrontEnd.html">
             
                 <a href="StartupLearning/FrontEnd.html">
             
@@ -172,7 +185,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="StartupLearning/BackEnd.html">
+        <li class="chapter " data-level="1.4.4" data-path="StartupLearning/BackEnd.html">
             
                 <a href="StartupLearning/BackEnd.html">
             
@@ -185,7 +198,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="StartupLearning/IntoTheCode.html">
+        <li class="chapter " data-level="1.4.5" data-path="StartupLearning/IntoTheCode.html">
             
                 <a href="StartupLearning/IntoTheCode.html">
             
@@ -253,7 +266,6 @@
 <h2 id="getting-the-software">Getting the Software</h2>
 <p>You will want to download and install all of these things to begin:</p>
 <ul>
-<li><a href="https://docs.docker.com/desktop/" target="_blank">Docker Desktop</a></li>
 <li><a href="https://code.visualstudio.com/Download" target="_blank">Visual Studio Code</a></li>
 <li><a href="https://nodejs.org/en/download/" target="_blank">NodeJS</a></li>
 <li>Git:<ul>
@@ -296,12 +308,14 @@
 <li>Enter &quot;.env&quot; for the filename, and press Enter<br> <img src="Assets/VsCodeCreateEnvFileBackEnd.png" alt=""></li>
 </ol>
 <p>Open the new <strong>back-end/.env</strong> file for editing, and add these two lines:</p>
-<pre><code class="lang-env">SECRET_KEY=&quot;thisissecret&quot;
+<pre><code class="lang-env">MONGO_URI=&quot;&lt;mongo-uri-here&gt;&quot;
+SECRET_KEY=&quot;thisissecret&quot;
 </code></pre>
-<h4 id="local-database">Local Database</h4>
-<p>To run the application locally you will need to have a running Postgres database. Easiest option to run this is by using docker. This command will allow you to spin up a Postgres database with the PostGIS extension already installed. </p>
-<pre><code>docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-password -p 5432:5432 -v pg-data:/var/lib/postgresql/data -d postgis/postgis
-</code></pre><h3 id="creating-the-front-end-environment-file">Creating the Front-End Environment File</h3>
+<p>The actual URI for the database is not published here. Replace <code>&lt;mongo-uri-here&gt;</code> in the <strong>.env</strong> file with the URI for an existing Mongo database.</p>
+<h4 id="optional-personal-database">(OPTIONAL) Personal Database</h4>
+<p>If desired, it is possible to create a personal database using MongoDB Atlas. <a href="MongoAtlasSetup.html">Click here for instructions.</a></p>
+<p>The new URI should replace <code>&lt;mongo-uri-here&gt;</code> in the <strong>.env</strong> file.</p>
+<h3 id="creating-the-front-end-environment-file">Creating the Front-End Environment File</h3>
 <p>In addition to a back-end file, there is also a front-end <strong>.env</strong>. This file allows access to the Google Maps API - basically, the thing that creates and runs the interactive map in the UCT Locator app.</p>
 <p>Follow the same basic steps as above, this time creating a new <strong>.env</strong> file within the <strong><em>front-end</em></strong> folder.</p>
 <p>Open the <strong>front-end/.env</strong> file for editing, and add this line:</p>
@@ -363,7 +377,7 @@
                 </a>
                 
                 
-                <a href="StartupLearning.html" class="navigation navigation-next " aria-label="Next page: Startup Learning">
+                <a href="MongoAtlasSetup.html" class="navigation navigation-next " aria-label="Next page: MongoDB Atlas Setup">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -374,7 +388,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Developer Setup Guide","level":"1.2","depth":1,"next":{"title":"Startup Learning","level":"1.3","depth":1,"path":"Setup/StartupLearning.md","ref":"Setup/StartupLearning.md","articles":[{"title":"Basic Background","level":"1.3.1","depth":2,"path":"Setup/StartupLearning/BasicBackground.md","ref":"Setup/StartupLearning/BasicBackground.md","articles":[]},{"title":"Full-Stack Architecture","level":"1.3.2","depth":2,"path":"Setup/StartupLearning/FullStackArchitecture.md","ref":"Setup/StartupLearning/FullStackArchitecture.md","articles":[]},{"title":"Front-End","level":"1.3.3","depth":2,"path":"Setup/StartupLearning/FrontEnd.md","ref":"Setup/StartupLearning/FrontEnd.md","articles":[]},{"title":"Back-End","level":"1.3.4","depth":2,"path":"Setup/StartupLearning/BackEnd.md","ref":"Setup/StartupLearning/BackEnd.md","articles":[]},{"title":"Into the Code","level":"1.3.5","depth":2,"path":"Setup/StartupLearning/IntoTheCode.md","ref":"Setup/StartupLearning/IntoTheCode.md","articles":[]}]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Setup/DeveloperSetupGuide.md","mtime":"2023-01-08T02:04:35.061Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-08T02:05:08.077Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Developer Setup Guide","level":"1.2","depth":1,"next":{"title":"MongoDB Atlas Setup","level":"1.3","depth":1,"path":"Setup/MongoAtlasSetup.md","ref":"Setup/MongoAtlasSetup.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Setup/DeveloperSetupGuide.md","mtime":"2023-01-08T02:04:45.546Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-08T02:05:16.334Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
