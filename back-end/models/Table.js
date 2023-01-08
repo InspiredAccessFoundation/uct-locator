@@ -1,85 +1,104 @@
-const mongoose = require("mongoose");
-const PointSchema = require("./Point");
-const UserSchema = require("./User");
-const Schema = mongoose.Schema;
+module.exports = (sequelize, DataTypes) => {
+  const Table = sequelize.define("Table", {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    locationName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id',
+      },
+    },
+    streetAddress: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    zipcode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      max: 5,
+    },
+    locationWithinBuilding: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    restroomType: {
+      type: DataTypes.ENUM('men', 'women', 'family', 'other'),
+      allowNull: true,
+    },
+    coordinateLocation: {
+      type: DataTypes.GEOMETRY('POINT', 4326),
+      allowNull: false,
+    },
+    tableStyle: {
+      type: DataTypes.ENUM('fixed-height', 'adjustable', 'portable'),
+      allowNull: true,
+    },
+    tableNotes: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    publicAccessibility: {
+      type: DataTypes.ENUM('Patrons/Patients Only', 'Accessible to the Public'),
+      allowNull: true,
+    },
+    hours: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    contactPhone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    contactEmail: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    additionalInfo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.ENUM('submitted', 'approved', 'deleted', 'reported'),
+      defaultValue: 'submitted',
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+  }, {
+    tableName: 'tables',
+    sequelize,
+  });
 
-// Create Schema
-const TableSchema = new Schema({
-  locationName: {
-    type: String,
-    required: true
-  },
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  streetAddress: {
-    type: String,
-    required: false
-  },
-  city: {
-    type: String,
-    required: false
-  },
-  state: {
-    type: String,
-    required: false
-  },
-  zipcode: {
-    type: String,
-    required: false,
-    max:5
-  },
-  locationWithinBuilding: {
-    type: String,
-    required: false
-  },
-  restroomType: {
-    type: String,
-    enum: ['men', 'women', 'family', 'other'],
-    required: false
-  },
-  coordinateLocation: {
-    type: PointSchema,
-    required: true
-  },
-  tableStyle: {
-    type: String,
-    enum: ['fixed-height', 'adjustable', 'portable'],
-    required: false
-  },
-  tableNotes: {
-    type: String,
-    required: false
-  },
-  publicAccessibility: {
-    type: String,
-    enum: ['Patrons/Patients Only', 'Accessible to the Public'],
-    required: false
-  },
-  hours: {
-    type: String,
-    required: false
-  },
-  contactPhone: {
-    type: String,
-    required: false
-  },
-  contactEmail: {
-    type: String,
-    required: false
-  },
-  additionalInfo: {
-    type: String,
-    required: false
-  },
-  status: {
-    type: String,
-    enum: ['submitted', 'approved', 'deleted', 'reported'],
-    default: 'submitted',
-    required: true
+  Table.associate = (models) => {
+    Table.belongsTo(models.User, {
+      foreignKey: {
+        name: "userId", allowNull: false
+      }
+    })
   }
-});
 
-module.exports = Table = mongoose.model("tables", TableSchema);
+  return Table;
+};
