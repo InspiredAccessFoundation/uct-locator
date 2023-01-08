@@ -38,15 +38,17 @@ In order to keep databases up-to-date with schema changes, this repo uses [seque
 
 Use the following commands for common tasks for schema migrations:
 
-1. Check migrations status for the current db: `npx runmigration --list`
-2. Run any pending migrations: `npx runmigration`
-3. Revert db changes from the last migration: `npx runmigration --pos <previous migration file>`
+1. Check migrations status for the current db: `npx sequelize-cli db:migrate:status` or `npm run db-status`
+2. Run any pending migrations: `npx sequelize-cli db:migrate` or `npm run db-up`
+3. Revert db changes from the last migration: `npx sequelize-cli db:migrate:undo` or or `npm run db-down` 
 4. Add a new migration script by updating your models and then running:
 
     ```sh
     cd back-end
     npx makemigration --name '<name that describes you changes>'
     ```
+
+    ** Caveat : It possible this will only generate the up, so you will have to go into the migration and write a `down` function so that it can be undone if needed. 
 
 ### Front-End
 

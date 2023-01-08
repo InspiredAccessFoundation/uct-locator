@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "test": "jest"
+    "test": "jest",
+    "db-status": "sequelize-cli db:migrate:status",
+    "db-up": "sequelize-cli db:migrate",
+    "db-down": "sequelize-cli db:migrate:undo"
   },
   "author": "",
   "license": "MIT",
