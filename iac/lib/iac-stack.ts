@@ -137,6 +137,7 @@ export class AppStack extends cdk.Stack {
       assignPublicIp: true,
       securityGroups: [ecsSecurityGroup],
       enableExecuteCommand: true,
+      circuitBreaker: { rollback: true },
       capacityProviderStrategies: [
         {
           capacityProvider: 'FARGATE_SPOT',
