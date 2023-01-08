@@ -216,14 +216,13 @@ export class AppStack extends cdk.Stack {
     });
 
     listener.addTargets('production_ecs', {
-      port: 443,
+      port: 80,
+      protocol: elbv2.ApplicationProtocol.HTTP,
       targets: [ecsService],
       conditions: [elbv2.ListenerCondition.hostHeaders(hosts)],
       priority: 1,
       healthCheck: {
-        port: "80",
         path: "/api/health/check",
-        protocol: elbv2.Protocol.HTTP
       }
     });
     // load_balancer.addRedirect()
