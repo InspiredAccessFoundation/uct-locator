@@ -4,6 +4,7 @@ Follow these steps to start contributing to the UCT Locator Project.
 ## Getting the Software
 You will want to download and install all of these things to begin:
 
+- [Docker Desktop](https://docs.docker.com/desktop/)
 - [Visual Studio Code](https://code.visualstudio.com/Download)
 - [NodeJS](https://nodejs.org/en/download/)
 - Git:
@@ -58,16 +59,15 @@ For the back-end of the application to work properly, it needs a database. The c
 Open the new **back-end/.env** file for editing, and add these two lines:
 
 ```env
-MONGO_URI="<mongo-uri-here>"
 SECRET_KEY="thisissecret"
 ```
 
-The actual URI for the database is not published here. Replace `<mongo-uri-here>` in the **.env** file with the URI for an existing Mongo database.
+#### Local Database
+To run the application locally you will need to have a running Postgres database. Easiest option to run this is by using docker. This command will allow you to spin up a Postgres database with the PostGIS extension already installed. 
 
-#### (OPTIONAL) Personal Database
-If desired, it is possible to create a personal database using MongoDB Atlas. [Click here for instructions.](MongoAtlasSetup.md)
-
-The new URI should replace `<mongo-uri-here>` in the **.env** file.
+```
+docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-password -p 5432:5432 -v pg-data:/var/lib/postgresql/data -d postgis/postgis
+```
 
 ### Creating the Front-End Environment File
 In addition to a back-end file, there is also a front-end **.env**. This file allows access to the Google Maps API - basically, the thing that creates and runs the interactive map in the UCT Locator app.
