@@ -1,5 +1,8 @@
 name: Build Gitbook
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
