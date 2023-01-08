@@ -40,19 +40,29 @@ docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-
 #### Migrations
 
 In order to keep databases up-to-date with schema changes, this repo uses [sequelize-auto-migrations-v2](https://github.com/brianschardt/sequelize-auto-migrations) to manage and run schema migrations. 
->>>>>>> 85db881 (Update all docs to be Postgres specific)
 
 Use the following commands for common tasks for schema migrations:
 
-1. Check migrations status for the current db: `npx runmigration --list`
-2. Run any pending migrations: `npx runmigration`
-3. Revert db changes from the last migration: `npx runmigration --pos <previous migration file>`
+1. Check migrations status for the current db: `npx sequelize-cli db:migrate:status` or `npm run db-status`
+2. Run any pending migrations: `npx sequelize-cli db:migrate` or `npm run db-up`
+3. Revert db changes from the last migration: `npx sequelize-cli db:migrate:undo` or or `npm run db-down` 
 4. Add a new migration script by updating your models and then running:
 
     ```sh
     cd back-end
     npx makemigration --name '<name that describes you changes>'
     ```
+
+### Front-End
+
+For the front-end, you should be able to simply `cd` into the **front-end** directory, and run this:
+
+```sh
+npm install
+npm run start
+```
+
+## Advanced
 
 ### Nx
 You can also use [Nx](https://nx.dev/) to build, run, and manage projects in this repository.
