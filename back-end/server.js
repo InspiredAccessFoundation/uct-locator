@@ -8,6 +8,17 @@ const passportConfig = require("./config/passport");
 // initialize app
 const app = express();
 
+// set up rate limiter: maximum of five requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 5,
+  message: { error: "Too many requests, please try again later." }
+});
+
+// apply rate limiter to all requests
+app.use(limiter);
+
 // setup middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
