@@ -2,16 +2,21 @@ import * as cdk from 'aws-cdk-lib';
 import { RemovalPolicy, aws_elasticloadbalancingv2 as elbv2, aws_route53_targets as route53targets, aws_certificatemanager as certman, aws_route53 as route53, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
+import { HostedZoneProps } from 'aws-cdk-lib/aws-route53';
 
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+const domains: string[] = [
+  "adultchangingtablemap.com",
+  "universalchangingtablemap.com",
+  "inclusiverestroommap.com"
+]
 
 export class CentralIacStack extends cdk.Stack {
   public readonly vpc: ec2.Vpc;
-  public readonly cluster: ecs.Cluster;
   public readonly frontend_repository: ecr.Repository;
   public readonly backend_repository: ecr.Repository;
   public readonly load_balancer: elbv2.ApplicationLoadBalancer
-
+  public readonly listener: elbv2.ApplicationListener
+  public readonly zones: route53.HostedZone[] = []
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -21,12 +26,6 @@ export class CentralIacStack extends cdk.Stack {
       enableDnsSupport: true,
       maxAzs: 2,
       natGateways: 0
-    })
-
-    this.cluster = new ecs.Cluster(this, "uct-cluster", {
-      vpc: this.vpc,
-      clusterName: "uct-cluster",
-      enableFargateCapacityProviders: true
     })
 
     this.frontend_repository = new ecr.Repository(this, "uct-frontend-repo", {
@@ -102,50 +101,62 @@ export class CentralIacStack extends cdk.Stack {
       vpc: this.vpc,
       internetFacing: true,
     });
+
+    const subdomains: string[] = ["app", "dev"]
+
+    const hosts: string[] = []
+    const certs: certman.Certificate[] = []
+    for (const subdomain of subdomains) {
+      for (const domain of domains) {
+        const hostname = `${subdomain}.${domain}`
+        const zone = new route53.HostedZone(this, `${hostname}-HostedZone`, {
+          zoneName: hostname,
+        });
+        const cert = new certman.Certificate(this, `${hostname}-Certificate`, {
+          domainName: hostname,
+          validation: certman.CertificateValidation.fromDns(zone),
+        });
+        certs.push(cert)
+        hosts.push(hostname)
+        this.zones.push(zone)
+      }
+    }
+
+    this.listener = new elbv2.ApplicationListener(this, 'Listener', {
+      loadBalancer: this.load_balancer, // ! need to pass load balancer to attach to !
+      port: 443,
+      defaultAction: elbv2.ListenerAction.fixedResponse(404),
+      certificates: certs
+    });
   }
 }
 
 export class AppStack extends cdk.Stack {
   constructor(scope: Construct, id: string,
     vpc: ec2.Vpc,
-    cluster: ecs.Cluster,
     frontend_repository: ecr.Repository,
     backend_repository: ecr.Repository,
     load_balancer: elbv2.ApplicationLoadBalancer,
+    listener: elbv2.ApplicationListener,
+    zones: route53.HostedZone[],
+    frontend_version: string,
+    backend_version: string,
     subdomain: string,
     props?: cdk.StackProps
   ) {
     super(scope, id, props);
 
-    const domains: string[] = [
-      "adultchangingtablemap.com",
-      "universalchangingtablemap.com",
-      "inclusiverestroommap.com"
-    ]
+    const cluster = new ecs.Cluster(this, "uct-cluster", {
+      vpc: vpc,
+      enableFargateCapacityProviders: true
+    })
 
-    const hosts: string[] = []
-    const certs: certman.Certificate[] = []
-    const zones: route53.HostedZone[] = []
-    for (const domain of domains) {
-      const hostname = `${subdomain}.${domain}`
-      const zone = new route53.HostedZone(this, `${hostname}-HostedZone`, {
-        zoneName: hostname,
-      });
-      const cert = new certman.Certificate(this, `${hostname}-Certificate`, {
-        domainName: hostname,
-        validation: certman.CertificateValidation.fromDns(zone),
-      });
-      certs.push(cert)
-      hosts.push(hostname)
-      zones.push(zone)
-    }
-
-    const taskDefinition = new ecs.FargateTaskDefinition(this, 'TaskDef', {
+    const taskDefinition = new ecs.FargateTaskDefinition(this, "taskDef", {
       memoryLimitMiB: 2048,
     });
 
-    taskDefinition.addContainer('frontend-container', {
-      image: ecs.ContainerImage.fromEcrRepository(frontend_repository, "0.0.1"),
+    taskDefinition.addContainer("frontend-container", {
+      image: ecs.ContainerImage.fromEcrRepository(frontend_repository, frontend_version),
       memoryLimitMiB: 512,
       essential: true,
       containerName: "frontend",
@@ -154,7 +165,7 @@ export class AppStack extends cdk.Stack {
         protocol: ecs.Protocol.TCP
       }],
       logging: ecs.LogDriver.awsLogs({
-        streamPrefix: "/uct-locator",
+        streamPrefix: `/uct-locator-${subdomain}`,
         logRetention: cdk.aws_logs.RetentionDays.ONE_DAY
       })
     });
@@ -162,8 +173,8 @@ export class AppStack extends cdk.Stack {
     const mongo_uri_secret = secretsmanager.Secret.fromSecretNameV2(this, "mongo-uri-secret", "/uct-locator/mongo-uri")
     const jwt_secret_key = secretsmanager.Secret.fromSecretNameV2(this, "jwt-secret-key", "/uct-locator/secret-key")
 
-    taskDefinition.addContainer('backend-container', {
-      image: ecs.ContainerImage.fromEcrRepository(backend_repository, "0.0.2"),
+    taskDefinition.addContainer("backend-container", {
+      image: ecs.ContainerImage.fromEcrRepository(backend_repository, backend_version),
       memoryLimitMiB: 1280,
       essential: true,
       containerName: "backend",
@@ -176,7 +187,7 @@ export class AppStack extends cdk.Stack {
         "SECRET_KEY": ecs.Secret.fromSecretsManager(jwt_secret_key),
       },
       logging: ecs.LogDriver.awsLogs({
-        streamPrefix: "/uct-locator",
+        streamPrefix: `/uct-locator-${subdomain}`,
         logRetention: cdk.aws_logs.RetentionDays.ONE_DAY
       })
     });
@@ -184,14 +195,23 @@ export class AppStack extends cdk.Stack {
     mongo_uri_secret.grantRead(taskDefinition.taskRole)
     jwt_secret_key.grantRead(taskDefinition.taskRole)
 
-    const ecsSecurityGroup = new ec2.SecurityGroup(this, 'ecs-sg', {
+    const ecsSecurityGroup = new ec2.SecurityGroup(this, "ecs-sg", {
       vpc,
       allowAllOutbound: true,
     })
 
-    const ecsService = new ecs.FargateService(this, 'Service', {
+    let priority = 2;
+    let desiredCount = 1;
+    // If production allow more than one at a time
+    if (subdomain == "app") {
+      desiredCount = 2
+      priority = 1;
+    }
+
+    const ecsService = new ecs.FargateService(this, "ecs-service", {
       cluster,
       taskDefinition,
+      desiredCount: desiredCount,
       assignPublicIp: true,
       securityGroups: [ecsSecurityGroup],
       enableExecuteCommand: true,
@@ -208,32 +228,32 @@ export class AppStack extends cdk.Stack {
       ],
     });
 
-    const listener = new elbv2.ApplicationListener(this, 'Listener', {
-      loadBalancer: load_balancer, // ! need to pass load balancer to attach to !
-      port: 443,
-      defaultAction: elbv2.ListenerAction.fixedResponse(404),
-      certificates: certs
-    });
 
-    listener.addTargets('production_ecs', {
+    const hosts: string[] = []
+    for (const domain of domains) {
+      hosts.push(`${subdomain}.${domain}`)
+    }
+
+    listener.addTargets(`${subdomain}-ecs`, {
       port: 80,
       protocol: elbv2.ApplicationProtocol.HTTP,
       targets: [ecsService],
       conditions: [elbv2.ListenerCondition.hostHeaders(hosts)],
-      priority: 1,
+      priority: priority,
       healthCheck: {
         path: "/api/health/check",
       }
     });
-    // load_balancer.addRedirect()
 
     for (const zone of zones) {
-      new route53.ARecord(this, `${zone.zoneName}-AliasRecord`, {
-        zone: zone,
-        target: route53.RecordTarget.fromAlias(
-          new route53targets.LoadBalancerTarget(load_balancer)
-        ),
-      });
+      if (zone.zoneName.indexOf(subdomain) > -1) {
+        new route53.ARecord(this, `${zone.zoneName}-LBAliasRecord`, {
+          zone: zone,
+          target: route53.RecordTarget.fromAlias(
+            new route53targets.LoadBalancerTarget(load_balancer)
+          ),
+        });
+      }
     }
 
   }
