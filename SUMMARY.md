@@ -1,4 +1,5 @@
 - [Developer Setup Guide](Setup/DeveloperSetupGuide.md)
+- [MongoDB Atlas Setup](Setup/MongoAtlasSetup.md)
 - [Startup Learning](Setup/StartupLearning.md)
     - [Basic Background](Setup/StartupLearning/BasicBackground.md)
     - [Full-Stack Architecture](Setup/StartupLearning/FullStackArchitecture.md)

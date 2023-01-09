@@ -1,8 +1,5 @@
 name: Build Gitbook
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   build:
@@ -11,7 +8,7 @@ jobs:
     steps:
       # Check out the repo first
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       # Run this action to publish gitbook
       - name: Publish
         uses: tuliren/publish-gitbook@v1.0.0

@@ -35,7 +35,7 @@ Powers of Logged-in User, plus...
 
 ## Tech
 - Web Server: NodeJS + Express
-- Database: Postgres with PostGIS extension installed
+- Database: MongoDB
 - Front-end: React
 - Component library:
 	- [Ant Design (maintained by chinese company)](https://ant.design/)

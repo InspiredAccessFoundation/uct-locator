@@ -1,55 +1,22 @@
-module.exports = (sequelize, DataTypes) => {
-  const Comment = sequelize.define("Comment", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    tableID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'tables',
-        key: 'id',
-      },
-    },
-    authorID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id',
-      },
-    },
-    body: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-  }, {
-    tableName: 'comments',
-    sequelize,
-  });
-
-  Comment.associate = (models) => {
-    Comment.belongsTo(models.User, {
-      foreignKey: {
-        name: "authorID", allowNull: false
-      }
-    })
-    models.Table.hasMany(Comment, {
-      foreignKey: {
-        name: "tableID", allowNull: false
-      }
-    })
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+ 
+// Create Schema
+const CommentSchema = new Schema({
+  tableID: {
+    type: Schema.Types.ObjectId,
+    ref: 'Table',
+    required: true
+  },
+  authorID: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  body: {
+    type: String,
+    required: true
   }
+});
 
-  return Comment;
-};
+module.exports = comment = mongoose.model("comments", commentSchema);

@@ -6,9 +6,9 @@
   "scripts": {
     "server": "nodemon server.js",
     "test": "jest",
-    "db-status": "sequelize-cli db:migrate:status",
-    "db-up": "sequelize-cli db:migrate",
-    "db-down": "sequelize-cli db:migrate:undo"
+    "db-status": "migrate-mongo status",
+    "db-up": "migrate-mongo up",
+    "db-down": "migrate-mongo down"
   },
   "author": "",
   "license": "MIT",
@@ -18,14 +18,11 @@
     "concurrently": "^7.2.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "express-rate-limit": "^6.7.0",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
-    "pg": "^8.8.0",
-    "sequelize": "^6.28.0",
-    "sequelize-auto-migrations-v2": "^1.2.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {
@@ -33,7 +30,7 @@
     "@babel/preset-env": "^7.18.2",
     "babel-jest": "^28.1.1",
     "jest": "^28.1.1",
-    "nodemon": "^2.0.16",
-    "sequelize-cli": "^6.5.2"
+    "migrate-mongo": "^9.0.0",
+    "nodemon": "^2.0.16"
   }
 }
