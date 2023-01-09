@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy, aws_elasticloadbalancingv2 as elbv2, aws_route53_targets as route53targets, aws_certificatemanager as certman, aws_route53 as route53, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
+import { RemovalPolicy, aws_s3 as s3, aws_elasticloadbalancingv2 as elbv2, aws_route53_targets as route53targets, aws_certificatemanager as certman, aws_route53 as route53, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
 import { HostedZoneProps } from 'aws-cdk-lib/aws-route53';
@@ -146,6 +146,24 @@ export class AppStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
+    const bucket = new s3.Bucket(this, 'image-storage', {
+      enforceSSL: true,
+      versioned: false,
+      accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+    })
+    bucket.addLifecycleRule({
+      abortIncompleteMultipartUploadAfter: Duration.days(7),
+      enabled: true,
+      transitions: [
+        {
+          storageClass: s3.StorageClass.INFREQUENT_ACCESS,
+          transitionAfter: cdk.Duration.days(30),
+        }
+      ]
+    });
+
     const cluster = new ecs.Cluster(this, "uct-cluster", {
       vpc: vpc,
       enableFargateCapacityProviders: true
@@ -194,6 +212,26 @@ export class AppStack extends cdk.Stack {
 
     mongo_uri_secret.grantRead(taskDefinition.taskRole)
     jwt_secret_key.grantRead(taskDefinition.taskRole)
+
+    taskDefinition.taskRole.attachInlinePolicy(
+      new iam.Policy(this, "s3-write-no-delete", {
+        statements: [
+          new iam.PolicyStatement({
+            actions: [
+              's3:GetObject',
+              's3:PutObject',
+              's3:Abort*',
+              's3:PutObjectTagging'
+            ],
+            resources: [
+              bucket.bucketArn,
+              `${bucket.bucketArn}/*`
+            ],
+          })
+        ]
+      })
+    )
+
 
     const ecsSecurityGroup = new ec2.SecurityGroup(this, "ecs-sg", {
       vpc,
