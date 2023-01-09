@@ -17,6 +17,7 @@ export class CentralIacStack extends cdk.Stack {
   public readonly load_balancer: elbv2.ApplicationLoadBalancer
   public readonly listener: elbv2.ApplicationListener
   public readonly zones: route53.HostedZone[] = []
+  public readonly database: rds.DatabaseInstance
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -74,7 +75,7 @@ export class CentralIacStack extends cdk.Stack {
     // Creates an admin user of uctadmin with a generated password
     const rds_master_creds = rds.Credentials.fromGeneratedSecret('uctadmin')
     // Using the secret
-    const uct_postgres_rds = new rds.DatabaseInstance(this, "uct-postgres", {
+    this.database = new rds.DatabaseInstance(this, "uct-postgres", {
       engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_14 }),
       credentials: rds_master_creds,
       vpc: this.vpc,
@@ -139,12 +140,23 @@ export class AppStack extends cdk.Stack {
     load_balancer: elbv2.ApplicationLoadBalancer,
     listener: elbv2.ApplicationListener,
     zones: route53.HostedZone[],
+    database: rds.DatabaseInstance,
     frontend_version: string,
     backend_version: string,
     subdomain: string,
     props?: cdk.StackProps
   ) {
     super(scope, id, props);
+
+    let env = "development"
+    let priority = 2;
+    let desiredCount = 1;
+    // If production allow more than one at a time
+    if (subdomain == "app") {
+      desiredCount = 2
+      priority = 1;
+      env = "production"
+    }
 
     const bucket = new s3.Bucket(this, 'image-storage', {
       enforceSSL: true,
@@ -188,6 +200,18 @@ export class AppStack extends cdk.Stack {
       })
     });
 
+    const databaseUserSecret = new secretsmanager.Secret(this, `${env}-dbappuser`, {
+      generateSecretString: {
+        secretStringTemplate: JSON.stringify(
+          {
+            username: `${env}user`,
+            host: database.dbInstanceEndpointAddress,
+            port: database.dbInstanceEndpointPort,
+            database: `${env}db`
+          }),
+        generateStringKey: 'password',
+      },
+    });
     const mongo_uri_secret = secretsmanager.Secret.fromSecretNameV2(this, "mongo-uri-secret", "/uct-locator/mongo-uri")
     const jwt_secret_key = secretsmanager.Secret.fromSecretNameV2(this, "jwt-secret-key", "/uct-locator/secret-key")
 
@@ -203,6 +227,14 @@ export class AppStack extends cdk.Stack {
       secrets: {
         "MONGO_URI": ecs.Secret.fromSecretsManager(mongo_uri_secret),
         "SECRET_KEY": ecs.Secret.fromSecretsManager(jwt_secret_key),
+        "POSTGRES_DB": ecs.Secret.fromSecretsManager(databaseUserSecret, "database"),
+        "POSTGRES_PASSWORD": ecs.Secret.fromSecretsManager(databaseUserSecret, "password"),
+        "POSTGRES_USERNAME": ecs.Secret.fromSecretsManager(databaseUserSecret, "username"),
+        "POSTGRES_PORT": ecs.Secret.fromSecretsManager(databaseUserSecret, "port"),
+        "POSTGRES_HOST": ecs.Secret.fromSecretsManager(databaseUserSecret, "host"),
+      },
+      environment: {
+        "NODE_ENV": env
       },
       logging: ecs.LogDriver.awsLogs({
         streamPrefix: `/uct-locator-${subdomain}`,
@@ -237,14 +269,6 @@ export class AppStack extends cdk.Stack {
       vpc,
       allowAllOutbound: true,
     })
-
-    let priority = 2;
-    let desiredCount = 1;
-    // If production allow more than one at a time
-    if (subdomain == "app") {
-      desiredCount = 2
-      priority = 1;
-    }
 
     const ecsService = new ecs.FargateService(this, "ecs-service", {
       cluster,

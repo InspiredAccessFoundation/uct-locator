@@ -11,7 +11,8 @@ const {
   backend_repository,
   load_balancer,
   listener,
-  zones
+  zones,
+  database
 } = new CentralIacStack(app, 'CentralIacStack', { env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: "us-east-1" } });
 
 // Production stack
@@ -22,6 +23,7 @@ new AppStack(app, 'ProdStack',
   load_balancer,
   listener,
   zones,
+  database,
   "0.0.1",
   "0.0.2",
   "app",
@@ -38,6 +40,7 @@ new AppStack(app, 'DevStack',
   load_balancer,
   listener,
   zones,
+  database,
   "0.0.1",
   "0.0.2",
   "dev",
