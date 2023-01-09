@@ -2,7 +2,6 @@ import * as cdk from 'aws-cdk-lib';
 import { RemovalPolicy, aws_s3 as s3, aws_elasticloadbalancingv2 as elbv2, aws_route53_targets as route53targets, aws_certificatemanager as certman, aws_route53 as route53, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
-import { HostedZoneProps } from 'aws-cdk-lib/aws-route53';
 
 const domains: string[] = [
   "adultchangingtablemap.com",
@@ -46,30 +45,46 @@ export class CentralIacStack extends cdk.Stack {
     this.backend_repository.addLifecycleRule({ maxImageCount: 10 });
 
     const provider = new GithubActionsIdentityProvider(this, 'GithubProvider');
-    const developmentActionsRole = new GithubActionsRole(this, 'GithubActionsRole', {
-      provider: provider,           // reference into the OIDC provider
-      owner: 'InspiredAccessFoundation',            // your repository owner (organization or user) name
-      repo: 'uct-locator',            // your repository name (without the owner name)
-      filter: `ref:refs/heads/develop`,   // JWT sub suffix filter, defaults to '*' 
-      // TODO Make this not just hardcoded to develop
-    });
 
-    // Allow for pushing and pulling from the ECR repo for docker images
-    this.frontend_repository.grantPullPush(developmentActionsRole)
-    this.backend_repository.grantPullPush(developmentActionsRole)
+    const envs = ["development", "production"]
+    for (const env of envs) {
+      const actionsRole = new GithubActionsRole(this, `${env}GithubActionsRole`, {
+        provider: provider,           // reference into the OIDC provider
+        owner: 'InspiredAccessFoundation',            // your repository owner (organization or user) name
+        repo: 'uct-locator',            // your repository name (without the owner name)
+        filter: `ref:refs/heads/${env}`,   // JWT sub suffix filter, defaults to '*' 
+        // TODO Make this not just hardcoded to develop
+      });
 
-    // Allow assume cdk iam roles to be able to do CDK things
-    developmentActionsRole.addToPolicy(
-      new iam.PolicyStatement({
-        actions: [
-          "sts:AssumeRole"
-        ],
-        effect: iam.Effect.ALLOW,
-        resources: [
-          "arn:aws:iam::*:role/cdk-*"
-        ]
-      })
-    )
+      // Allow for pushing and pulling from the ECR repo for docker images
+      this.frontend_repository.grantPullPush(actionsRole)
+      this.backend_repository.grantPullPush(actionsRole)
+
+      // Allow assume cdk iam roles to be able to do CDK things
+      actionsRole.addToPolicy(
+        new iam.PolicyStatement({
+          actions: [
+            "sts:AssumeRole"
+          ],
+          effect: iam.Effect.ALLOW,
+          resources: [
+            "arn:aws:iam::*:role/cdk-*"
+          ]
+        })
+      )
+      actionsRole.addToPolicy(
+        new iam.PolicyStatement({
+          actions: [
+            "secretsmanager:DescribeSecret",
+            "secretsmanager:GetSecretValue"
+          ],
+          effect: iam.Effect.ALLOW,
+          resources: [
+            `arn:aws:secretsmanager:us-east-1:${cdk.Stack.of(this).account}:secret:/uct-locator/development/dbappuser-??????`
+          ]
+        })
+      )
+    }
 
 
     // Creates an admin user of uctadmin with a generated password
@@ -104,7 +119,6 @@ export class CentralIacStack extends cdk.Stack {
     });
 
     const subdomains: string[] = ["app", "dev"]
-
     const hosts: string[] = []
     const certs: certman.Certificate[] = []
     for (const subdomain of subdomains) {
@@ -201,6 +215,7 @@ export class AppStack extends cdk.Stack {
     });
 
     const databaseUserSecret = new secretsmanager.Secret(this, `${env}-dbappuser`, {
+      secretName: `/uct-locator/${env}/dbappuser`,
       generateSecretString: {
         secretStringTemplate: JSON.stringify(
           {
