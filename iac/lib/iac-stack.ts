@@ -143,6 +143,7 @@ export class CentralIacStack extends cdk.Stack {
       defaultAction: elbv2.ListenerAction.fixedResponse(404),
       certificates: certs
     });
+    this.load_balancer.addRedirect()
   }
 }
 
