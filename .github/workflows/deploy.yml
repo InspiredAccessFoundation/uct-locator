@@ -15,13 +15,8 @@ jobs:
           ref: ${{github.event.push.ref}}
       - name: Build the Docker images
         run: |-
-<<<<<<< HEAD
-          docker build . --file Dockerfile.frontend --tag ${{ secrets.ECR_REPO_URL }}/uct-frontend:${{ github.event.inputs.version }}
-          docker build . --file Dockerfile.backend --tag ${{ secrets.ECR_REPO_URL }}/uct-backend:${{ github.event.inputs.version }}
-=======
           docker build . --file Dockerfile.frontend --tag ${{ secrets.ECR_REPO_URL }}/uct-frontend:${{  github.ref_name }}
           docker build . --file Dockerfile.backend --tag ${{ secrets.ECR_REPO_URL }}/uct-backend:${{  github.ref_name }}
->>>>>>> c9fa40b (Actions fixes)
       - name: Configure AWS credentials 
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -32,13 +27,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Push Docker to ECR Private
         run: |-
-<<<<<<< HEAD
-          docker push ${{ secrets.ECR_REPO_URL }}/uct-frontend:${{ github.event.inputs.version }}
-          docker push ${{ secrets.ECR_REPO_URL }}/uct-backend:${{ github.event.inputs.version }}
-=======
           docker push ${{ secrets.ECR_REPO_URL }}/uct-frontend:${{  github.ref_name }}
           docker push ${{ secrets.ECR_REPO_URL }}/uct-backend:${{  github.ref_name }}
->>>>>>> c9fa40b (Actions fixes)
 
   diff-dev:
     runs-on: 'ubuntu-latest'
