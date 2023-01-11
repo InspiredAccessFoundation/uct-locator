@@ -50,7 +50,7 @@ export class CentralIacStack extends cdk.Stack {
       provider: provider,           // reference into the OIDC provider
       owner: 'InspiredAccessFoundation',            // your repository owner (organization or user) name
       repo: 'uct-locator',            // your repository name (without the owner name)
-      filter: 'repo:octo-org/octo-repo:ref:refs/tags/v*',   // JWT sub suffix filter, defaults to '*' 
+      filter: 'ref:refs/tags/v*',   // JWT sub suffix filter, defaults to '*' 
       // TODO Make this not just hardcoded to develop
     });
     this.frontend_repository.grantPullPush(ecrActionsRole)
