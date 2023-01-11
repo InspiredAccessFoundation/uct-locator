@@ -43,11 +43,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.DEV_IAM_ROLE }}
           aws-region: us-east-1
-      - name: Configure NPM and Install
+      - name: CDK Diff
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      - name: CDK Diff
       - run: |-
           cd iac
           npm install
@@ -71,11 +70,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.DEV_IAM_ROLE }}
           aws-region: us-east-1
-      - name: Configure NPM and Install
+      - name: CDK Deploy
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      - name: CDK Deploy
         run: |-
           cd iac
           npm install
@@ -94,11 +92,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.PROD_IAM_ROLE }}
           aws-region: us-east-1
-      - name: Configure NPM and Install
+      - name: CDK Diff
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      - name: CDK Diff
         run: |-
           cd iac
           npm install
@@ -122,11 +119,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.PROD_IAM_ROLE }}
           aws-region: us-east-1
-      - name: Configure NPM and Install
+      - name: CDK Deploy
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      - name: CDK Deploy
         run: |-
           cd iac
           npm install
