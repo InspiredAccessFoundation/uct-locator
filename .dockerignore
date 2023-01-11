@@ -1,0 +1,4 @@
+**/node_modules
+**/.env
+**/jest.config.js
+**/postman_collection.json

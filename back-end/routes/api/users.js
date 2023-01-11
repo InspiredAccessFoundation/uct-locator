@@ -9,7 +9,7 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 // Load User model
-const User = require("../../models/User");
+const models = require("../../models");
 
 // Environment variables
 require('dotenv').config();
@@ -29,8 +29,8 @@ router.post("/register", async (req, res) => {
   }
 
   // Try to find an existing user
-  let userWithEmail = await User.findOne({ email: req.body.email });
-  let userWithUsername = await User.findOne({ username: req.body.username });
+  let userWithEmail = await models.User.findOne({ where: { email: req.body.email } });
+  let userWithUsername = await models.User.findOne({ where: { username: req.body.username } });
 
   // If there is already a user with this email, return an error
   if (userWithEmail) {
@@ -39,11 +39,11 @@ router.post("/register", async (req, res) => {
 
   // If there is already a user with this username, return an error
   if (userWithUsername) {
-    return res.status(400).json({ username: "Username already exists"});
+    return res.status(400).json({ username: "Username already exists" });
   }
 
   // There was not an existing user, create a new one
-  const newUser = new User({
+  const newUser = models.User.build({
     name: req.body.name,
     username: req.body.username,
     email: req.body.email,
@@ -82,8 +82,8 @@ router.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-    // Find user by email
-  User.findOne({ email: email }).then(user => {
+  // Find user by email
+  models.User.findOne({ where: { email: email } }).then(user => {
     // Check if user exists
     if (!user) {
       return res.status(404).json({ emailnotfound: "Email not found" });
@@ -128,9 +128,9 @@ router.post("/login", (req, res) => {
 router.get("/test-auth", (req, res) => {
   try {
     const decoded = jwt.verify(req.headers.authorization, keys.secretOrKey);
-    res.json({token:'verified', id: decoded.id, name: decoded.name});
+    res.json({ token: 'verified', id: decoded.id, name: decoded.name });
   } catch {
-    res.json({token:'unverified'});
+    res.json({ token: 'unverified' });
   }
 });
 

@@ -1,0 +1,374 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Deployment · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="IntoTheCode.html" />
+    
+    
+    <link rel="prev" href="IAC.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../DeveloperSetupGuide.html">
+            
+                <a href="../DeveloperSetupGuide.html">
+            
+                    
+                    Developer Setup Guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../StartupLearning.html">
+            
+                <a href="../StartupLearning.html">
+            
+                    
+                    Startup Learning
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="BasicBackground.html">
+            
+                <a href="BasicBackground.html">
+            
+                    
+                    Basic Background
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="FullStackArchitecture.html">
+            
+                <a href="FullStackArchitecture.html">
+            
+                    
+                    Full-Stack Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="FrontEnd.html">
+            
+                <a href="FrontEnd.html">
+            
+                    
+                    Front-End
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="BackEnd.html">
+            
+                <a href="BackEnd.html">
+            
+                    
+                    Back-End
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="IAC.html">
+            
+                <a href="IAC.html">
+            
+                    
+                    Infrastructe as code
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.6" data-path="Deployment.html">
+            
+                <a href="Deployment.html">
+            
+                    
+                    Deployment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="IntoTheCode.html">
+            
+                <a href="IntoTheCode.html">
+            
+                    
+                    Into the Code
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Deployment</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="deployment">Deployment</h1>
+<p>The project is being deployed to <a href="https://aws.amazon.com/" target="_blank">AWS</a>. We are using a single account that is shared between our development and production environments. Putting both environments is for cost saving measures as the free tier allows for one free ALB and one free RDS instance. So to reap those benefits for awhile we will run in the same account. </p>
+<h2 id="pretty-pictures">Pretty Pictures</h2>
+<p><img src="Assets/architecture.png" alt=""></p>
+<h3 id="words-for-the-pictures">Words for the pictures</h3>
+<p>Github actions is setup to utilize OIDC to gain access to the configured roles for each deployment branch. There is a branch for development and one for production. To do a deployment to an environment, simply open an MR into those branches and on merge it&apos;ll deploy to the environment. </p>
+<p>Development and Production even though seperate are living in the same VPC again to save cost on resources like ALB and RDS. Once we grow those can easily be split out and should live in their own accounts. </p>
+<p>We also took the stance of no NAT Gateways as a cost saving measure as well. Simply placing the ECS clusters in side the public subnet with a very restricted security group allow for that to happen. No direct access from the internet is possible only the ALB can access the ECS clusters even though public. Usually you would place these in a private subnet with NAT Gateway or an isolated subnet with VPC endpoints to all the things you need access to. The later was an option but decided not to over complicate it. </p>
+<p>RDS is able to live inside an isolated subnet and does just that. </p>
+<p>S3 is used for image storage and there is a bucket per environment. </p>
+<p>ECR is utilized for the docker container storage that is used for the containers deployed to ECS. A strict retention policy has been configured to only allow a few containers per service to exist to save cost. </p>
+<p>Secrets Manager well holds all our secrets. Things like master RDS credentials, RDS app user credentials, google maps api key, etc. </p>
+<h2 id="building-docker-containers">Building Docker containers</h2>
+<p>Building of docker containers happens via Github Actions. We have a container for the frontend React application and another for the nodejs backend application. </p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="IAC.html" class="navigation navigation-prev " aria-label="Previous page: Infrastructe as code">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="IntoTheCode.html" class="navigation navigation-next " aria-label="Next page: Into the Code">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Deployment","level":"1.3.6","depth":2,"next":{"title":"Into the Code","level":"1.3.7","depth":2,"path":"Setup/StartupLearning/IntoTheCode.md","ref":"Setup/StartupLearning/IntoTheCode.md","articles":[]},"previous":{"title":"Infrastructe as code","level":"1.3.5","depth":2,"path":"Setup/StartupLearning/IAC.md","ref":"Setup/StartupLearning/IAC.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Setup/StartupLearning/Deployment.md","mtime":"2023-01-11T01:53:19.205Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-11T01:53:57.206Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
