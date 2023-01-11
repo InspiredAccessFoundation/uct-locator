@@ -46,19 +46,29 @@ export class CentralIacStack extends cdk.Stack {
 
     const provider = new GithubActionsIdentityProvider(this, 'GithubProvider');
 
+    const ecrActionsRole = new GithubActionsRole(this, 'ecrPushGithubActionsRole', {
+      provider: provider,           // reference into the OIDC provider
+      owner: 'InspiredAccessFoundation',            // your repository owner (organization or user) name
+      repo: 'uct-locator',            // your repository name (without the owner name)
+      filter: 'repo:octo-org/octo-repo:ref:refs/tags/v*',   // JWT sub suffix filter, defaults to '*' 
+      // TODO Make this not just hardcoded to develop
+    });
+    this.frontend_repository.grantPullPush(ecrActionsRole)
+    this.backend_repository.grantPullPush(ecrActionsRole)
+
     const envs = ["development", "production"]
     for (const env of envs) {
       const actionsRole = new GithubActionsRole(this, `${env}GithubActionsRole`, {
         provider: provider,           // reference into the OIDC provider
         owner: 'InspiredAccessFoundation',            // your repository owner (organization or user) name
         repo: 'uct-locator',            // your repository name (without the owner name)
-        filter: `ref:refs/heads/${env}`,   // JWT sub suffix filter, defaults to '*' 
+        filter: `environment:${env}`,   // JWT sub suffix filter, defaults to '*' 
         // TODO Make this not just hardcoded to develop
       });
 
       // Allow for pushing and pulling from the ECR repo for docker images
-      this.frontend_repository.grantPullPush(actionsRole)
-      this.backend_repository.grantPullPush(actionsRole)
+      this.frontend_repository.grantPull(actionsRole)
+      this.backend_repository.grantPull(actionsRole)
 
       // Allow assume cdk iam roles to be able to do CDK things
       actionsRole.addToPolicy(
