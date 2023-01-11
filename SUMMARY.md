@@ -4,4 +4,6 @@
     - [Full-Stack Architecture](Setup/StartupLearning/FullStackArchitecture.md)
     - [Front-End](Setup/StartupLearning/FrontEnd.md)
     - [Back-End](Setup/StartupLearning/BackEnd.md)
+    - [Infrastructe as code](Setup/StartupLearning/IAC.md)
+    - [Deployment](Setup/StartupLearning/Deployment.md)
     - [Into the Code](Setup/StartupLearning/IntoTheCode.md)
