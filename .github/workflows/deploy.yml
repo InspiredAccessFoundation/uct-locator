@@ -74,7 +74,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-        run: |-
+      - run: |-
           cd iac
           npm install
           npm run cdk deploy DevStack
@@ -96,7 +96,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-        run: |-
+      - run: |-
           cd iac
           npm install
           npm run cdk diff
@@ -123,7 +123,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-        run: |-
+      - run: |-
           cd iac
           npm install
           npm run cdk deploy ProdStack
