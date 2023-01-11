@@ -40,6 +40,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    environment: 'development'
     needs: build-and-publish
     steps:
       - name: Checkout
@@ -93,6 +94,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    environment: 'production'
     needs: [build-and-publish, deploy-dev]
     steps:
       - name: Checkout
