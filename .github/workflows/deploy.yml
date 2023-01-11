@@ -1,0 +1,130 @@
+name: Deployment
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repo
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: ${{github.event.push.ref}}
+      - name: Build the Docker images
+        run: |-
+          docker build . --file Dockerfile.frontend --tag ${{ env.ECR_REPO_URL }}/uct-frontend:${{ github.event.inputs.version }}
+          docker build . --file Dockerfile.backend --tag ${{ env.ECR_REPO_URL }}/uct-backend:${{ github.event.inputs.version }}
+      - name: Configure AWS credentials 
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.ECR_PUSH_IAM_ROLE }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR Private
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Push Docker to ECR Private
+        run: |-
+          docker push ${{ env.ECR_REPO_URL }}/uct-frontend:${{ github.event.inputs.version }}
+          docker push ${{ env.ECR_REPO_URL }}/uct-backend:${{ github.event.inputs.version }}
+
+  diff-dev:
+    runs-on: 'ubuntu-latest'
+    needs: build-and-publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: ${{github.event.push.ref}}
+      - name: Configure AWS credentials 
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.DEV_IAM_ROLE }}
+          aws-region: us-east-1
+      - name: Configure NPM and Install
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      # Install dependencies
+      - run: npm install
+      - name: "CDK Diff"
+        run: npm run cdk diff
+
+  deploy-dev:
+    runs-on: 'ubuntu-latest'
+    environment: 'development'
+    needs: diff-dev
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: ${{github.event.push.ref}}
+      - name: Configure AWS credentials 
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.DEV_IAM_ROLE }}
+          aws-region: us-east-1
+      - name: Configure NPM and Install
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      # Install dependencies
+      - run: npm install
+      - name: "CDK Deploy"
+        run: npm run cdk deploy --require-approval never DevStack
+  
+  diff-prod:
+    runs-on: 'ubuntu-latest'
+    needs: [build-and-publish, deploy-dev]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: ${{github.event.push.ref}}
+      - name: Configure AWS credentials 
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.PROD_IAM_ROLE }}
+          aws-region: us-east-1
+      - name: Configure NPM and Install
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      # Install dependencies
+      - run: npm install
+      - name: "CDK Diff"
+        run: npm run cdk diff
+
+  deploy-prod:
+    runs-on: 'ubuntu-latest'
+    environment: 'production'
+    needs: diff-prod
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: ${{github.event.push.ref}}
+      - name: Configure AWS credentials 
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.PROD_IAM_ROLE }}
+          aws-region: us-east-1
+      - name: Configure NPM and Install
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      # Install dependencies
+      - run: npm install
+      - name: "CDK Deploy"
+        run: npm run cdk deploy --require-approval never ProdStack
