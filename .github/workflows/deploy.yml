@@ -47,10 +47,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      # Install dependencies
-      - run: npm install
-      - name: "CDK Diff"
-        run: npm run cdk diff
+      - name: CDK Diff
+      - run: |-
+          cd iac
+          npm install
+          npm run cdk diff
 
   deploy-dev:
     runs-on: 'ubuntu-latest'
@@ -74,10 +75,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      # Install dependencies
-      - run: npm install
-      - name: "CDK Deploy"
-        run: npm run cdk deploy --require-approval never DevStack
+      - name: CDK Deploy
+        run: |-
+          cd iac
+          npm install
+          npm run cdk deploy DevStack
   
   diff-prod:
     runs-on: 'ubuntu-latest'
@@ -96,10 +98,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      # Install dependencies
-      - run: npm install
-      - name: "CDK Diff"
-        run: npm run cdk diff
+      - name: CDK Diff
+        run: |-
+          cd iac
+          npm install
+          npm run cdk diff
 
   deploy-prod:
     runs-on: 'ubuntu-latest'
@@ -123,7 +126,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      # Install dependencies
-      - run: npm install
-      - name: "CDK Deploy"
-        run: npm run cdk deploy --require-approval never ProdStack
+      - name: CDK Deploy
+        run: |-
+          cd iac
+          npm install
+          npm run cdk deploy ProdStack
