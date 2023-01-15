@@ -15,7 +15,6 @@ import Login from "./components/auth/Login";
 import About from "./components/about-us/about-us"
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import SubmitTable from "./components/Tables/SubmitTable";
-import LocationViewMap from "./components/Map/LocationViewMap";
 import LocationViewMapNew from "./components/Map/LocationViewMapNew";
 import ViewTable from "./components/Tables/ViewTable";
 
@@ -55,8 +54,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/find" component={LocationViewMap} />
-            <Route exact path="/find-new" component={LocationViewMapNew} />
+            <Route exact path="/find" component={LocationViewMapNew} />
             <Route path="/view-table/:tableId" component={ViewTable} />
             <Route exact path="/about" component={About} />
             <Switch>

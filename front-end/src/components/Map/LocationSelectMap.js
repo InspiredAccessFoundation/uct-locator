@@ -1,7 +1,7 @@
 import React from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { CircularProgress } from "@mui/material";
-import TableMap from "./TableMap";
+import TableMapNew from "./TableMapNew";
 
 const render = () => {
   return (
@@ -24,13 +24,13 @@ const LocationSelectMap = (props) => {
     <>
       <div style={{ height: "100%" }}>
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render} libraries={["places"]}>
-          <TableMap
+          <TableMapNew
             onCenterChanged={onCenterChanged}
             style={tableMapStyle}
             mapOptions={mapOptions}
             selectingLocation
           >
-          </TableMap>
+          </TableMapNew>
         </Wrapper>
       </div>
     </>
