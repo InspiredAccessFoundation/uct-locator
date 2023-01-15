@@ -1,0 +1,16 @@
+.add-new-floater {
+    position: fixed;
+    bottom: 0%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.add-circle {
+    font-size: 3.5rem !important;
+    color: #88C6CB;
+    background-color: black;
+    border-radius: 100%;
+}

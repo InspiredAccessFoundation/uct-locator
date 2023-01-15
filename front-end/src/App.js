@@ -16,6 +16,7 @@ import About from "./components/about-us/about-us"
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import SubmitTable from "./components/Tables/SubmitTable";
 import LocationViewMap from "./components/Map/LocationViewMap";
+import LocationViewMapNew from "./components/Map/LocationViewMapNew";
 import ViewTable from "./components/Tables/ViewTable";
 
 import Container from "@mui/material/Container";
@@ -46,13 +47,16 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <Navbar />
-          <Container>
-            <Route component={Breadcrumbs} />
+          <Container maxWidth={false} style={{
+            height: "100%!important",
+            margin: "0",
+            padding: "0"
+          }}>
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/find" component={LocationViewMap} />
+            <Route exact path="/find-new" component={LocationViewMapNew} />
             <Route path="/view-table/:tableId" component={ViewTable} />
             <Route exact path="/about" component={About} />
             <Switch>
@@ -62,10 +66,9 @@ class App extends Component {
                 component={SubmitTable}
               />
             </Switch>
-            <div style={{ height: "50px" }} />
           </Container>
         </Router>
-      </Provider>
+      </Provider >
     );
   }
 }

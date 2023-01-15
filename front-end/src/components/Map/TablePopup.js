@@ -52,19 +52,19 @@ const TablePopup = (props) => {
           }
         }}
       >
-        <AppBar sx={{position: 'relative' }}>
+        <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Changing Table Location
-            </Typography> 
+            </Typography>
             <IconButton
               edge="start"
               color="inherit"
               onClick={onClose}
               aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
+            >
+              <CloseIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
         {loading ?
@@ -77,10 +77,10 @@ const TablePopup = (props) => {
             }}
           >
             <CircularProgress size="100px" />
-          </Box> : 
+          </Box> :
           <DialogContent>
             <p>{tableData.locationName}</p>
-            <p><Link to={`/view-table/${tableData._id}`}>More Info</Link></p>
+            <p><Link to={`/view-table/${tableData.id}`}>More Info</Link></p>
           </DialogContent>
         }
       </Dialog>
