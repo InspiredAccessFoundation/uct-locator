@@ -8,7 +8,7 @@ import Chip from '@mui/material/Chip'
 import Icon from '@mui/material/Icon';
 import CircularProgress from "@mui/material/CircularProgress";
 
-import "./TableMapNew.css";
+import "./TableMap.css";
 
 const TableMapNew = (props) => {
   const findingLocationRef = React.useRef(null);

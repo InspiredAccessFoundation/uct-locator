@@ -1,7 +1,7 @@
 import React from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { CircularProgress } from "@mui/material";
-import TableMapNew from "./TableMapNew";
+import TableMapNew from "./TableMap";
 
 const render = () => {
   return (

@@ -10,10 +10,10 @@ import Icon from '@mui/material/Icon';
 import axios from "../../axiosRequests";
 import * as constants from "../../constants";
 import Marker from "./Marker";
-import TableMap from "./TableMapNew";
+import TableMap from "./TableMap";
 import TablePopup from "./TablePopup";
 
-import "./LocationViewMapNew.css"
+import "./LocationViewMap.css"
 
 const render = () => {
   return <CircularProgress size="100px" />;

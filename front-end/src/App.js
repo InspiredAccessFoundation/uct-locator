@@ -15,7 +15,7 @@ import Login from "./components/auth/Login";
 import About from "./components/about-us/about-us"
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import SubmitTable from "./components/Tables/SubmitTable";
-import LocationViewMapNew from "./components/Map/LocationViewMapNew";
+import LocationViewMapNew from "./components/Map/LocationViewMap";
 import ViewTable from "./components/Tables/ViewTable";
 
 import Container from "@mui/material/Container";
