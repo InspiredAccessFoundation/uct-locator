@@ -56,6 +56,32 @@ export class CentralIacStack extends cdk.Stack {
     this.frontend_repository.grantPullPush(ecrActionsRole)
     this.backend_repository.grantPullPush(ecrActionsRole)
 
+    // Creates an admin user of uctadmin with a generated password
+    const rds_master_creds = rds.Credentials.fromGeneratedSecret('uctadmin')
+    // Using the secret
+    this.database = new rds.DatabaseInstance(this, "uct-postgres", {
+      engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_14 }),
+      credentials: rds_master_creds,
+      vpc: this.vpc,
+      storageEncrypted: true,
+      allocatedStorage: 5,
+      maxAllocatedStorage: 50,
+      allowMajorVersionUpgrade: false,
+      autoMinorVersionUpgrade: true,
+      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),
+      enablePerformanceInsights: true,
+      performanceInsightRetention: rds.PerformanceInsightRetention.DEFAULT,
+      multiAz: false,
+      publiclyAccessible: false,
+      backupRetention: Duration.days(1),
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      parameters: {
+        "pg_stat_statements.track": "ALL"
+      }
+    });
+
     const envs = ["development", "production"]
     for (const env of envs) {
       const actionsRole = new GithubActionsRole(this, `${env}GithubActionsRole`, {
@@ -90,38 +116,15 @@ export class CentralIacStack extends cdk.Stack {
           ],
           effect: iam.Effect.ALLOW,
           resources: [
-            `arn:aws:secretsmanager:us-east-1:${cdk.Stack.of(this).account}:secret:/uct-locator/development/dbappuser-??????`
+            `arn:aws:secretsmanager:us-east-1:${cdk.Stack.of(this).account}:secret:/uct-locator/development/dbappuser-??????`,
+            //@ts-ignore
+            this.database.secret?.secretArn
           ]
         })
       )
     }
 
 
-    // Creates an admin user of uctadmin with a generated password
-    const rds_master_creds = rds.Credentials.fromGeneratedSecret('uctadmin')
-    // Using the secret
-    this.database = new rds.DatabaseInstance(this, "uct-postgres", {
-      engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_14 }),
-      credentials: rds_master_creds,
-      vpc: this.vpc,
-      storageEncrypted: true,
-      allocatedStorage: 5,
-      maxAllocatedStorage: 50,
-      allowMajorVersionUpgrade: false,
-      autoMinorVersionUpgrade: true,
-      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),
-      enablePerformanceInsights: true,
-      performanceInsightRetention: rds.PerformanceInsightRetention.DEFAULT,
-      multiAz: false,
-      publiclyAccessible: false,
-      backupRetention: Duration.days(1),
-      vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
-      },
-      parameters: {
-        "pg_stat_statements.track": "ALL"
-      }
-    });
 
     this.load_balancer = new elbv2.ApplicationLoadBalancer(this, 'LoadBalancer', {
       vpc: this.vpc,
