@@ -61,4 +61,6 @@ jobs:
           PORT_ENV="${PREFIX}_PORT"
           POSTGRES_ADMIN_PORT=${!PORT_ENV}
           
+          cd back-end
+          npm install
           NODE_ENV=migrate npm run db-status -- --debug
