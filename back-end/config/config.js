@@ -13,7 +13,7 @@ module.exports = {
   migrate: {
     username: process.env.POSTGRES_ADMIN_USERNAME,
     password: process.env.POSTGRES_ADMIN_PASSWORD,
-    database: process.env.POSTGRES_ADMIN_DB,
+    database: process.env.POSTGRES_APP_DB,
     host: process.env.POSTGRES_ADMIN_HOST,
     port: process.env.POSTGRES_ADMIN_PORT,
     dialect: "postgres",
