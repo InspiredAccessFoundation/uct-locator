@@ -45,4 +45,20 @@ jobs:
         with:
           node-version: "18"
       - run: |-
+          PREFIX=${{ secrets.MIGRATE_DEV_DB_SECRET_ENV_PREFIX }}
+          USERNAME_ENV="${PREFIX}_USERNAME"
+          USERNAME=${!USERNAME_ENV}
+
+          PASSWORD_ENV="${PREFIX}_PASSWORD"
+          PASSWORD=${!PASSWORD_ENV}
+
+          DATABASE_ENV="${PREFIX}_DATABASE"
+          DATABASE=${!DATABASE_ENV}
+
+          HOST_ENV="${PREFIX}_HOST"
+          HOST=${!HOST_ENV}
+          
+          PORT_ENV="${PREFIX}_PORT"
+          PORT=${!PORT_ENV}
+          
           echo "$PORT"
