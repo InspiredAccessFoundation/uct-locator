@@ -238,7 +238,6 @@ export class AppStack extends cdk.Stack {
         generateStringKey: 'password',
       },
     });
-    const mongo_uri_secret = secretsmanager.Secret.fromSecretNameV2(this, "mongo-uri-secret", "/uct-locator/mongo-uri")
     const jwt_secret_key = secretsmanager.Secret.fromSecretNameV2(this, "jwt-secret-key", "/uct-locator/secret-key")
 
     taskDefinition.addContainer("backend-container", {
@@ -251,7 +250,6 @@ export class AppStack extends cdk.Stack {
         protocol: ecs.Protocol.TCP
       }],
       secrets: {
-        "MONGO_URI": ecs.Secret.fromSecretsManager(mongo_uri_secret),
         "SECRET_KEY": ecs.Secret.fromSecretsManager(jwt_secret_key),
         "POSTGRES_DB": ecs.Secret.fromSecretsManager(databaseUserSecret, "database"),
         "POSTGRES_PASSWORD": ecs.Secret.fromSecretsManager(databaseUserSecret, "password"),
@@ -268,7 +266,6 @@ export class AppStack extends cdk.Stack {
       })
     });
 
-    mongo_uri_secret.grantRead(taskDefinition.taskRole)
     jwt_secret_key.grantRead(taskDefinition.taskRole)
 
     taskDefinition.taskRole.attachInlinePolicy(
