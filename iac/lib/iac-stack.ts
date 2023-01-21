@@ -116,7 +116,8 @@ export class CentralIacStack extends cdk.Stack {
           ],
           effect: iam.Effect.ALLOW,
           resources: [
-            `arn:aws:secretsmanager:us-east-1:${cdk.Stack.of(this).account}:secret:/uct-locator/development/dbappuser-??????`,
+            // Generated as part of AppStacks so build the arn as we expect it to be created later
+            `arn:aws:secretsmanager:us-east-1:${cdk.Stack.of(this).account}:secret:/uct-locator/${env}/dbappuser-??????`,
             //@ts-ignore
             this.database.secret?.secretArn
           ]
