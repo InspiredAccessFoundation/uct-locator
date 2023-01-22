@@ -19,6 +19,6 @@ AWS_PROFILE=<your profile> aws ssm start-session --region us-east-1 --target ecs
 # Running migrations
 
 1. Start a port forward connection from above
-2. Update your .env.migrate file to point to the env you want to run migrations against
-3. Run `NODE_ENV=migrate npm run db-status -- --debug` to validate what is going to run
-3. Run `NODE_ENV=migrate npm run db-up -- --debug` to execute the migrations
+2. Update your .env.migrate<env> file to point to have the correct connection details to the db you are connecting to
+3. Run `NODE_ENV=migrate<env> npm run db-status -- --debug` to validate what is going to run
+3. Run `NODE_ENV=migrate<env> npm run db-up -- --debug` to execute the migrations

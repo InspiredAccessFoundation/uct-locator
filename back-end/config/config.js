@@ -15,11 +15,24 @@ module.exports = {
     port: process.env.POSTGRES_PORT,
     dialect: "postgres"
   },
-  // Pulled from AWS Secrets Manager and stored in ENV vars
-  migrate: {
+  migrateprod: {
     username: process.env.POSTGRES_ADMIN_USERNAME,
     password: process.env.POSTGRES_ADMIN_PASSWORD,
-    database: process.env.POSTGRES_APP_DB,
+    database: "productiondb",
+    host: process.env.POSTGRES_ADMIN_HOST,
+    port: process.env.POSTGRES_ADMIN_PORT,
+    dialect: "postgres",
+    pool: {
+      max: 1,
+      min: 1,
+      acquire: 30000,
+      idle: 10000
+    }
+  },
+  migratedev: {
+    username: process.env.POSTGRES_ADMIN_USERNAME,
+    password: process.env.POSTGRES_ADMIN_PASSWORD,
+    database: "developmentdb",
     host: process.env.POSTGRES_ADMIN_HOST,
     port: process.env.POSTGRES_ADMIN_PORT,
     dialect: "postgres",
