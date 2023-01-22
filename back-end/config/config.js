@@ -30,7 +30,13 @@ module.exports = {
     database: process.env.POSTGRES_DB,
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
-    dialect: "postgres"
+    dialect: "postgres",
+    pool: {
+      max: 10,
+      min: 1,
+      acquire: 30000,
+      idle: 10000
+    }
   },
   production: {
     username: process.env.POSTGRES_USERNAME,
@@ -38,6 +44,13 @@ module.exports = {
     database: process.env.POSTGRES_DB,
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
-    dialect: "postgres"
+    dialect: "postgres",
+    ssl: true,
+    pool: {
+      max: 75,
+      min: 25,
+      acquire: 30000,
+      idle: 10000
+    }
   }
 };
