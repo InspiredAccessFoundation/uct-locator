@@ -155,7 +155,8 @@ export class CentralIacStack extends cdk.Stack {
       loadBalancer: this.load_balancer, // ! need to pass load balancer to attach to !
       port: 443,
       defaultAction: elbv2.ListenerAction.fixedResponse(404),
-      certificates: certs
+      certificates: certs,
+      sslPolicy: elbv2.SslPolicy.TLS13_RES
     });
     this.load_balancer.addRedirect()
   }
