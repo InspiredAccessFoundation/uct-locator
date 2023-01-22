@@ -1,3 +1,6 @@
 FROM postgis/postgis:14-3.3
 
-COPY sql/create-script.sql /docker-entrypoint-initdb.d/
+COPY sql/init-db.sh /docker-entrypoint-initdb.d/
+COPY sql/dev.sql /var/sql/
+COPY sql/prod.sql /var/sql/
+COPY sql/create-script.sql /var/sql/
