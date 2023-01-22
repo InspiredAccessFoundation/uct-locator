@@ -74,6 +74,7 @@ export class CentralIacStack extends cdk.Stack {
       multiAz: false,
       publiclyAccessible: false,
       backupRetention: Duration.days(1),
+      deletionProtection: true,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
       },
