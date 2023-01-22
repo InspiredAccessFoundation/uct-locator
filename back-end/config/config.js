@@ -1,4 +1,10 @@
-require('dotenv').config();
+if (process.env.NODE_ENV != "local") {
+  require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
+  console.log(`Using dotenv at location './.env.${process.env.NODE_ENV}'`)
+} else {
+  require('dotenv').config();
+  console.log("Using default .env file config")
+}
 
 module.exports = {
   local: {
