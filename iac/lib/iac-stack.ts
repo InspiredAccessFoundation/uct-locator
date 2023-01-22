@@ -156,7 +156,7 @@ export class CentralIacStack extends cdk.Stack {
       port: 443,
       defaultAction: elbv2.ListenerAction.fixedResponse(404),
       certificates: certs,
-      sslPolicy: elbv2.SslPolicy.TLS13_RES
+      sslPolicy: elbv2.SslPolicy.FORWARD_SECRECY_TLS12_RES_GCM
     });
     this.load_balancer.addRedirect()
   }
