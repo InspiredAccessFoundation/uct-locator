@@ -27,3 +27,7 @@ Secrets Manager well holds all our secrets. Things like master RDS credentials, 
 
 Building of docker containers happens via Github Actions. We have a container for the frontend React application and another for the nodejs backend application. 
 
+
+## DB updates
+
+Today DB migrations and even the initialization is manual and requires extra setup that can be found [here](../../sql/README.md)
