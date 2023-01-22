@@ -66,7 +66,24 @@ SECRET_KEY="thisissecret"
 To run the application locally you will need to have a running Postgres database. Easiest option to run this is by using docker. This command will allow you to spin up a Postgres database with the PostGIS extension already installed. 
 
 ```
-docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-password -p 5432:5432 -v pg-data:/var/lib/postgresql/data -d postgis/postgis
+docker build . -f Dockerfile-postgres -t uct-postgres
+```
+
+```
+docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-password -p 5432:5432 -v $(pwd)/sql/pg-data:/var/lib/postgresql/data -d uct-postgres
+```
+
+#### Create a .env to connect to your database
+
+The following properties should allow the database to connect. If you modified the sql script above then they may differ slightly. 
+
+```
+NODE_ENV=local
+POSTGRES_USERNAME="developmentuser"
+POSTGRES_PASSWORD="real-dev-password-here"
+POSTGRES_DB="developmentdb"
+POSTGRES_HOST="127.0.0.1"
+POSTGRES_PORT=5432
 ```
 
 ### Creating the Front-End Environment File

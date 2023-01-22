@@ -1,7 +1,7 @@
-import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy, aws_s3 as s3, aws_elasticloadbalancingv2 as elbv2, aws_route53_targets as route53targets, aws_certificatemanager as certman, aws_route53 as route53, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
+import * as cdk from 'aws-cdk-lib';
+import { aws_certificatemanager as certman, aws_ec2 as ec2, aws_ecr as ecr, aws_ecs as ecs, aws_elasticloadbalancingv2 as elbv2, aws_iam as iam, aws_rds as rds, aws_route53 as route53, aws_route53_targets as route53targets, aws_s3 as s3, aws_secretsmanager as secretsmanager, Duration, RemovalPolicy } from 'aws-cdk-lib';
+import { Construct } from 'constructs';
 
 const domains: string[] = [
   "adultchangingtablemap.com",
@@ -56,6 +56,32 @@ export class CentralIacStack extends cdk.Stack {
     this.frontend_repository.grantPullPush(ecrActionsRole)
     this.backend_repository.grantPullPush(ecrActionsRole)
 
+    // Creates an admin user of uctadmin with a generated password
+    const rds_master_creds = rds.Credentials.fromGeneratedSecret('uctadmin')
+    // Using the secret
+    this.database = new rds.DatabaseInstance(this, "uct-postgres", {
+      engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_14 }),
+      credentials: rds_master_creds,
+      vpc: this.vpc,
+      storageEncrypted: true,
+      allocatedStorage: 5,
+      maxAllocatedStorage: 50,
+      allowMajorVersionUpgrade: false,
+      autoMinorVersionUpgrade: true,
+      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),
+      enablePerformanceInsights: true,
+      performanceInsightRetention: rds.PerformanceInsightRetention.DEFAULT,
+      multiAz: false,
+      publiclyAccessible: false,
+      backupRetention: Duration.days(1),
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      parameters: {
+        "pg_stat_statements.track": "ALL"
+      }
+    });
+
     const envs = ["development", "production"]
     for (const env of envs) {
       const actionsRole = new GithubActionsRole(this, `${env}GithubActionsRole`, {
@@ -90,38 +116,16 @@ export class CentralIacStack extends cdk.Stack {
           ],
           effect: iam.Effect.ALLOW,
           resources: [
-            `arn:aws:secretsmanager:us-east-1:${cdk.Stack.of(this).account}:secret:/uct-locator/development/dbappuser-??????`
+            // Generated as part of AppStacks so build the arn as we expect it to be created later
+            `arn:aws:secretsmanager:us-east-1:${cdk.Stack.of(this).account}:secret:/uct-locator/${env}/dbappuser-??????`,
+            //@ts-ignore
+            this.database.secret?.secretArn
           ]
         })
       )
     }
 
 
-    // Creates an admin user of uctadmin with a generated password
-    const rds_master_creds = rds.Credentials.fromGeneratedSecret('uctadmin')
-    // Using the secret
-    this.database = new rds.DatabaseInstance(this, "uct-postgres", {
-      engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_14 }),
-      credentials: rds_master_creds,
-      vpc: this.vpc,
-      storageEncrypted: true,
-      allocatedStorage: 5,
-      maxAllocatedStorage: 50,
-      allowMajorVersionUpgrade: false,
-      autoMinorVersionUpgrade: true,
-      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),
-      enablePerformanceInsights: true,
-      performanceInsightRetention: rds.PerformanceInsightRetention.DEFAULT,
-      multiAz: false,
-      publiclyAccessible: false,
-      backupRetention: Duration.days(1),
-      vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
-      },
-      parameters: {
-        "pg_stat_statements.track": "ALL"
-      }
-    });
 
     this.load_balancer = new elbv2.ApplicationLoadBalancer(this, 'LoadBalancer', {
       vpc: this.vpc,
@@ -238,7 +242,6 @@ export class AppStack extends cdk.Stack {
         generateStringKey: 'password',
       },
     });
-    const mongo_uri_secret = secretsmanager.Secret.fromSecretNameV2(this, "mongo-uri-secret", "/uct-locator/mongo-uri")
     const jwt_secret_key = secretsmanager.Secret.fromSecretNameV2(this, "jwt-secret-key", "/uct-locator/secret-key")
 
     taskDefinition.addContainer("backend-container", {
@@ -251,7 +254,6 @@ export class AppStack extends cdk.Stack {
         protocol: ecs.Protocol.TCP
       }],
       secrets: {
-        "MONGO_URI": ecs.Secret.fromSecretsManager(mongo_uri_secret),
         "SECRET_KEY": ecs.Secret.fromSecretsManager(jwt_secret_key),
         "POSTGRES_DB": ecs.Secret.fromSecretsManager(databaseUserSecret, "database"),
         "POSTGRES_PASSWORD": ecs.Secret.fromSecretsManager(databaseUserSecret, "password"),
@@ -268,7 +270,6 @@ export class AppStack extends cdk.Stack {
       })
     });
 
-    mongo_uri_secret.grantRead(taskDefinition.taskRole)
     jwt_secret_key.grantRead(taskDefinition.taskRole)
 
     taskDefinition.taskRole.attachInlinePolicy(
@@ -316,6 +317,7 @@ export class AppStack extends cdk.Stack {
       ],
     });
 
+    ecsSecurityGroup.connections.allowTo(database.connections, ec2.Port.tcp(5432), `${env} ECS to RDS`)
 
     const hosts: string[] = []
     for (const domain of domains) {
