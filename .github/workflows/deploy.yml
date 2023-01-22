@@ -19,7 +19,7 @@ jobs:
           ref: ${{github.event.push.ref}}
       - name: Build the Docker images
         run: |-
-          docker build . --file Dockerfile-frontend --tag ${{ secrets.ECR_REPO_URL }}/uct-frontend:${{  github.ref_name }}
+          docker build . --file Dockerfile-frontend --build-arg API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }} --tag ${{ secrets.ECR_REPO_URL }}/uct-frontend:${{  github.ref_name }}
           docker build . --file Dockerfile-backend --tag ${{ secrets.ECR_REPO_URL }}/uct-backend:${{  github.ref_name }}
       - name: Configure AWS credentials 
         uses: aws-actions/configure-aws-credentials@v1
