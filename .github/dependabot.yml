@@ -16,3 +16,15 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+  # Maintain dependencies for npm for iac project
+  - package-ecosystem: "npm"
+    directory: "/iac"
+    schedule:
+      interval: "weekly"
+
+  # Keep our docker files up to date too
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
