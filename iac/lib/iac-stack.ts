@@ -1,7 +1,7 @@
-import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy, aws_s3 as s3, aws_elasticloadbalancingv2 as elbv2, aws_route53_targets as route53targets, aws_certificatemanager as certman, aws_route53 as route53, aws_rds as rds, aws_ecs as ecs, aws_ec2 as ec2, aws_ecr as ecr, aws_iam as iam, aws_secretsmanager as secretsmanager, Duration } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
+import * as cdk from 'aws-cdk-lib';
+import { aws_certificatemanager as certman, aws_ec2 as ec2, aws_ecr as ecr, aws_ecs as ecs, aws_elasticloadbalancingv2 as elbv2, aws_iam as iam, aws_rds as rds, aws_route53 as route53, aws_route53_targets as route53targets, aws_s3 as s3, aws_secretsmanager as secretsmanager, Duration, RemovalPolicy } from 'aws-cdk-lib';
+import { Construct } from 'constructs';
 
 const domains: string[] = [
   "adultchangingtablemap.com",
@@ -317,6 +317,7 @@ export class AppStack extends cdk.Stack {
       ],
     });
 
+    ecsSecurityGroup.connections.allowTo(database.connections, ec2.Port.tcp(5432), `${env} ECS to RDS`)
 
     const hosts: string[] = []
     for (const domain of domains) {
