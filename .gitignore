@@ -1,6 +1,6 @@
 node_modules/
 build/
-.env
+.env*
 coverage
 test-results
 **/.DS_Store
