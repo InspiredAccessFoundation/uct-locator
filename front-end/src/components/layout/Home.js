@@ -3,8 +3,8 @@ import Link from "./Link";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "@mui/system";
+import { drawerWidth } from "../../utils/constants";
 
-const drawerWidth = 300;
 const Home = (props) => {
   const loggedIn = props.auth.isAuthenticated;
 

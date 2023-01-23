@@ -21,9 +21,9 @@ import ViewTable from "./components/Tables/ViewTable";
 import Box from '@mui/material/Box';
 
 import Container from "@mui/material/Container";
+import { drawerWidth } from "./utils/constants";
 
 import "./App.css";
-const drawerWidth = 300;
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth

@@ -35,7 +35,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Icon from '@mui/material/Icon';
 import store from "../../store";
 
-const drawerWidth = 300;
+import { drawerWidth } from "../../utils/constants";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

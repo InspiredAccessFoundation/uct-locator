@@ -19,7 +19,6 @@ import LocationSelectMap from "../Map/LocationSelectMap";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from "@mui/material/styles";
 
-const drawerWidth = 300;
 const SubmitTable = () => {
   const theme = useTheme();
   const smallWidth = useMediaQuery(theme.breakpoints.down('sm'));
