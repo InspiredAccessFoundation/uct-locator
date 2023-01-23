@@ -24,7 +24,7 @@
     flex-direction: row;
 }
 
-#searchbar {
+/* #searchbar {
     width: 80%;
     padding: 6px 20px;
     border-radius: 15px;
@@ -32,14 +32,18 @@
     height: 25px;
     font-size: 15px;
     color: #555;
-}
+} */
 
 .hidden {
     display: none !important;
 }
 
 .location-icon {
-    font-size: 35px !important;
+    font-size: 25px !important;
+    color: white;
+    padding-top: 2px;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .filters-bar {

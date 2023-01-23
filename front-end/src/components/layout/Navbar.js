@@ -1,9 +1,13 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import InputBase from '@mui/material/InputBase';
+
+import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
@@ -30,7 +34,51 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
 import PersonIcon from '@mui/icons-material/Person';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 10000
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  zIndex: 10,
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1.5em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    zIndex: 10,
+    [theme.breakpoints.up('md')]: {
+      width: '50ch',
+    },
+  },
+}));
+
 const Navbar = (props) => {
   const theme = useTheme();
   const bg = theme.palette.primary.main;
@@ -88,7 +136,7 @@ const Navbar = (props) => {
     <Box
       role="presentation"
       onClick={() => setDrawerOpen(false)}
-      sx={{ backgroundColor: bg, minWidth: "300px", height: "100%", color: fg }}
+      sx={{ backgroundColor: bg, height: "100%", color: fg }}
     >
       <List>
         <ListItem>
@@ -128,11 +176,11 @@ const Navbar = (props) => {
 
   return (
     <>
-      <AppBar position="static" sx={{
+      <AppBar position="sticky" sx={{
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
       }}>
-        <Toolbar sx={{ backgroundColor: bg, color: fg, justifyContent: "center" }}>
+        <Toolbar sx={{ backgroundColor: bg, color: fg, justifyContent: { sm: "center", xs: "flex-start" } }}>
           <IconButton
             color="inherit"
             onClick={() => setDrawerOpen(true)}
@@ -142,15 +190,18 @@ const Navbar = (props) => {
             <MenuIcon />
           </IconButton>
           {mapShowing ? (
-            <div className="input-bar">
-              <input id="searchbar"></input>
-              <div>
-                <Icon className={"location-icon"} component={GpsFixedTwoTone} alt="Find My Current Location" />
-              </div>
-              <div className="hidden">
-                <CircularProgress size="35px" color="secondary" />
-              </div>
-            </div>
+            <Search>
+              <SearchIconWrapper>
+                <div>
+                  <Icon className={"location-icon"} component={GpsFixedTwoTone} alt="Find My Current Location" />
+                </div>
+                <div className="hidden">
+                  <CircularProgress size="35px" color="secondary" />
+                </div>
+              </SearchIconWrapper>
+              <StyledInputBase id="searchbar" placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }} />
+            </Search>
           ) : (
             <></>
           )}

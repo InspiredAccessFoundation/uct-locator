@@ -11,9 +11,6 @@ const render = () => {
 
 const LocationSelectMap = (props) => {
   const { onCenterChanged, tableMapStyle } = props;
-  tableMapStyle.width = "100%";
-  tableMapStyle.height = tableMapStyle.height || "500px";
-
   const mapOptions = {
     styles: [],
     streetViewControl: false,
@@ -24,13 +21,12 @@ const LocationSelectMap = (props) => {
     <>
       <div style={{ height: "100%" }}>
         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render} libraries={["places"]}>
-          <TableMapNew
+          {/* <TableMapNew
             onCenterChanged={onCenterChanged}
-            style={tableMapStyle}
             mapOptions={mapOptions}
             selectingLocation
           >
-          </TableMapNew>
+          </TableMapNew> */}
         </Wrapper>
       </div>
     </>

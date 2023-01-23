@@ -5,7 +5,7 @@ import Container from "@mui/system/Container";
 import CircularProgress from "@mui/material/CircularProgress";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Icon from '@mui/material/Icon';
-
+import { useTheme } from '@mui/material/styles';
 
 import axios from "../../axiosRequests";
 import * as constants from "../../constants";
@@ -29,6 +29,9 @@ const getTablePosition = (tbl) => {
 };
 
 const LocationViewMapNew = () => {
+  const theme = useTheme();
+  const bg = theme.palette.primary.main;
+  const fg = theme.palette.primary.contrastText;
   const [zoom, setZoom] = React.useState(
     Number(localStorage.getItem("zoom")) || 3
   );
@@ -80,7 +83,7 @@ const LocationViewMapNew = () => {
   }, []);
 
   return (
-    <div style={{ height: "100%" }}>
+    <Container maxWidth={false} disableGutters>
       <Wrapper
         apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
         render={render}
@@ -91,7 +94,7 @@ const LocationViewMapNew = () => {
           onCenterChanged={onCenterChanged}
           onZoomChanged={onZoomChanged}
           zoom={zoom}
-          style={{ width: "100%", height: "100vh" }}
+          style={{ width: "100%", height: "94vh" }}
         >
           {tableLocations.map((tbl, i) => (
             <Marker
@@ -106,11 +109,11 @@ const LocationViewMapNew = () => {
           onClose={() => setCurrentTableId('')}
           open={!!currentTableId}
         />
-        <div className="add-new-floater">
-          <Icon component={AddCircleIcon} fontSize="large" className="add-circle" />
-        </div>
+        {/* <div className="add-new-floater">
+          <Icon component={AddCircleIcon} fontSize="large" className="add-circle" sx={{ color: bg, backgroundColor: fg }} />
+        </div> */}
       </Wrapper>
-    </div>
+    </Container>
   );
 };
 

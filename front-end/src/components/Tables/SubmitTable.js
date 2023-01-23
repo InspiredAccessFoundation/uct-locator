@@ -19,6 +19,7 @@ import LocationSelectMap from "../Map/LocationSelectMap";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from "@mui/material/styles";
 
+const drawerWidth = 300;
 const SubmitTable = () => {
   const theme = useTheme();
   const smallWidth = useMediaQuery(theme.breakpoints.down('sm'));
@@ -102,7 +103,7 @@ const SubmitTable = () => {
 
   return (
     <>
-      <Container maxWidth="md">
+      <Container maxWidth={false} sx={{ py: 3, mx: 5 }}>
         <div style={{ marginTop: "1rem" }} className="row">
           <h2>Submit Table</h2>
           <p>Enter information for your table here.</p><br></br>

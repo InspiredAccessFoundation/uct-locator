@@ -18,10 +18,12 @@ import SubmitTable from "./components/Tables/SubmitTable";
 import LocationViewMapNew from "./components/Map/LocationViewMap";
 import ViewTable from "./components/Tables/ViewTable";
 
+import Box from '@mui/material/Box';
+
 import Container from "@mui/material/Container";
 
 import "./App.css";
-
+const drawerWidth = 300;
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -47,11 +49,10 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Navbar />
-          <Container maxWidth={false} style={{
-            height: "100%!important",
-            margin: "0",
-            padding: "0"
-          }}>
+          <Box
+            component="main"
+            sx={{ display: 'flex', flexGrow: 3, p: 0, width: { sm: `calc(100% - ${drawerWidth}px)` }, marginLeft: { sm: `${drawerWidth}px` } }}
+          >
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
@@ -65,7 +66,7 @@ class App extends Component {
                 component={SubmitTable}
               />
             </Switch>
-          </Container>
+          </Box>
         </Router>
       </Provider >
     );

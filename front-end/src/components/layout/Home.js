@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "@mui/system";
 
+const drawerWidth = 300;
 const Home = (props) => {
   const loggedIn = props.auth.isAuthenticated;
 
@@ -23,7 +24,7 @@ const Home = (props) => {
   );
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth={false} sx={{ py: 3, mx: 5 }}>
       <p>Welcome to the UCT Locator app!</p>
       {loggedIn ? loggedInContent : loggedOutContent}
       <Link to="/find">Find a Table</Link>
