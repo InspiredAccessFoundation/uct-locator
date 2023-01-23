@@ -46,6 +46,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
+          <Navbar />
           <Container maxWidth={false} style={{
             height: "100%!important",
             margin: "0",

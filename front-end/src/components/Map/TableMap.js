@@ -7,6 +7,8 @@ import LoopSharpIcon from '@mui/icons-material/LoopSharp';
 import Chip from '@mui/material/Chip'
 import Icon from '@mui/material/Icon';
 import CircularProgress from "@mui/material/CircularProgress";
+import { SET_MAP_SHOWING } from "../../actions/types";
+import store from "../../store";
 
 import "./TableMap.css";
 
@@ -32,6 +34,19 @@ const TableMapNew = (props) => {
   if (!mapOptions) {
     mapOptions = constants.DEFAULT_MAP_OPTIONS;
   }
+
+  React.useEffect(() => {
+    store.dispatch({
+      type: SET_MAP_SHOWING,
+      payload: true
+    });
+    return function cleanup() {
+      store.dispatch({
+        type: SET_MAP_SHOWING,
+        payload: false
+      });
+    };
+  }, [])
 
   React.useEffect(() => {
     if (ref.current && !map) {
@@ -123,7 +138,7 @@ const TableMapNew = (props) => {
 
   return (
     <>
-      <div className="search-bar">
+      {/* <div className="search-bar">
         <div className="input-bar">
           <input id="searchbar"></input>
           <div ref={currentLocationRef}>
@@ -138,7 +153,7 @@ const TableMapNew = (props) => {
           <Chip label="Style" onClick={filterClick} />
           <Chip label="Accessibility" onClick={filterClick} />
         </div>
-      </div>
+      </div> */}
 
       <div style={{ position: "relative" }}>
         {selectingLocation && centerMarkerImg}
