@@ -29,9 +29,6 @@ const getTablePosition = (tbl) => {
 };
 
 const LocationViewMapNew = () => {
-  const theme = useTheme();
-  const bg = theme.palette.primary.main;
-  const fg = theme.palette.primary.contrastText;
   const [zoom, setZoom] = React.useState(
     Number(localStorage.getItem("zoom")) || 3
   );

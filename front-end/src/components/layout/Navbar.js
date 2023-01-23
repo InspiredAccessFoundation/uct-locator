@@ -1,38 +1,39 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
-import { logoutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logoutUser } from "../../actions/authActions";
 
 import InputBase from '@mui/material/InputBase';
 
-import { styled, alpha } from '@mui/material/styles';
+import { Wrapper } from "@googlemaps/react-wrapper";
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import HomeIcon from '@mui/icons-material/Home';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
 import Drawer from '@mui/material/Drawer';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import HomeIcon from '@mui/icons-material/Home';
-import SearchIcon from '@mui/icons-material/Search';
-import { useTheme } from '@mui/material/styles';
+import ListItemText from '@mui/material/ListItemText';
+import { alpha, styled, useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { SET_CURRENT_LOCATION, SET_SEARCH } from "../../actions/types";
 
-import Icon from '@mui/material/Icon';
-import CircularProgress from "@mui/material/CircularProgress";
-import GpsFixedTwoTone from "@mui/icons-material/GpsFixedTwoTone";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
+import GpsFixedTwoTone from "@mui/icons-material/GpsFixedTwoTone";
 import PersonIcon from '@mui/icons-material/Person';
+import CircularProgress from "@mui/material/CircularProgress";
+import Icon from '@mui/material/Icon';
+import store from "../../store";
 
 const drawerWidth = 300;
 
@@ -80,6 +81,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = (props) => {
+  const ref = React.useRef(null);
   const theme = useTheme();
   const bg = theme.palette.primary.main;
   const fg = theme.palette.primary.contrastText;
@@ -132,6 +134,39 @@ const Navbar = (props) => {
     });
   }
 
+  const centerCurrentLocation = e => {
+    e.preventDefault();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(p => {
+        // If setting a current location wipe out the value here
+        const input = document.getElementById("searchbar");
+        input.value = ""
+        store.dispatch({
+          type: SET_CURRENT_LOCATION,
+          payload: p
+        });
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  const [, setAutocomplete] = React.useState();
+  React.useEffect(() => {
+    if (ref.current) {
+      const input = document.getElementById("searchbar");
+      const autocomplete = new window.google.maps.places.Autocomplete(input);
+      setAutocomplete(autocomplete);
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        store.dispatch({
+          type: SET_SEARCH,
+          payload: place
+        });
+      });
+    }
+  }, [ref, mapShowing]);
+
   const drawer = (
     <Box
       role="presentation"
@@ -173,40 +208,49 @@ const Navbar = (props) => {
       </List>
     </Box >
   )
+  const render = () => {
+    return <CircularProgress size="100px" />;
+  };
 
   return (
     <>
-      <AppBar position="sticky" sx={{
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
-        ml: { sm: `${drawerWidth}px` },
-      }}>
-        <Toolbar sx={{ backgroundColor: bg, color: fg, justifyContent: { sm: "center", xs: "flex-start" } }}>
-          <IconButton
-            color="inherit"
-            onClick={() => setDrawerOpen(true)}
-            edge="start"
-            sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          {mapShowing ? (
-            <Search>
-              <SearchIconWrapper>
-                <div>
-                  <Icon className={"location-icon"} component={GpsFixedTwoTone} alt="Find My Current Location" />
-                </div>
-                <div className="hidden">
-                  <CircularProgress size="35px" color="secondary" />
-                </div>
-              </SearchIconWrapper>
-              <StyledInputBase id="searchbar" placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }} />
-            </Search>
-          ) : (
-            <></>
-          )}
-        </Toolbar>
-      </AppBar>
+      <Wrapper
+        apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        render={render}
+        libraries={["places"]}
+      >
+        <AppBar position="sticky" sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}>
+          <Toolbar sx={{ backgroundColor: bg, color: fg, justifyContent: { sm: "center", xs: "flex-start" } }}>
+            <IconButton
+              color="inherit"
+              onClick={() => setDrawerOpen(true)}
+              edge="start"
+              sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            {mapShowing ? (
+              <Search>
+                <SearchIconWrapper>
+                  <div>
+                    <Icon className={"location-icon"} component={GpsFixedTwoTone} alt="Find My Current Location" onClick={centerCurrentLocation} />
+                  </div>
+                  <div className="hidden">
+                    <CircularProgress size="35px" color="secondary" />
+                  </div>
+                </SearchIconWrapper>
+                <StyledInputBase ref={ref} id="searchbar" placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }} />
+              </Search>
+            ) : (
+              <></>
+            )}
+          </Toolbar>
+        </AppBar>
+      </Wrapper>
       <Drawer
         variant="temporary"
         open={drawerOpen}
