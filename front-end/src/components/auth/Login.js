@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
+import { pageSpacing } from "../../utils/constants";
 
 class Login extends Component {
   constructor() {
@@ -57,7 +58,7 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <Container maxWidth={false} sx={{ py: 3, mx: 5 }}>
+      <Container maxWidth={false} sx={{ ...pageSpacing }}>
         <div className="row">
           <h2>
             <b>Login</b>

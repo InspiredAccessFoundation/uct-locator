@@ -3,7 +3,7 @@ import Link from "./Link";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "@mui/system";
-import { drawerWidth } from "../../utils/constants";
+import { pageSpacing } from "../../utils/constants";
 
 const Home = (props) => {
   const loggedIn = props.auth.isAuthenticated;
@@ -24,7 +24,7 @@ const Home = (props) => {
   );
 
   return (
-    <Container maxWidth={false} sx={{ py: 3, mx: 5 }}>
+    <Container maxWidth={false} sx={{ ...pageSpacing }}>
       <p>Welcome to the UCT Locator app!</p>
       {loggedIn ? loggedInContent : loggedOutContent}
       <Link to="/find">Find a Table</Link>

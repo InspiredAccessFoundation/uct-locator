@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import HomeIcon from '@mui/icons-material/Home';
 import Stack from '@mui/material/Stack';
+import { pageSpacing } from "../../utils/constants";
 
 class Register extends Component {
   constructor() {
@@ -60,7 +61,7 @@ class Register extends Component {
     const { errors } = this.state;
 
     return (
-      <Container maxWidth={false} sx={{ py: 3, mx: 5 }}>
+      <Container maxWidth={false} sx={{ ...pageSpacing }}>
         <div className="row">
           <h2>
             <b>Register</b>

@@ -18,6 +18,7 @@ import axios from "axios";
 import LocationSelectMap from "../Map/LocationSelectMap";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from "@mui/material/styles";
+import { pageSpacing } from '../../utils/constants';
 
 const SubmitTable = () => {
   const theme = useTheme();
@@ -102,7 +103,7 @@ const SubmitTable = () => {
 
   return (
     <>
-      <Container maxWidth={false} sx={{ py: 3, mx: 5 }}>
+      <Container maxWidth={false} sx={{ ...pageSpacing }}>
         <div style={{ marginTop: "1rem" }} className="row">
           <h2>Submit Table</h2>
           <p>Enter information for your table here.</p><br></br>
