@@ -52,7 +52,6 @@ const TableMapNew = (props) => {
   }, [searchValue])
 
   React.useEffect(() => {
-    debugger;
     if (map && currentLocation) {
       // Zoom in if the map isn't already zoomed past the default
       if (map.getZoom() < constants.CENTER_CURRENT_LOCATION_ZOOM_DEFAULT) {
