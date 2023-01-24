@@ -1,21 +1,30 @@
-import * as React from "react";
-import Dialog from '@mui/material/Dialog';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
+import DirectionsIcon from '@mui/icons-material/Directions';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import { Box, CircularProgress } from "@mui/material";
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import DialogContent from '@mui/material/DialogContent';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
-import { CircularProgress } from "@mui/material";
-import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import * as React from "react";
+import SvgIcon from '@mui/material/SvgIcon';
+import AppleIcon from '@mui/icons-material/Apple';
+import GoogleIcon from '@mui/icons-material/Google';
+import MapIcon from '@mui/icons-material/Map';
+import { iOS } from '../../utils/constants';
+
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import TableData from "../Tables/TableData";
 
 const TablePopup = (props) => {
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const ref = React.useRef(null);
 
   const tableId = props.tableId;
   const [tableData, setTableData] = React.useState();
@@ -39,22 +48,15 @@ const TablePopup = (props) => {
   return (
     <>
       <TableData tableId={tableId} onDataReceived={onDataReceived} />
-      <Dialog
-        fullScreen={fullScreen}
-        fullWidth
-        maxWidth="md"
-        scroll="paper"
+      <SwipeableDrawer
+        anchor="bottom"
         open={open}
         onClose={onClose}
-        PaperProps={{
-          sx: {
-            height: "100vh"
-          }
-        }}
+        disableBackdropTransition={!iOS} disableDiscovery={iOS}
       >
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h7" component="div">
               Changing Table Location
             </Typography>
             <IconButton
@@ -79,11 +81,48 @@ const TablePopup = (props) => {
             <CircularProgress size="100px" />
           </Box> :
           <DialogContent>
-            <p>{tableData.locationName}</p>
-            <p><Link to={`/view-table/${tableData.id}`}>More Info</Link></p>
+            <h2>{tableData.locationName}</h2>
+            <Divider></Divider>
+            <Box
+              sx={{
+                p: 3,
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                flexDirection: "row",
+                height: "100%"
+              }}
+            >
+              <Avatar>
+                <SvgIcon>
+                  <AppleIcon color="primary" />
+                </SvgIcon>
+              </Avatar>
+              <Avatar>
+                <SvgIcon>
+                  <GoogleIcon color="primary" />
+                </SvgIcon>
+              </Avatar>
+              <Link href={`mailto:${tableData.contactPhone}`}>
+                <Avatar>
+                  <PhoneIcon color="primary" />
+                </Avatar>
+              </Link>
+              <Link href={`mailto:${tableData.contactEmail}`}>
+                <Avatar>
+                  <EmailIcon color="primary" />
+                </Avatar>
+              </Link>
+            </Box>
+            <Divider></Divider>
+            <Box ref={ref} sx={{ display: "none" }}>
+              <p>{tableData.contactPhone}</p>
+              <p>{tableData.contactEmail}</p>
+            </Box>
+
           </DialogContent>
         }
-      </Dialog>
+      </SwipeableDrawer>
     </>
   );
 };
