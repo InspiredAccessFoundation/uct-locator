@@ -198,14 +198,14 @@ const TablePopup = (props) => {
                   </Tooltip>
 
                   <Tooltip title="Directions using Apple Maps">
-                    <Link href="http://maps.apple.com/?daddr=San+Francisco&dirflg=d&t=h" target={"_black"} rel="noopener">
+                    <Link href={"http://maps.apple.com/?daddr=" + tableData.fullAddress(tableData) + "&dirflg=d&t=h"} target={"_blank"} rel="noopener">
                       <Avatar>
                         <AppleIcon color="primary" />
                       </Avatar>
                     </Link>
                   </Tooltip>
                   <Tooltip title="Directions using Google Maps">
-                    <Link href="https://www.google.com/maps?saddr=My+Location&daddr=760+West+Genesee+Street+Syracuse+NY+13204" target={"_black"} rel="noopener">
+                    <Link href={"https://www.google.com/maps?saddr=My+Location&daddr=" + tableData.fullAddress(tableData)} target={"_blank"} rel="noopener">
                       <Avatar>
                         <GoogleIcon color="primary" />
                       </Avatar>
@@ -230,7 +230,7 @@ const TablePopup = (props) => {
                 <Link onClick={moreThings}>More</Link>
                 <Box>
                   <label>Address</label>
-                  <p>{tableData.streetAddress} {tableData.city}, {tableData.state} {tableData.zipCode}</p>
+                  <p>{tableData.fullAddress(tableData)}</p>
                   <label>Phone Number</label>
                   <p>{tableData.contactPhone}</p>
                   <label>Email</label>

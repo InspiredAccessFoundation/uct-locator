@@ -149,15 +149,15 @@ const SubmitTable = () => {
             <p>Enter information for your table here.</p><br></br>
             <form className='form' onSubmit={handleSubmit}>
               <Stack spacing={2}>
-                <TextField id="locationName" label="Location Name" variant="outlined"
-                  onChange={(e) => setLocationName(e.target.value)}
-                  required value={locationName}
-                  inputProps={{ 'aria-label': 'search' }}
-                />
                 <TextField ref={searchRef} label="Search for Address" variant="outlined"
                   onChange={(e) => setStreetAddress(e.target.value)}
                   value={streetAddress}
                   required
+                />
+                <TextField id="locationName" label="Location Name" variant="outlined"
+                  onChange={(e) => setLocationName(e.target.value)}
+                  required value={locationName}
+                  inputProps={{ 'aria-label': 'search' }}
                 />
                 <TextField id="locationWithinBuilding" label="Location Within Building" variant="outlined"
                   onChange={(e) => setLocationWithinBuilding(e.target.value)}

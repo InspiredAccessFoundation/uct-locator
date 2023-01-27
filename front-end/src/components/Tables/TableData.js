@@ -10,13 +10,17 @@ const TableData = (props) => {
       async function fetchData() {
         try {
           let response = await axios.get(`/api/tables/${tableId}`);
-          onDataReceived(response.data);
+          const tableData = response.data
+          tableData.fullAddress = (data) => {
+            return `${data.streetAddress} ${data.city}, ${data.state} ${data.zipcode}`
+          }
+          onDataReceived(tableData);
         } catch (e) {
           console.error("Something went wrong:", e);
           return [];
         }
       }
-      
+
       fetchData();
     }
   }, [tableId, onDataReceived]);
