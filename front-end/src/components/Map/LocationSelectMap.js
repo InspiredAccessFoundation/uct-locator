@@ -2,6 +2,7 @@ import React from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { CircularProgress } from "@mui/material";
 import TableMapNew from "./TableMap";
+import { GoogleApiKey } from "../../utils/constants";
 
 const render = () => {
   return (
@@ -20,7 +21,7 @@ const LocationSelectMap = (props) => {
   return (
     <>
       <div style={{ height: "100%" }}>
-        <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render} libraries={["places"]}>
+        <Wrapper apiKey={GoogleApiKey()} render={render} libraries={["places"]}>
           {/* <TableMapNew
             onCenterChanged={onCenterChanged}
             mapOptions={mapOptions}

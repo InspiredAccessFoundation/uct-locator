@@ -18,7 +18,7 @@ import axios from "axios";
 import LocationSelectMap from "../Map/LocationSelectMap";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from "@mui/material/styles";
-import { pageSpacing } from '../../utils/constants';
+import { GoogleApiKey, pageSpacing } from '../../utils/constants';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -140,7 +140,7 @@ const SubmitTable = () => {
     <>
       <Container maxWidth={false} sx={{ ...pageSpacing }}>
         <Wrapper
-          apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+          apiKey={GoogleApiKey()}
           render={render}
           libraries={["places"]}
         >

@@ -35,7 +35,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Icon from '@mui/material/Icon';
 import store from "../../store";
 
-import { drawerWidth } from "../../utils/constants";
+import { drawerWidth, GoogleApiKey } from "../../utils/constants";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -215,7 +215,7 @@ const Navbar = (props) => {
   return (
     <>
       <Wrapper
-        apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        apiKey={GoogleApiKey()}
         render={render}
         libraries={["places"]}
       >

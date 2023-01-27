@@ -14,6 +14,7 @@ import TableMap from "./TableMap";
 import TablePopup from "./TablePopup";
 
 import "./LocationViewMap.css"
+import { GoogleApiKey } from "../../utils/constants";
 
 const render = () => {
   return <CircularProgress size="100px" />;
@@ -82,7 +83,7 @@ const LocationViewMapNew = () => {
   return (
     <Container maxWidth={false} disableGutters>
       <Wrapper
-        apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        apiKey={GoogleApiKey()}
         render={render}
         libraries={["places"]}
       >
