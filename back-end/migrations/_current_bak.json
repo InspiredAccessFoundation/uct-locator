@@ -107,33 +107,6 @@
             },
             "indexes": []
         },
-        "points": {
-            "tableName": "points",
-            "schema": {
-                "id": {
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "field": "id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "coordinates": {
-                    "allowNull": false,
-                    "field": "coordinates",
-                    "seqType": "Sequelize.GEOMETRY('POINT', 4326)"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
         "tables": {
             "tableName": "tables",
             "schema": {
@@ -310,5 +283,5 @@
             "indexes": []
         }
     },
-    "revision": 1
+    "revision": 2
 }

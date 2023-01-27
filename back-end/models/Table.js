@@ -19,19 +19,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     streetAddress: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     city: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     state: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     zipcode: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.INTEGER(),
+      allowNull: false,
       max: 5,
     },
     locationWithinBuilding: {
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     restroomType: {
       type: DataTypes.ENUM('men', 'women', 'family', 'other'),
-      allowNull: true,
+      allowNull: false,
     },
     coordinateLocation: {
       type: DataTypes.GEOMETRY('POINT', 4326),
@@ -48,18 +48,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     tableStyle: {
       type: DataTypes.ENUM('fixed-height', 'adjustable', 'portable'),
-      allowNull: true,
+      allowNull: false,
     },
     tableNotes: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     publicAccessibility: {
       type: DataTypes.ENUM('Patrons/Patients Only', 'Accessible to the Public'),
-      allowNull: true,
+      allowNull: false,
     },
     hours: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     contactPhone: {
@@ -71,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     additionalInfo: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     status: {
