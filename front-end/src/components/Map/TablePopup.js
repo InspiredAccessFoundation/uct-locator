@@ -155,7 +155,7 @@ const TablePopup = (props) => {
                     flexDirection: "row",
                   }}
                 >
-                  <Tooltip title="Publicly Accessible">
+                  {/* <Tooltip title="Publicly Accessible">
                     <Avatar>
                       <PublicIcon color="primary" />
                     </Avatar>
@@ -180,7 +180,7 @@ const TablePopup = (props) => {
                     <Avatar>
                       <FamilyRestroomIcon color="primary" />
                     </Avatar>
-                  </Tooltip>
+                  </Tooltip> */}
                   <Tooltip title="Fixed height">
                     <Avatar>
                       <AirlineSeatFlatIcon color="primary"></AirlineSeatFlatIcon>
@@ -196,14 +196,15 @@ const TablePopup = (props) => {
                       <WorkOutlineIcon color="primary" />
                     </Avatar>
                   </Tooltip>
-
-                  <Tooltip title="Directions using Apple Maps">
-                    <Link href={"http://maps.apple.com/?daddr=" + tableData.fullAddress(tableData) + "&dirflg=d&t=h"} target={"_blank"} rel="noopener">
-                      <Avatar>
-                        <AppleIcon color="primary" />
-                      </Avatar>
-                    </Link>
-                  </Tooltip>
+                  {iOS &&
+                    <Tooltip title="Directions using Apple Maps">
+                      <Link href={"http://maps.apple.com/?daddr=" + tableData.fullAddress(tableData) + "&dirflg=d&t=h"} target={"_blank"} rel="noopener">
+                        <Avatar>
+                          <AppleIcon color="primary" />
+                        </Avatar>
+                      </Link>
+                    </Tooltip>
+                  }
                   <Tooltip title="Directions using Google Maps">
                     <Link href={"https://www.google.com/maps?saddr=My+Location&daddr=" + tableData.fullAddress(tableData)} target={"_blank"} rel="noopener">
                       <Avatar>
@@ -211,20 +212,24 @@ const TablePopup = (props) => {
                       </Avatar>
                     </Link>
                   </Tooltip>
-                  <Tooltip title="Call">
-                    <Link href={`tel:${tableData.contactPhone}`}>
-                      <Avatar>
-                        <PhoneIcon color="primary" />
-                      </Avatar>
-                    </Link>
-                  </Tooltip>
-                  <Tooltip title="Email">
-                    <Link href={`mailto:${tableData.contactEmail}`}>
-                      <Avatar>
-                        <EmailIcon color="primary" />
-                      </Avatar>
-                    </Link>
-                  </Tooltip>
+                  {tableData.contactPhone &&
+                    <Tooltip title="Call">
+                      <Link href={`tel:${tableData.contactPhone}`}>
+                        <Avatar>
+                          <PhoneIcon color="primary" />
+                        </Avatar>
+                      </Link>
+                    </Tooltip>
+                  }
+                  {tableData.contactEmail &&
+                    <Tooltip title="Email">
+                      <Link href={`mailto:${tableData.contactEmail}`}>
+                        <Avatar>
+                          <EmailIcon color="primary" />
+                        </Avatar>
+                      </Link>
+                    </Tooltip>
+                  }
                 </Box>
                 <Divider></Divider>
                 <Link onClick={moreThings}>More</Link>

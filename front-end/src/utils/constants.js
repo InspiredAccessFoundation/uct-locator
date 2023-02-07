@@ -1,6 +1,7 @@
 export const drawerWidth = 235;
 export const pageSpacing = { py: 3, mx: 5 }
 export const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+export const macOS = typeof navigator !== 'undefined' && navigator.platform.indexOf("Mac") === 0;
 
 // Allows for configuration of differnt api keys per environment. 
 export const GoogleApiKey = () => {
