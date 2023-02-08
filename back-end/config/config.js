@@ -43,6 +43,20 @@ module.exports = {
       idle: 10000
     }
   },
+  migratelocal: {
+    username: 'uct-user',
+    password: 'uct-password',
+    database: "developmentdb",
+    host: '127.0.0.1',
+    port: 5432,
+    dialect: "postgres",
+    pool: {
+      max: 1,
+      min: 1,
+      acquire: 30000,
+      idle: 10000
+    }
+  },
   development: {
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASSWORD,

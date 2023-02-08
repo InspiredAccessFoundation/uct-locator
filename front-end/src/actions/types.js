@@ -1,3 +1,6 @@
 export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SET_MAP_SHOWING = "SET_MAP_SHOWING"
+export const SET_SEARCH = "SET_SEARCH"
+export const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION"

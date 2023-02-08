@@ -107,33 +107,6 @@
             },
             "indexes": []
         },
-        "points": {
-            "tableName": "points",
-            "schema": {
-                "id": {
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "field": "id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "coordinates": {
-                    "allowNull": false,
-                    "field": "coordinates",
-                    "seqType": "Sequelize.GEOMETRY('POINT', 4326)"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
         "tables": {
             "tableName": "tables",
             "schema": {
@@ -161,25 +134,25 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "streetAddress": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "field": "streetAddress",
                     "seqType": "Sequelize.STRING"
                 },
                 "city": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "field": "city",
                     "seqType": "Sequelize.STRING"
                 },
                 "state": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "field": "state",
                     "seqType": "Sequelize.STRING"
                 },
                 "zipcode": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "max": 5,
                     "field": "zipcode",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "locationWithinBuilding": {
                     "allowNull": true,
@@ -187,7 +160,7 @@
                     "seqType": "Sequelize.STRING"
                 },
                 "restroomType": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "field": "restroomType",
                     "seqType": "Sequelize.ENUM('men', 'women', 'family', 'other')"
                 },
@@ -197,24 +170,24 @@
                     "seqType": "Sequelize.GEOMETRY('POINT', 4326)"
                 },
                 "tableStyle": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "field": "tableStyle",
                     "seqType": "Sequelize.ENUM('fixed-height', 'adjustable', 'portable')"
                 },
                 "tableNotes": {
                     "allowNull": true,
                     "field": "tableNotes",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.TEXT"
                 },
                 "publicAccessibility": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "field": "publicAccessibility",
                     "seqType": "Sequelize.ENUM('Patrons/Patients Only', 'Accessible to the Public')"
                 },
                 "hours": {
                     "allowNull": true,
                     "field": "hours",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.TEXT"
                 },
                 "contactPhone": {
                     "allowNull": true,
@@ -229,7 +202,7 @@
                 "additionalInfo": {
                     "allowNull": true,
                     "field": "additionalInfo",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.TEXT"
                 },
                 "status": {
                     "defaultValue": {
@@ -310,5 +283,5 @@
             "indexes": []
         }
     },
-    "revision": 1
+    "revision": 3
 }

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    tableID: {
+    tableId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
-    authorID: {
+    authorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import HomeIcon from '@mui/icons-material/Home';
 import Stack from '@mui/material/Stack';
+import { pageSpacing } from "../../utils/constants";
 
 class Register extends Component {
   constructor() {
@@ -60,77 +61,74 @@ class Register extends Component {
     const { errors } = this.state;
 
     return (
-      <Container maxWidth='sm'>
-        <div style={{ marginTop: "4rem" }} className="row">
-           <Button variant="outlined" startIcon={<HomeIcon />} href="/">
-                Home
-               </Button>
-              <h2>
-                <b>Register below </b>
-              </h2>
-            <form noValidate onSubmit={this.onSubmit}>
-            <Stack spacing = {1}>
+      <Container maxWidth={false} sx={{ ...pageSpacing }}>
+        <div className="row">
+          <h2>
+            <b>Register</b>
+          </h2>
+          <form noValidate onSubmit={this.onSubmit}>
+            <Stack spacing={1}>
 
               <TextField id='name' variant='outlined' label='Name'
-                  onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                  className={classnames("", {
-                    invalid: errors.name
-                  })}
-                />
-                <span className="red-text">{errors.name}</span>
+                onChange={this.onChange}
+                value={this.state.name}
+                error={errors.name}
+                className={classnames("", {
+                  invalid: errors.name
+                })}
+              />
+              <span className="red-text">{errors.name}</span>
 
               <TextField id='email' variant='outlined' label='Email'
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  className={classnames("", {
-                    invalid: errors.email
-                  })}
-                />
-                <span className="red-text">{errors.email}</span>
+                onChange={this.onChange}
+                value={this.state.email}
+                error={errors.email}
+                className={classnames("", {
+                  invalid: errors.email
+                })}
+              />
+              <span className="red-text">{errors.email}</span>
 
               <TextField id='username' variant='outlined' label='Username'
-                  onChange={this.onChange}
-                  value={this.state.username}
-                  error={errors.username}
-                  className = {classnames("", {
-                    invalid: errors.username
-                  })}
-                />
-                <span className="red-text">{errors.username}</span>
+                onChange={this.onChange}
+                value={this.state.username}
+                error={errors.username}
+                className={classnames("", {
+                  invalid: errors.username
+                })}
+              />
+              <span className="red-text">{errors.username}</span>
 
               <TextField id='password' variant='outlined' label='Password' type='password'
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  className={classnames("", {
-                    invalid: errors.password
-                  })}
-                />
-                <span className="red-text">{errors.password}</span>
+                onChange={this.onChange}
+                value={this.state.password}
+                error={errors.password}
+                className={classnames("", {
+                  invalid: errors.password
+                })}
+              />
+              <span className="red-text">{errors.password}</span>
 
-                <TextField id='password2' variant='outlined' label='Confirm Password' type="password"
-                  onChange={this.onChange}
-                  value={this.state.password2}
-                  error={errors.password2}
-                  className={classnames("", {
-                    invalid: errors.password2
-                  })}
-                />
-                <span className="red-text">{errors.password2}</span>
-              </Stack>
-                <Button variant="contained" type="subimt">
-                  Sign Up
-                </Button>
-                <p className="grey-text text-darken-1">
-                Already have an account? 
-                <Button href='/login'>Login</Button>
-              </p>
-            </form>
-            </div>
-        </Container>
+              <TextField id='password2' variant='outlined' label='Confirm Password' type="password"
+                onChange={this.onChange}
+                value={this.state.password2}
+                error={errors.password2}
+                className={classnames("", {
+                  invalid: errors.password2
+                })}
+              />
+              <span className="red-text">{errors.password2}</span>
+            </Stack>
+            <Button variant="contained" type="subimt">
+              Sign Up
+            </Button>
+            <p className="grey-text text-darken-1">
+              Already have an account?
+              <Button href='/login'>Login</Button>
+            </p>
+          </form>
+        </div>
+      </Container>
     );
   }
 }
