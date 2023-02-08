@@ -8,7 +8,9 @@ The project is being deployed to [AWS](https://aws.amazon.com/). We are using a 
 
 ### Words for the pictures
 
-Github actions is setup to utilize OIDC to gain access to the configured roles for each deployment branch. There is a branch for development and one for production. To do a deployment to an environment, simply open an MR into those branches and on merge it'll deploy to the environment. 
+Github actions is setup to utilize OIDC to gain access to the configured roles for each deployment environment as well as the build step to push the docker containers. To do a deployment to an environment, simply create a new release and corresponding tag using the `vx.x.x` convention for naming. 
+
+Once build to kick off any cdk diff or cdk deployment you must approve the run to execute. Approvers are added to the github environments. 
 
 Development and Production even though seperate are living in the same VPC again to save cost on resources like ALB and RDS. Once we grow those can easily be split out and should live in their own accounts. 
 

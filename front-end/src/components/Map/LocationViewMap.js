@@ -1,13 +1,20 @@
 import React from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
+import GpsFixedTwoToneIcon from '@mui/icons-material/GpsFixedTwoTone';
 import Container from "@mui/system/Container";
 import CircularProgress from "@mui/material/CircularProgress";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Icon from '@mui/material/Icon';
+import { useTheme } from '@mui/material/styles';
 
 import axios from "../../axiosRequests";
 import * as constants from "../../constants";
 import Marker from "./Marker";
 import TableMap from "./TableMap";
 import TablePopup from "./TablePopup";
+
+import "./LocationViewMap.css"
+import { GoogleApiKey } from "../../utils/constants";
 
 const render = () => {
   return <CircularProgress size="100px" />;
@@ -22,7 +29,7 @@ const getTablePosition = (tbl) => {
   };
 };
 
-const LocationViewMap = () => {
+const LocationViewMapNew = () => {
   const [zoom, setZoom] = React.useState(
     Number(localStorage.getItem("zoom")) || 3
   );
@@ -50,10 +57,15 @@ const LocationViewMap = () => {
     });
   };
 
+  const onMarkerClicked = tblId => {
+    setCurrentTableId(tblId)
+  }
+
+
   const onZoomChanged = (zoom) => {
     setZoom(zoom);
   }
-  
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,39 +81,38 @@ const LocationViewMap = () => {
   }, []);
 
   return (
-    <Container maxWidth="md">
-      <div style={{ height: "100%" }}>
-        <h1>Find a Table</h1>
-        <p>Use this map to find the location of a universal changing table!</p>
-        <Wrapper
-          apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-          render={render}
-          libraries={["places"]}
+    <Container maxWidth={false} disableGutters>
+      <Wrapper
+        apiKey={GoogleApiKey()}
+        render={render}
+        libraries={["places"]}
+      >
+        <TableMap
+          center={center}
+          onCenterChanged={onCenterChanged}
+          onZoomChanged={onZoomChanged}
+          zoom={zoom}
+          style={{ width: "100%", height: "94vh" }}
         >
-          <TableMap
-            center={center}
-            onCenterChanged={onCenterChanged}
-            onZoomChanged={onZoomChanged}
-            zoom={zoom}
-            style={{ width: "100%", height: "500px" }}
-          >
-            {tableLocations.map((tbl, i) => (
-              <Marker
-                key={i}
-                position={getTablePosition(tbl)}
-                onClick={() => setCurrentTableId(tbl._id)}
-              />
-            ))}
-          </TableMap>
-          <TablePopup
-            tableId={currentTableId}
-            onClose={() => setCurrentTableId('')}
-            open={!!currentTableId}
-          />
-        </Wrapper>
-      </div>
+          {tableLocations.map((tbl, i) => (
+            <Marker
+              key={i}
+              position={getTablePosition(tbl)}
+              onClick={() => onMarkerClicked(tbl.id)}
+            />
+          ))}
+        </TableMap>
+        <TablePopup
+          tableId={currentTableId}
+          onClose={() => setCurrentTableId('')}
+          open={!!currentTableId}
+        />
+        {/* <div className="add-new-floater">
+          <Icon component={AddCircleIcon} fontSize="large" className="add-circle" sx={{ color: bg, backgroundColor: fg }} />
+        </div> */}
+      </Wrapper>
     </Container>
   );
 };
 
-export default LocationViewMap;
+export default LocationViewMapNew;

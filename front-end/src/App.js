@@ -15,13 +15,15 @@ import Login from "./components/auth/Login";
 import About from "./components/about-us/about-us"
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import SubmitTable from "./components/Tables/SubmitTable";
-import LocationViewMap from "./components/Map/LocationViewMap";
+import LocationViewMapNew from "./components/Map/LocationViewMap";
 import ViewTable from "./components/Tables/ViewTable";
 
+import Box from '@mui/material/Box';
+
 import Container from "@mui/material/Container";
+import { drawerWidth } from "./utils/constants";
 
 import "./App.css";
-
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -47,12 +49,14 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Navbar />
-          <Container>
-            <Route component={Breadcrumbs} />
+          <Box
+            component="main"
+            sx={{ display: 'flex', flexGrow: 3, p: 0, width: { sm: `calc(100% - ${drawerWidth}px)` }, marginLeft: { sm: `${drawerWidth}px` } }}
+          >
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/find" component={LocationViewMap} />
+            <Route exact path="/find" component={LocationViewMapNew} />
             <Route path="/view-table/:tableId" component={ViewTable} />
             <Route exact path="/about" component={About} />
             <Switch>
@@ -62,10 +66,9 @@ class App extends Component {
                 component={SubmitTable}
               />
             </Switch>
-            <div style={{ height: "50px" }} />
-          </Container>
+          </Box>
         </Router>
-      </Provider>
+      </Provider >
     );
   }
 }
