@@ -12,6 +12,8 @@ export const GoogleApiKey = () => {
     } else if (process.env.REACT_APP_GOOGLE_MAPS_API_KEY) {
         // Locally we expected this value to be set in .env
         return process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    } else if (process.env.NODE_ENV === "test") {
+        return "dummy-test-value"
     } else {
         throw new Error("No google maps api key set")
     }
