@@ -208,7 +208,7 @@
                 "tableStyle": {
                     "allowNull": false,
                     "field": "tableStyle",
-                    "seqType": "Sequelize.ENUM('fixed-height', 'adjustable', 'portable')"
+                    "seqType": "Sequelize.ENUM('fixed-height', 'adjustable', 'child-size')"
                 },
                 "tableNotes": {
                     "allowNull": true,
@@ -319,5 +319,5 @@
             "indexes": []
         }
     },
-    "revision": 4
+    "revision": 5
 }

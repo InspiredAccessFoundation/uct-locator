@@ -50,7 +50,7 @@ Use the following commands for common tasks for schema migrations:
 
     ```sh
     cd back-end
-    npx makemigration --name '<name that describes you changes>'
+    NODE_ENV=local npx makemigration --name '<name that describes you changes>'
     ```
 
 ### Front-End
