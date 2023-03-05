@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     tableStyle: {
-      type: DataTypes.ENUM('fixed-height', 'adjustable', 'portable'),
+      type: DataTypes.ENUM('fixed-height', 'adjustable', 'child-size'),
       allowNull: false,
     },
     tableNotes: {
