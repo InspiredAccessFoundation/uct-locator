@@ -45,12 +45,12 @@ module.exports = (sequelize, DataTypes) => {
   Picture.associate = (models) => {
     Picture.belongsTo(models.User, {
       foreignKey: {
-        name: "uploaderID", allowNull: false
+        name: "uploaderId", allowNull: false
       }
     })
     Picture.belongsTo(models.Table, {
       foreignKey: {
-        name: "tableID", allowNull: false
+        name: "tableId", allowNull: false
       }
     })
   }

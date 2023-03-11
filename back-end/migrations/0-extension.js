@@ -1,7 +1,7 @@
 module.exports = {
     pos: 0,
     up: function (queryInterface, Sequelize) {
-        return queryInterface.sequelize.query('CREATE EXTENSION postgis;')
+        return queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS postgis;')
     },
     info: {
         "revision": 1,

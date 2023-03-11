@@ -16,6 +16,9 @@
                         "key": "id"
                     },
                     "field": "tableId",
+                    "name": "tableId",
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "authorId": {
@@ -25,6 +28,9 @@
                         "key": "id"
                     },
                     "field": "authorId",
+                    "name": "authorId",
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "body": {
@@ -41,30 +47,6 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                },
-                "authorID": {
-                    "allowNull": false,
-                    "name": "authorID",
-                    "references": {
-                        "model": "users",
-                        "key": "id"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
-                    "field": "authorID",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "tableID": {
-                    "allowNull": false,
-                    "name": "tableID",
-                    "references": {
-                        "model": "tables",
-                        "key": "id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "tableID",
-                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -85,6 +67,9 @@
                         "key": "id"
                     },
                     "field": "tableId",
+                    "name": "tableId",
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "uploaderId": {
@@ -94,6 +79,9 @@
                         "key": "id"
                     },
                     "field": "uploaderId",
+                    "name": "uploaderId",
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "name": {
@@ -115,30 +103,6 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                },
-                "uploaderID": {
-                    "allowNull": false,
-                    "name": "uploaderID",
-                    "references": {
-                        "model": "users",
-                        "key": "id"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
-                    "field": "uploaderID",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "tableID": {
-                    "allowNull": false,
-                    "name": "tableID",
-                    "references": {
-                        "model": "tables",
-                        "key": "id"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
-                    "field": "tableID",
-                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -319,5 +283,5 @@
             "indexes": []
         }
     },
-    "revision": 5
+    "revision": 1
 }
