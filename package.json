@@ -5,6 +5,6 @@
     "back-end"
   ],
   "devDependencies": {
-    "nx": "15.5.3"
+    "nx": "15.8.7"
   }
 }
