@@ -41,12 +41,12 @@ module.exports = (sequelize, DataTypes) => {
   Comment.associate = (models) => {
     Comment.belongsTo(models.User, {
       foreignKey: {
-        name: "authorID", allowNull: false
+        name: "authorId", allowNull: false
       }
     })
     models.Table.hasMany(Comment, {
       foreignKey: {
-        name: "tableID", allowNull: false
+        name: "tableId", allowNull: false
       }
     })
   }

@@ -34,8 +34,12 @@ npm run server
 The backing database for this project is Postgres. Easiest way to get one of those running locally is simply to use Docker. You can use the following command to get a Postgis enabled Postgres instance up and running. 
 
 ```
-docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-password -p 5432:5432 -v pg-data:/var/lib/postgresql/data -d postgis/postgis
+docker-compose up -d
 ```
+
+We also spin up an instance of pgAdmin4 to make querying the database easy. It runs on http://localhost:5050. 
+
+Login credentials can be found in the docker-compose.yaml file. 
 
 #### Migrations
 

@@ -11,6 +11,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import SvgIcon from '@mui/material/SvgIcon';
+import ChildCareIcon from '@mui/icons-material/ChildCare';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useSpring } from '@react-spring/web';
@@ -42,6 +43,8 @@ import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import TableData from "../Tables/TableData";
+
+import "./TablePopup.css";
 
 const TablePopup = (props) => {
   const ref = React.useRef(null);
@@ -137,115 +140,189 @@ const TablePopup = (props) => {
               </AppBar>
               <DialogContent ref={ref}
                 sx={{
-                  height: "20vh",
+                  height: "29vh",
                   maxHeight: "100vh",
                   transition: "height 0.2s linear",
                   overflowY: "hidden"
                 }}>
-                <p>{tableData.restroomType}</p>
-                <p>{tableData.tableStyle}</p>
                 <p>{tableData.publiclyAccessible}</p>
-                <Divider></Divider>
                 <Box
                   sx={{
                     p: 3,
                     display: "flex",
                     justifyContent: "space-evenly",
-                    alignItems: "center",
+                    alignItems: "flex-start",
                     flexDirection: "row",
                   }}
                 >
-                  {/* <Tooltip title="Publicly Accessible">
-                    <Avatar>
-                      <PublicIcon color="primary" />
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="Patrons/Patients Only">
-                    <Avatar>
-                      <PublicOffIcon color="primary" />
-                    </Avatar>
-                  </Tooltip>
-
-                  <Tooltip title="Men's restroom">
-                    <Avatar>
-                      <Man2Icon color="primary" />
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="Women's restroom">
-                    <Avatar>
-                      <Woman2Icon color="primary" />
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="Family restroom">
-                    <Avatar>
-                      <FamilyRestroomIcon color="primary" />
-                    </Avatar>
-                  </Tooltip> */}
-                  <Tooltip title="Fixed height">
-                    <Avatar>
-                      <AirlineSeatFlatIcon color="primary"></AirlineSeatFlatIcon>
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="Adjustable">
-                    <Avatar>
-                      <AirlineSeatFlatAngled color="primary" />
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="Portable">
-                    <Avatar>
-                      <WorkOutlineIcon color="primary" />
-                    </Avatar>
-                  </Tooltip>
-                  {iOS &&
-                    <Tooltip title="Directions using Apple Maps">
-                      <Link href={"http://maps.apple.com/?daddr=" + tableData.fullAddress(tableData) + "&dirflg=d&t=h"} target={"_blank"} rel="noopener">
+                  {tableData.tableStyle === "fixed-height" ?
+                    <Box
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Tooltip title="Fixed height">
                         <Avatar>
-                          <AppleIcon color="primary" />
+                          <AirlineSeatFlatIcon color="primary"></AirlineSeatFlatIcon>
                         </Avatar>
-                      </Link>
-                    </Tooltip>
+                      </Tooltip>
+                      <p>Fixed Height</p>
+                    </Box> : <></>
                   }
-                  <Tooltip title="Directions using Google Maps">
-                    <Link href={"https://www.google.com/maps?saddr=My+Location&daddr=" + tableData.fullAddress(tableData)} target={"_blank"} rel="noopener">
-                      <Avatar>
-                        <GoogleIcon color="primary" />
-                      </Avatar>
-                    </Link>
-                  </Tooltip>
-                  {tableData.contactPhone &&
-                    <Tooltip title="Call">
-                      <Link href={`tel:${tableData.contactPhone}`}>
+                  {tableData.tableStyle === "adjustable" ?
+                    <Box
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Tooltip title="Adjustable">
                         <Avatar>
-                          <PhoneIcon color="primary" />
+                          <AirlineSeatFlatAngled color="primary" />
+                        </Avatar>
+                      </Tooltip>
+                      <p>Adjustable</p>
+                    </Box> : <></>}
+                  {tableData.tableStyle === "child-size" ?
+                    <Box
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Tooltip title="Child Size">
+                        <Avatar>
+                          <ChildCareIcon color="primary" />
+                        </Avatar>
+                      </Tooltip>
+                      <p>Child Size</p>
+                    </Box> : <></>}
+                  {iOS &&
+                    <Box
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Tooltip title="Directions using Apple Maps">
+                        <Link href={"http://maps.apple.com/?daddr=" + tableData.fullAddress(tableData) + "&dirflg=d&t=h"} target={"_blank"} rel="noopener">
+                          <Avatar>
+                            <AppleIcon color="primary" />
+                          </Avatar>
+                        </Link>
+                      </Tooltip>
+                      <p>Apple Maps Directions</p>
+                    </Box>
+                  }
+                  <Box
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Tooltip title="Directions using Google Maps">
+                      <Link href={"https://www.google.com/maps?saddr=My+Location&daddr=" + tableData.fullAddress(tableData)} target={"_blank"} rel="noopener">
+                        <Avatar>
+                          <GoogleIcon color="primary" />
                         </Avatar>
                       </Link>
                     </Tooltip>
+                    <p>Google Maps Directions</p>
+                  </Box>
+                  {tableData.contactPhone &&
+                    <Box
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Tooltip title="Call">
+                        <Link href={`tel:${tableData.contactPhone}`}>
+                          <Avatar>
+                            <PhoneIcon color="primary" />
+                          </Avatar>
+                        </Link>
+                      </Tooltip>
+                      <p>Call</p>
+                    </Box>
                   }
                   {tableData.contactEmail &&
-                    <Tooltip title="Email">
-                      <Link href={`mailto:${tableData.contactEmail}`}>
-                        <Avatar>
-                          <EmailIcon color="primary" />
-                        </Avatar>
-                      </Link>
-                    </Tooltip>
+                    <Box
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Tooltip title="Email">
+                        <Link href={`mailto:${tableData.contactEmail}`}>
+                          <Avatar>
+                            <EmailIcon color="primary" />
+                          </Avatar>
+                        </Link>
+                      </Tooltip>
+                      <p>Email</p>
+                    </Box>
                   }
                 </Box>
                 <Divider></Divider>
                 <Link onClick={moreThings}>More</Link>
-                <Box>
+                <Box style={{ padding: "10px" }}>
                   <label>Address</label>
                   <p>{tableData.fullAddress(tableData)}</p>
                   <label>Phone Number</label>
-                  <p>{tableData.contactPhone}</p>
-                  <label>Email</label>
-                  <p>{tableData.contactEmail}</p>
-                  <label>Location within building</label>
-                  <p>{tableData.locationWithinBuilding}</p>
-                  <label>Hours of operation</label>
-                  <p>{tableData.hours}</p>
-                  <label>Additional Details</label>
-                  <p>{tableData.additionalInfo}</p>
+                  <p>
+                    <Link href={`tel:${tableData.contactPhone}`}>
+                      {tableData.contactPhone}
+                    </Link>
+                  </p>
+
+                  {tableData.contactEmail ?
+                    <>
+                      <label>Email</label>
+                      <p>{tableData.contactEmail}</p>
+                    </> : <></>
+                  }
+
+                  {tableData.locationWithinBuilding ?
+                    <>
+                      <label>Location within building</label>
+                      <p>{tableData.locationWithinBuilding}</p>
+                    </> : <></>}
+
+
+                  {tableData.hours ?
+                    <>
+                      <label>Hours of operation</label>
+                      <p>{tableData.hours}</p>
+                    </> : <></>}
+
+                  {tableData.additionalInfo ?
+                    <>
+                      <label>Additional Details</label>
+                      <p>{tableData.additionalInfo}</p>
+                    </> : <></>}
                 </Box>
                 <Divider></Divider>
                 <Box>
