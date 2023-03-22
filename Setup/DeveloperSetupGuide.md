@@ -66,12 +66,12 @@ SECRET_KEY="thisissecret"
 To run the application locally you will need to have a running Postgres database. Easiest option to run this is by using docker. This command will allow you to spin up a Postgres database with the PostGIS extension already installed. 
 
 ```
-docker build . -f Dockerfile-postgres -t uct-postgres
+docker-compose up -d
 ```
 
-```
-docker run --name postgresql -e POSTGRES_USER=uct-user -e POSTGRES_PASSWORD=uct-password -p 5432:5432 -v $(pwd)/sql/pg-data:/var/lib/postgresql/data -d uct-postgres
-```
+We also spin up an instance of pgAdmin4 to make querying the database easy. It runs on http://localhost:5050. 
+
+Login credentials can be found in the docker-compose.yaml file. 
 
 #### Create a .env to connect to your database
 
