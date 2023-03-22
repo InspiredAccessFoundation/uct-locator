@@ -5,24 +5,5 @@
         "**/bower_components": true,
         "**/tmp": true
     },
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "uct-local",
-            "database": "developmentdb",
-            "username": "uct-user"
-        },
-        {
-            "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "developmentuser",
-            "database": "developmentdb",
-            "username": "developmentuser"
-        }
-    ]
+    "sqltools.connections": []
 }
