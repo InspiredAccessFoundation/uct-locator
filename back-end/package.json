@@ -23,7 +23,7 @@
     "jsonwebtoken": "^9.0.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
-    "pg": "^8.8.0",
+    "pg": "^8.10.0",
     "sequelize": "^6.28.0",
     "sequelize-auto-migrations-v2": "^1.2.1",
     "validator": "^13.7.0"
